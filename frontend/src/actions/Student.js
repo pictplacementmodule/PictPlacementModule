@@ -1,0 +1,6 @@
+export const CHANGE = 'CHANGE';
+export const CHANGE_DATE = 'CHANGE_DATE';
+export const CHANGE2 = 'CHANGE2';
+export const CHANGE_YEAR_OF_PASSING = 'CHANGE_YEAR_OF_PASSING';
+export const CHANGE_SWITCH = 'CHANGE_SWITCH';
+export const HANDLE_NEXT_PERSONAL = 'HANDLE_NEXT_PERSONAL';
