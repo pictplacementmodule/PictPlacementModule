@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-
+import com.example.demo.model.Studentdetails;
 import com.example.demo.model.industry;
 
 public interface industryrepo extends JpaRepository<industry,Integer>{

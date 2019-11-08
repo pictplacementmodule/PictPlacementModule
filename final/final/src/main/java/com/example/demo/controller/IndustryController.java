@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.model.Studentdetails;
 import com.example.demo.model.industry;
 import com.example.demo.repository.industryrepo;
+import com.example.demo.service.industryservice;
 
 @RestController
 @CrossOrigin(origins = "*",allowedHeaders="*")
@@ -25,6 +27,8 @@ import com.example.demo.repository.industryrepo;
 public class IndustryController {
 	@Autowired
 	private industryrepo industryrepo;
+	@Autowired
+	private industryservice industryserv;
 	@PostMapping("/add")
 	public industry addIndystry(@RequestBody industry industry)
 	{
@@ -50,6 +54,12 @@ public class IndustryController {
 		ArrayList<Date> datelist = new ArrayList<Date>();
 		datelist.addAll(industryrepo.addFinalDates());
 		return datelist;
+	}
+	
+	@PostMapping("/findStudents")
+	public List<Studentdetails> findStudents(@RequestBody industry industry)
+	{
+		return industryserv.findStudents(industry.getSkills());
 	}
 	
 	@PostMapping("/findByDate")
