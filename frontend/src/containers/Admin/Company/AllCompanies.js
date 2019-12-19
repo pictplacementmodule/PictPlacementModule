@@ -104,6 +104,20 @@ class AllCompanies extends Component {
             [name]: date,
         })
     }
+    
+    dateChangeHandlerPersonal = (date, index) => {
+        var newCompanies = [...this.state.companies]
+        console.log(newCompanies)
+        var company = newCompanies[index]
+        company.final_date = date;
+        console.log(company)
+        newCompanies[index] = company;
+        console.log(newCompanies);
+        this.setState({
+            ...this.state,
+            companies: newCompanies
+        })
+    }
 
     companyHandler = (company) => {
         console.log("clicked" + company.name);
@@ -228,7 +242,7 @@ class AllCompanies extends Component {
                                 <KeyboardDatePicker
                                     margin="normal"
                                     label="End Date"
-                                    value={this.state.Date}
+                                    value={this.state.finalDate}
                                     onChange={(date) => this.dateChangeHandler(date, 'finalDate')}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
@@ -252,7 +266,7 @@ class AllCompanies extends Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {this.state.companies.map(company => (
+                            {this.state.companies.map((company,index) => (
                                 <TableRow key={company.id} className={classes.tableRow}>
                                     <TableCell component="th" scope="row" onClick={()=>this.companyHandler(company)}>
                                         {company.name}
@@ -262,16 +276,15 @@ class AllCompanies extends Component {
                                 <KeyboardDatePicker
                                     margin="normal"
                                     label="Final Date"
-                                    value={this.state.finalDate}
-                                    onChange={(date) => this.dateChangeHandler(date, 'finalDate')}
+                                    value={company.final_date}
+                                    onChange={(date) => this.dateChangeHandlerPersonal(date,index )}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
                                     }}
                                 />
                             </MuiPickersUtilsProvider></TableCell>
                             <TableCell>
-                                
-                                 <Button className={classes.button} variant="contained" color="primary" onClick={()=>this.submitHandler2(company)} >Allot</Button>
+                                 <Button className={classes.button} variant="contained" color="primary" onClick={()=>this.submitHandler3(company)} >Allot</Button>
                             </TableCell>
                                 </TableRow>
                             ))}

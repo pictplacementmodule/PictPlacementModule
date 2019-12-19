@@ -8,6 +8,7 @@ public class PlacementModuleApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PlacementModuleApplication.class, args);
+		System.out.println("Started");
 	}
 
 }

@@ -38,6 +38,7 @@ class Admin extends Component {
             <Route exact path="/admin/company-details/:id" component={CompanyDetails} />
                 <Route exact path="/admin/skill-report/:id" component={StudentReport} />
                 <Route exact path="/admin" component={Login} />
+                {/* <Route path="/admin/dashboard" component={Dashboard2} /> */}
                 <ProtectedRoute path="/admin/dashboard" component={() =>
                     <Dashboard drawerList={this.drawerList}>
                         <Route exact path="/admin/dashboard/add-company" component={AddVisited} />

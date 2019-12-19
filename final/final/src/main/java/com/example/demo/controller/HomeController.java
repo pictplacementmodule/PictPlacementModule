@@ -24,6 +24,10 @@ private Userservice userservice;
 
 private BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
 
+@RequestMapping("/home")
+public void Home() {
+	System.out.println("home");
+}
 
 @RequestMapping("/findall")//for all login id and pass in users class
 public List<users> findall()
@@ -44,7 +48,6 @@ public boolean authenticate(@RequestBody users user)
 	users user1=null;
 	
 	user1=userservice.findById(user.getId());
-//	System.out.println(user1.getId()+"   "+user1.getPass());
 
 if(user1==null)
 {
@@ -79,15 +82,12 @@ else
 @RequestMapping("/addPersonaldetails")//for adding student personal details
 public void addPersonaldetails(@RequestBody Studentdetails user)
 {
-	
-	
 	userservice.addpd(user);
 }
+
 @RequestMapping("/c")//for adding student personal details
 public List<Studentdetails> getPersonaldetails()
 {
-	
-	
 	return userservice.findallpersonaldetails();
 }
 
@@ -96,7 +96,6 @@ public void addUser(@RequestBody users user)
 {
 	user.setPass(passwordEncoder.encode(user.getPass()));
 	System.out.println(user.getId() + " " + user.getPass());
-	
 	userservice.adduser(user);
 }
 
@@ -115,7 +114,6 @@ public List<Academicdetails> findacademicdetails()
 public void delUser(@RequestParam("id") int sid)
 {
 	userservice.deleteById(sid);
-
 }
 
 

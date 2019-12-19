@@ -323,7 +323,7 @@ function Profile(props) {
 
         axios.get('/industry/getDateList', null)
             .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
                 da = response.data;
 
             })

@@ -44,8 +44,8 @@ public class IndustryController {
 	@GetMapping("/findall")
 	public List<industry> findindustry()
 	{
-		System.out.println(industryrepo.findAll());
-		return industryrepo.findAll();
+		System.out.println(industryrepo.findAll2());
+		return industryrepo.findAll2();
 	}
 	
 	@GetMapping("/getDateList")
@@ -65,6 +65,8 @@ public class IndustryController {
 	@PostMapping("/findByDate")
 	public List<industry> findIndustryByDate(@RequestBody industry industry)
 	{
+		System.out.println(industry.getStart_date()+" "+industry.getFinal_date());
+		System.out.println(industryrepo.findIndustryByDate(industry.getStart_date(),industry.getFinal_date()));
 		return industryrepo.findIndustryByDate(industry.getStart_date(),industry.getFinal_date());
 	}
 	

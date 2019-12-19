@@ -36,9 +36,9 @@ public class industry {
 	private List<String> locality;
 	private float package_lpa;
 	private int no_of_students;
-	@JsonFormat(timezone = JsonFormat.DEFAULT_TIMEZONE)
+	@JsonFormat(timezone = "Asia/Kolkata",pattern="yyyy-MM-dd")
 	private Date start_date;
-	@JsonFormat(timezone = JsonFormat.DEFAULT_TIMEZONE)
+	@JsonFormat(timezone = "Asia/Kolkata",pattern="yyyy-MM-dd")
 	private Date final_date;
 	private Boolean computer;
 

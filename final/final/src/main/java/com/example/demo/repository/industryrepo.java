@@ -22,6 +22,8 @@ public interface industryrepo extends JpaRepository<industry,Integer>{
 //		@Query(value="SELECT * FROM industry where (?1 between start_date and end_date) or (?2 between start_date and end_date) or ((start_date between ?1 and ?2) and (end_date between ?1 and ?2))",nativeQuery=true)
 //		public List<industry> findIndustryByDate(Date d1,Date d2);
 		
+	@Query(value="select * from industry order by id ASC",nativeQuery = true)
+	public List<industry> findAll2();
 
 	  @Query(value="SELECT * FROM industry ORDER BY package_lpa desc",nativeQuery=true)
 		public List<industry> ByPackage();
@@ -37,7 +39,7 @@ public interface industryrepo extends JpaRepository<industry,Integer>{
 	@Query("select cast(start_date as date) from industry")
 	public List<Date> addStartDates();
 	
-	@Query(value="SELECT * FROM industry where (final_date between ?1 and ?2)",nativeQuery=true)
+	@Query(value="SELECT * FROM industry where (final_date between ?1 and ?2) order by id asc",nativeQuery=true)
 	public List<industry> findIndustryByDate(Date d1,Date d2);
 	
 	
