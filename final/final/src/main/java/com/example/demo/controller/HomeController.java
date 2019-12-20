@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Academicdetails;
+import com.example.demo.model.Branches;
 import com.example.demo.model.Studentdetails;
 import com.example.demo.model.countofplaced;
 import com.example.demo.model.users;
@@ -125,10 +126,20 @@ public void gettotalstudents()
 }
 
 @RequestMapping("/sortbybranch")
-public List<Academicdetails> show(@RequestParam String branch) {
-System.out.println(branch);
-	return userservice.sortbybranch(branch);
+public List<Academicdetails> show(@RequestBody Branches b) {
+	List<String>branches = new ArrayList<String>();
+	if(b.isComputer()) {
+		branches.add("Computer");
+	}
+	if(b.isIt()) {
+		branches.add("IT");
+	}
+	if(b.isEntc()) {
+		branches.add("ENTC");
+	}
+	return userservice.sortbybranch(branches);
 }
+
 @RequestMapping("/sortbyskills")
 public List<Academicdetails> show(@RequestParam int id) 
 {

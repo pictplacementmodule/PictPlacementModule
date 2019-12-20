@@ -5,8 +5,9 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
+import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -15,6 +16,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import axios from "../../axios";
 import { ButtonGroup } from "@material-ui/core";
+import FormGroup from '@material-ui/core/FormGroup';
 
 const styles = theme => ({
   palette: {
@@ -49,43 +51,45 @@ const styles = theme => ({
 
 class BranchReport extends Component {
   state = {
-    branch: "",
+    computer: false,
+    it: false,
+    entc: false,
     students: []
   };
 
-  handleChange = event => {
+  handleChange = name => event => {
     this.setState({
       ...this.state,
-      branch: event.target.value
+      [name]: event.target.checked
     });
   };
 
   printDocument = () => {
-    document.getElementById("Submitbtn").style.visibility="hidden";
-    document.getElementById("printbtn").style.visibility="hidden";
+    document.getElementById("Submitbtn").style.visibility = "hidden";
+    document.getElementById("printbtn").style.visibility = "hidden";
     window.print();
-    document.getElementById("Submitbtn").style.visibility="visible";
-    document.getElementById("printbtn").style.visibility="visible";
+    document.getElementById("Submitbtn").style.visibility = "visible";
+    document.getElementById("printbtn").style.visibility = "visible";
   }
-  
+
 
   clickHandler = () => {
-    console.log(this.state.branch);
-    axios
-      .post("/sortbybranch", null, { params: { branch: this.state.branch } })
-      .then(response => {
-        console.log(response.data)
-
+    var pass = {
+      computer: this.state.computer,
+      it: this.state.it,
+      entc: this.state.entc,
+    }
+    console.log(pass)
+    axios.post("/sortbybranch",pass)
+      .then((response) => {
         this.setState({
           ...this.state,
-          students: response.data
-        });
-        console.log("this is not done")
-        console.log(this.state.students)
+          students: response.data,
+        })
       })
-      .catch(error => {
+      .catch((error)=>{
         console.log(error);
-      });
+      })
   };
 
   render() {
@@ -97,45 +101,58 @@ class BranchReport extends Component {
             <FormLabel component="legend" className={classes.text}>
               Select the branch
             </FormLabel>
-            <RadioGroup
-              aria-label="branch"
-              name="branch"
-              className={classes.group}
-              value={this.state.branch}
-              onChange={this.handleChange}
-              row
-            >
+            <FormGroup row>
               <FormControlLabel
-                value="Computer"
-                control={<Radio />}
+                control={
+                  <Checkbox
+                    checked={this.state.computer}
+                    onChange={this.handleChange('computer')}
+                    value="computer"
+                  />
+                }
                 label="Computer"
               />
               <FormControlLabel
-                style={{ marginLeft: "40px", marginRight: "60px" }}
-                value="IT"
-                control={<Radio />}
+                control={
+                  <Checkbox
+                  style={{marginLeft:"5vw"}}
+                    checked={this.state.it}
+                    onChange={this.handleChange('it')}
+                    value="it"
+                  />
+                }
                 label="IT"
               />
-              <FormControlLabel value="ENTC" control={<Radio />} label="ENTC" />
-            </RadioGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                  style={{marginLeft:"5vw"}}
+                    checked={this.state.entc}
+                    onChange={this.handleChange('entc')}
+                    value="entc"
+                  />
+                }
+                label="ENTC"
+              />
+            </FormGroup>
             <ButtonGroup>
-            <Button
-              variant="contained"
-              color="primary"
-              id="Submitbtn"
-              className={classes.button}
-              onClick={this.clickHandler}
-            >
-              Submit
+              <Button
+                variant="contained"
+                color="primary"
+                id="Submitbtn"
+                className={classes.button}
+                onClick={this.clickHandler}
+              >
+                Submit
             </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              id="printbtn"
-              className={classes.button}
-              onClick={this.printDocument}
-            >
-              Print
+              <Button
+                variant="contained"
+                color="primary"
+                id="printbtn"
+                className={classes.button}
+                onClick={this.printDocument}
+              >
+                Print
             </Button>
             </ButtonGroup>
           </FormControl>

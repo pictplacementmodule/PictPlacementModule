@@ -61,7 +61,10 @@ class StudentReport extends Component {
 
         axios.post("/industry/findById", null, { params: { id: this.props.match.params.id } })
             .then((response) => {
-                console.log(response.data);
+                this.setState({
+                    ...this.state,
+                    company: response.data,
+                })
             })
             .catch((error) => {
                 console.log(error);
@@ -86,7 +89,7 @@ class StudentReport extends Component {
       }
     state = {
         students: [],
-        company: '',
+        company: {},
         branch: 'computer'
     };
 
@@ -138,7 +141,7 @@ class StudentReport extends Component {
                                             <TableCell component="th" scope="row">
                                                 {s.student.rollno}
                                             </TableCell>
-                                            <TableCell align="right">{s.student.firstname}</TableCell>
+                                            <TableCell align="right">{s.student.firstName}</TableCell>
                                             <TableCell align="right">{s.student.rollno}</TableCell>
                                             <TableCell align="right">{s.sgpaAggregate}</TableCell>
                                         </TableRow>

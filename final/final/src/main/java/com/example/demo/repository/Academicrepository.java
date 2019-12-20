@@ -18,8 +18,8 @@ public interface Academicrepository extends JpaRepository<Academicdetails,Intege
 @Query(value = "select * from student", nativeQuery = true)
 public users addToTable(@Param("columnName") String columnName, @Param("dataType") String dataType);
 
-@Query(value = "select * from academic_details where br=?1", nativeQuery = true)
-public List<Academicdetails> sortbybranch(String branch);
+@Query(value = "select * from academic_details where br IN (:branches)", nativeQuery = true)
+public List<Academicdetails> sortbybranch(List<String>branches);
 
 @Query(value = "select skills from industry_skills where industry_id=?1", nativeQuery = true)
 public List<String> sortbyskills(int id);

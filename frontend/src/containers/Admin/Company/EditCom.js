@@ -21,9 +21,42 @@ import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 import Chip from '@material-ui/core/Chip';
 import Switch from '@material-ui/core/Switch'
-import Divider from '@material-ui/core/Divider'
+
+import PropTypes from 'prop-types';
+import clsx from 'clsx';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import ErrorIcon from '@material-ui/icons/Error';
+import InfoIcon from '@material-ui/icons/Info';
+import CloseIcon from '@material-ui/icons/Close';
+import { amber, green } from '@material-ui/core/colors';
+import IconButton from '@material-ui/core/IconButton';
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import WarningIcon from '@material-ui/icons/Warning';
+// import moment from "moment";
+
+const variantIcon = {
+    success: CheckCircleIcon,
+    warning: WarningIcon,
+    error: ErrorIcon,
+    info: InfoIcon,
+};
 
 const useStyles = makeStyles(theme => ({
+    icon: {
+        fontSize: 20,
+    },
+    success: {
+        backgroundColor: green[600],
+    },
+    iconVariant: {
+        opacity: 0.9,
+        marginRight: theme.spacing(1),
+    },
+    message: {
+        display: 'flex',
+        alignItems: 'center',
+    },
     paper: {
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),
@@ -76,54 +109,64 @@ const MenuProps = {
     },
 };
 
+function MySnackbarContentWrapper(props) {
+    const classes = useStyles();
+    const { className, message, onClose, variant, ...other } = props;
+    const Icon = variantIcon[variant];
+
+    return (
+        <SnackbarContent
+            className={clsx(classes[variant], className)}
+            aria-describedby="client-snackbar"
+            message={
+                <span id="client-snackbar" className={classes.message}>
+                    <Icon className={clsx(classes.icon, classes.iconVariant)} />
+                    {message}
+                </span>
+            }
+            action={[
+                <IconButton key="close" aria-label="close" color="inherit" onClick={onClose}>
+                    <CloseIcon className={classes.icon} />
+                </IconButton>,
+            ]}
+            {...other}
+        />
+    );
+}
+MySnackbarContentWrapper.propTypes = {
+    className: PropTypes.string,
+    message: PropTypes.string,
+    onClose: PropTypes.func,
+    variant: PropTypes.oneOf(['error', 'info', 'success', 'warning']).isRequired,
+};
+
 export default function AddVisited() {
 
 
     const classes = useStyles();
 
     const skills = [
-         'Oliver Hansen',
-         'Van Henry',
-         'April Tucker',
-         'Ralph Hubbard',
-         'Omar Alexander',
-         'Carlos Abbott',
-         'Miriam Wagner',
-         'Bradley Wilkerson',
-         'Virginia Andrews',
-         'Kelly Snyder',
-         'a',
-         'b',
-         'c',
-         'd',
-         'e',
-         'f',
-         'g',
-         'h',
-         'i',
-    ];
+        'JAVA',
+        'CPP',
+        'PYTHON',
+        'SPRING',
+        'REACT',
+        'MYSQL',
+        'POSTGRESQL'
+      ];
+      const cities = [
+        'PUNE',
+        'DELHI',
+        'SANGAMNER',
+        'NAGPUR',
+        'MUMBAI',
+        'BARSHI',
+        'SOLAPUR',
+        'KOLHAPUR',
+        'SATARA'
+      ]
 
-    const cities = [
-         'Oliver Hansen',
-          'Van Henry',
-          'April Tucker',
-          'Ralph Hubbard',
-          'Omar Alexander',
-          'Carlos Abbott',
-          'Miriam Wagner',
-          'Bradley Wilkerson',
-          'Virginia Andrews',
-          'Kelly Snyder',
-          'a',
-          'b',
-          'c',
-          'd',
-          'e',
-          'f',
-          'g',
-          'h',
-          'i',
-    ]
+    const [open, setOpen] = React.useState(false);
 
     const [state, setState] = React.useState({
         name: '',
@@ -147,6 +190,9 @@ export default function AddVisited() {
         entc: ''
     })
 
+    const [snackState, setSnackState] = React.useState(false);
+
+
     const [formErrors, setError] = React.useState({
         cpname: '',
         cpemail1: '',
@@ -164,7 +210,7 @@ export default function AddVisited() {
         event.preventDefault();
         var name = state.name;
         console.log(name);
-        axios.post('/industry/edit', null, { params: { id: state.name } })
+        axios.post('/industry/findById', null, { params: { id: state.name } })
             .then((response) => {
                 if (response.data != null) {
                        setState({
@@ -183,7 +229,7 @@ export default function AddVisited() {
         event.preventDefault();
         axios.post('/industry/add', state)
             .then((response) => {
-                console.log(response);
+                setOpen(true);
             })
             .catch((error) => {
                 console.log(error);
@@ -254,9 +300,32 @@ export default function AddVisited() {
             [name]: event.target.checked,
         })
     }
+    
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     return (
         <React.Fragment>
+             <Snackbar
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+                open={open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+            >
+                <MySnackbarContentWrapper
+                    onClose={handleClose}
+                    variant="success"
+                    message="Company Profile edited successfully!"
+                />
+            </Snackbar>
             <Paper className={classes.paper}>
                 <Typography variant="h6" gutterBottom align="center">
                     Edit company details

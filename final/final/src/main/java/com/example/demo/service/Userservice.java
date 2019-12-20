@@ -82,9 +82,9 @@ public void saveaca(Academicdetails user)
 	acarepo.save(user);
 
 }
-public List<Academicdetails> sortbybranch(String branch) {
-	System.out.println(branch);
-	return acarepo.sortbybranch(branch);
+public List<Academicdetails> sortbybranch(List<String>branches) {
+	System.out.println(branches);
+	return acarepo.sortbybranch(branches);
 }
 public List<Academicdetails> sortbyskills(int id) {
 	System.out.println(id);
