@@ -34,6 +34,7 @@ class Current extends Component {
         axios.get('/industry/findall')
             .then((response) => {
                 this.setState({ companies: response.data });
+                console.log(response.data)
             })
             .catch((error) => {
                 console.log(error);
@@ -60,7 +61,7 @@ class Current extends Component {
                                     {company.name}
                                 </TableCell>
                                 <TableCell align="right">{company.criteria}</TableCell>
-                                <TableCell align="right">{company.salary}</TableCell>
+                                <TableCell align="right">{company.package_lpa}</TableCell>
                                 <TableCell align="right">{company.skills}</TableCell>
                             </TableRow>
                         ))}

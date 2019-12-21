@@ -196,6 +196,7 @@ function Profile(props) {
     })
     var da = [];
     const [formErrors, setError] = React.useState({
+        name: '',
         cpName: '',
         cpEmail1: '',
         cpEmail2: '',
@@ -206,6 +207,23 @@ function Profile(props) {
         package: '',
         numberOfStudents: '',
     })
+
+    const [emptyError, setEmptyError] = React.useState({
+    });
+
+    const keys = ['name','cpName','cpEmail1','contactNo1','package']
+
+    let e = {
+    }
+    function validate(){
+        setEmptyError({});
+        keys.map((key) => {
+            if(state[key].length==0){
+                e[key]='Empty'
+            }
+        })
+        setEmptyError(e);
+    }
 
 
     const submitHandler = (event) => {
@@ -233,9 +251,17 @@ function Profile(props) {
             it: state.branches.it,
             entc: state.branches.entc,
         }
-        console.log(industry);
-
-        axios.post('/industry/add', industry)
+        validate();
+        var valid = true;
+        if(Object.values(formErrors).some((error) => error.length>0)||Object.keys(e).length>0){
+            valid = false;
+        }
+        else{
+            valid = true;
+        }
+        console.log(valid);
+        if(valid){
+            axios.post('/industry/add', industry)
             .then((response) => {
                 console.log(response);
                 setOpen(true);
@@ -243,6 +269,7 @@ function Profile(props) {
             .catch((error) => {
                 console.log(error);
             });
+        }
     }
     const handleChange = (name) => (event) => {
         setState({
@@ -253,7 +280,6 @@ function Profile(props) {
         let error = '';
         let reg = '';
         switch (name) {
-
             case 'cpName':
                 reg = /^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/
                 error = reg.test(value) ? '' : 'Invalid CPName';
@@ -312,7 +338,6 @@ function Profile(props) {
             [name]: event.target.checked,
         })
     }
-
 
 
 
@@ -406,6 +431,7 @@ function Profile(props) {
                                     fullWidth
                                     onChange={handleChange('name')}
                                     value={state.name}
+                                    error={formErrors.name.length>0||emptyError.name}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -414,7 +440,7 @@ function Profile(props) {
                                     fullWidth
                                     onChange={handleChange('cpName')}
                                     value={state.cpName}
-                                    error={formErrors.cpName.length > 0}
+                                    error={formErrors.cpName.length > 0||emptyError.cpName}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -423,7 +449,7 @@ function Profile(props) {
                                     fullWidth
                                     onChange={handleChange('cpEmail1')}
                                     value={state.cpEmail1}
-                                    error={formErrors.cpEmail1.length > 0}
+                                    error={formErrors.cpEmail1.length > 0||emptyError.cpEmail1}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -441,7 +467,7 @@ function Profile(props) {
                                     fullWidth
                                     onChange={handleChange('contactNo1')}
                                     value={state.contactNo1}
-                                    error={formErrors.contactNo1.length > 0}
+                                    error={formErrors.contactNo1.length > 0||emptyError.contactNo1}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -477,7 +503,7 @@ function Profile(props) {
                                     fullWidth
                                     onChange={handleChange('package')}
                                     value={state.package}
-                                    error={formErrors.package.length > 0}
+                                    error={formErrors.package.length > 0||emptyError.package}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>

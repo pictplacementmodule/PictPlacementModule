@@ -261,8 +261,8 @@ class AllCompanies extends Component {
                             <TableRow style={{ height: '8vh' }}>
                                 <TableCell className={classes.tableText}>Company Name</TableCell>
                                 <TableCell className={classes.tableText} align="right">Preffered Date</TableCell>
-                                <TableCell className={classes.tableText} align="right">Choose final date</TableCell>
-                                <TableCell className={classes.tableText} align="right">Accept</TableCell>
+                                <TableCell className={classes.tableText} align="center">Choose final date</TableCell>
+                                <TableCell className={classes.tableText} align="left">Accept</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -272,7 +272,7 @@ class AllCompanies extends Component {
                                         {company.name}
                                     </TableCell>
                                     <TableCell align="right">{company.start_date}</TableCell>
-                                    <TableCell id="btncol"> <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                    <TableCell align="right" id="btncol"> <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                 <KeyboardDatePicker
                                     margin="normal"
                                     label="Final Date"
