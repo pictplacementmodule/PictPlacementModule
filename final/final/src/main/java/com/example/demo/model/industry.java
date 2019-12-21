@@ -3,18 +3,30 @@ package com.example.demo.model;
 import java.sql.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class industry {
-
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="id",referencedColumnName="id",unique = true)
+	private users user;
+	public users getUser() {
+		return user;
+	}
+	public void setUser(users user) {
+		this.user = user;
+	}
 	@Id
-	@GeneratedValue
 	private int id;
 	private String name;
 	private String cpname;
@@ -39,6 +51,14 @@ public class industry {
 	private Date final_date;
 	private Boolean computer;
 
+	public industry() 
+	{	
+		criteria = (float)0.0;
+		no_of_students = 0;
+		package_lpa = (float)0.0;
+		id = user.getId();
+	}
+	
 	public Boolean getComputer() {
 		return computer;
 	}

@@ -1,0 +1,114 @@
+[1mdiff --cc final/final/src/main/java/com/example/demo/controller/IndustryController.java[m
+[1mindex 6fb6445,fa60248..0000000[m
+[1m--- a/final/final/src/main/java/com/example/demo/controller/IndustryController.java[m
+[1m+++ b/final/final/src/main/java/com/example/demo/controller/IndustryController.java[m
+[36m@@@ -85,16 -82,19 +85,33 @@@[m [mpublic class IndustryController [m
+  		 return industryrepo.ByPackage();[m
+  	 }[m
+  	 [m
+[32m++<<<<<<< HEAD[m
+[32m +	 @PostMapping("/pushPlacedByCompany")[m
+[32m +	 public void pushPlaced(@RequestBody List<placedstudents> p) {[m
+[32m +		 placedrepo.saveAll(p);[m
+[32m +		 [m
+[32m +	 }[m
+[32m +	 [m
+[32m +[m
+[32m +	 @PostMapping("/finalPlaced")[m
+[32m +	 public void finalPlaced(@RequestBody List<placedstudents> p) {[m
+[32m +		 placedrepo.saveAll(p);[m
+[32m +	 }[m
+[32m++=======[m
+[32m+ 	 [m
+[32m+ 	 @GetMapping("/getAllSkills")[m
+[32m+ 		public List<String> getAllSkills()[m
+[32m+ 		{[m
+[32m+ 			[m
+[32m+ 			return industryrepo.finaAllSkills();[m
+[32m+ 		}[m
+[32m++>>>>>>> 62f3f0a3cfada3e83e5d18f5cadf0580dbe4fd05[m
+  [m
+[32m+ 	 [m
+[32m+ 	 @GetMapping("/getAllLocations")[m
+[32m+ 		public List<String> getAllLocations()[m
+[32m+ 		{[m
+[32m+ 			[m
+[32m+ 			return industryrepo.finaAllLocations();[m
+[32m+ 		}[m
+  }[m
+[1mdiff --cc final/final/src/main/java/com/example/demo/model/industry.java[m
+[1mindex fd950f3,7a5d0a6..0000000[m
+[1m--- a/final/final/src/main/java/com/example/demo/model/industry.java[m
+[1m+++ b/final/final/src/main/java/com/example/demo/model/industry.java[m
+[36m@@@ -7,7 -10,10 +8,11 @@@[m [mimport javax.persistence.ElementCollect[m
+  import javax.persistence.Entity;[m
+  import javax.persistence.GeneratedValue;[m
+  import javax.persistence.Id;[m
+[32m+ import javax.persistence.JoinColumn;[m
+[32m+ import javax.persistence.OneToOne;[m
+[32m+ import javax.persistence.Table;[m
+[32m+ [m
+[32m +[m
+  import com.fasterxml.jackson.annotation.JsonFormat;[m
+  [m
+  @Entity[m
+[1mdiff --cc final/final/src/main/resources/application.properties[m
+[1mindex 3d39abf,3bd5c42..0000000[m
+[1m--- a/final/final/src/main/resources/application.properties[m
+[1m+++ b/final/final/src/main/resources/application.properties[m
+[36m@@@ -1,8 -1,8 +1,15 @@@[m
+  [m
+[32m++<<<<<<< HEAD[m
+[32m +spring.datasource.url=jdbc:postgresql://localhost:3306/firstDB[m
+[32m +spring.datasource.username=postgres[m
+[32m +spring.datasource.password=12345678[m
+[32m +server.port=8080[m
+[32m++=======[m
+[32m+ spring.datasource.url=jdbc:postgresql://localhost:5432/a[m
+[32m+ spring.datasource.username=postgres[m
+[32m+ spring.datasource.password=nips@123[m
+[32m+ server.port=8085[m
+[32m++>>>>>>> 62f3f0a3cfada3e83e5d18f5cadf0580dbe4fd05[m
+  spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults = false[m
+  spring.batch.job.enabled=false[m
+  spring.jpa.generate-ddl=true[m
+[1mdiff --cc frontend/src/containers/Admin/Admin.js[m
+[1mindex c48be49,0b3463c..0000000[m
+[1m--- a/frontend/src/containers/Admin/Admin.js[m
+[1m+++ b/frontend/src/containers/Admin/Admin.js[m
+[36m@@@ -21,7 -21,8 +21,12 @@@[m [mimport CountReport from './CountReport[m
+  import SkillsReport from './SkillsReport'[m
+  import StudentReport from './StudentReport'[m
+  import AddUser from './AddUser'[m
+[32m++<<<<<<< HEAD[m
+[32m +import PendingRequests from './pendingRequest'[m
+[32m++=======[m
+[32m+ import Place from '@material-ui/icons/Place'[m
+[32m+ import PlaceStudents from './PlaceStudents'[m
+[32m++>>>>>>> 62f3f0a3cfada3e83e5d18f5cadf0580dbe4fd05[m
+  [m
+  class Admin extends Component {[m
+  [m
+[36m@@@ -34,8 -35,7 +39,12 @@@[m
+          'Branch Report': ['branch-report', <Receipt />],[m
+          'Placement Report': ['placement-report', <Receipt />],[m
+          'Skills Report': ['skills-report', <Receipt />],[m
+[32m++<<<<<<< HEAD[m
+[32m +        'Pending Request':['pending-request',<Receipt/>][m
+[32m +[m
+[32m++=======[m
+[32m+         'Place Students': ['place-students', <Place />],[m
+[32m++>>>>>>> 62f3f0a3cfada3e83e5d18f5cadf0580dbe4fd05[m
+      }[m
+  [m
+      render() {[m
+[36m@@@ -54,8 -54,8 +63,9 @@@[m
+                          <Route exact path="/admin/dashboard/branch-report" component={BranchReport} />[m
+                          <Route exact path="/admin/dashboard/placement-report" component={CountReport} />[m
+                          <Route exact path="/admin/dashboard/skills-report" component={SkillsReport} />[m
+[32m +                        <Route exact path="/admin/dashboard/pending-request" component={PendingRequests} />[m
+                          <Route exact path="/admin/dashboard/" component={AllCompanies} />[m
+[32m+                         <Route exact path="/admin/dashboard/place-students" component={PlaceStudents} />[m
+                      </Dashboard>[m
+                  }[m
+                  />[m

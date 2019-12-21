@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles'
@@ -147,28 +147,19 @@ const MenuProps = {
 
 function Profile(props) {
     const classes = useStyles();
-    const skills = [
-        'JAVA',
-        'CPP',
-        'PYTHON',
-        'SPRING',
-        'REACT',
-        'MYSQL',
-        'POSTGRESQL'
-      ];
-      const cities = [
-        'PUNE',
-        'DELHI',
-        'SANGAMNER',
-        'NAGPUR',
-        'MUMBAI',
-        'BARSHI',
-        'SOLAPUR',
-        'KOLHAPUR',
-        'SATARA'
-      ]
+
+    const [skills,setSkills] = React.useState([]);
+    const [cities,setCities] = React.useState([]);
 
     const [open, setOpen] = React.useState(false);
+
+    useEffect(() => {
+        axios.get('/industry/getAllSkills')
+            .then((response) => {
+                console.log(response.data)
+            })
+            .catch()
+    });
 
     const [state, setState] = React.useState({
         name: '',
@@ -311,6 +302,11 @@ function Profile(props) {
             [name]: error,
         })
     }
+    // function handleProfileEdit(){
+    //     if(state.package===0.0 || state.criteria === 0.0 || state.no_of_students===0){
+    //         se
+    //     }
+    // }
 
     const handleChecked = (name) => (event) => {
         console.log(event.target.checked);

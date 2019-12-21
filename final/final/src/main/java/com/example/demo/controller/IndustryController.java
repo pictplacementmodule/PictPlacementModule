@@ -96,5 +96,19 @@ public class IndustryController {
 	 public void finalPlaced(@RequestBody List<placedstudents> p) {
 		 placedrepo.saveAll(p);
 	 }
+	 
+	 @GetMapping("/getAllSkills")
+		public List<String> getAllSkills()
+		{
+			
+			return industryrepo.finaAllSkills();
+		}
 
+	 
+	 @GetMapping("/getAllLocations")
+		public List<String> getAllLocations()
+		{
+			
+			return industryrepo.finaAllLocations();
+		}
 }

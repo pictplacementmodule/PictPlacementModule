@@ -22,6 +22,8 @@ import SkillsReport from './SkillsReport'
 import StudentReport from './StudentReport'
 import AddUser from './AddUser'
 import PendingRequests from './pendingRequest'
+import Place from '@material-ui/icons/Place'
+import PlaceStudents from './PlaceStudents'
 
 class Admin extends Component {
 
@@ -56,6 +58,7 @@ class Admin extends Component {
                         <Route exact path="/admin/dashboard/skills-report" component={SkillsReport} />
                         <Route exact path="/admin/dashboard/pending-request" component={PendingRequests} />
                         <Route exact path="/admin/dashboard/" component={AllCompanies} />
+                        <Route exact path="/admin/dashboard/place-students" component={PlaceStudents} />
                     </Dashboard>
                 }
                 />

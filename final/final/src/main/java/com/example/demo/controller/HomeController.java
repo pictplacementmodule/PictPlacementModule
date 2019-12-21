@@ -17,14 +17,17 @@ import com.example.demo.model.AdminPlaced;
 import com.example.demo.model.Branches;
 import com.example.demo.model.Studentdetails;
 import com.example.demo.model.countofplaced;
+import com.example.demo.model.industry;
 import com.example.demo.model.users;
+import com.example.demo.repository.industryrepo;
 import com.example.demo.service.Userservice;
 @CrossOrigin(origins="*",allowedHeaders="*")
 @RestController
 public class HomeController {
 @Autowired
 private Userservice userservice;
-
+@Autowired
+private industryrepo industryrepo;
 private BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
 
 @RequestMapping("/home")
@@ -44,7 +47,7 @@ public List<Academicdetails> findallstu()
 	return userservice.findAllstu();
 }
 @RequestMapping(value="/authenticate") //for authentication of login details
-public boolean authenticate(@RequestBody users user)
+public String authenticate(@RequestBody users user)
 {
 	
 	System.out.println(user.getPass());
@@ -55,7 +58,7 @@ public boolean authenticate(@RequestBody users user)
 if(user1==null)
 {
 	System.out.println("does not exist");
-	return false;
+	return "FALSE";
 }
 else
 {
@@ -64,19 +67,14 @@ else
 
 	if(passwordEncoder.matches(user.getPass(),user1.getPass()))
 	{
-		if(user.getType().equals(user1.getType()))
-		{System.out.println("exists");
-		return true;
-		}
-		else
-		{
-			return false;
-		}
+		return user1.getType();
+		
+		
 	}
 	else
 	{
 		System.out.println("not exists");
-		return false;
+		return "FALSE";
 	}
 
 }
@@ -96,7 +94,19 @@ public List<Studentdetails> getPersonaldetails()
 
 @RequestMapping("/adduser")//for adding sign up details
 public void addUser(@RequestBody users user)
-{
+{	
+
+//	if(user.getType().equals("Company"))
+//	{
+//		
+//		industry obj=new industry();
+//		obj.setUser(user);
+//		obj.setId(user.getId());
+//		System.out.println(obj.getUser().getId());
+//		industryrepo.save(obj);
+//	
+//		
+//	}
 	user.setPass(passwordEncoder.encode(user.getPass()));
 	System.out.println(user.getId() + " " + user.getPass());
 	userservice.adduser(user);
