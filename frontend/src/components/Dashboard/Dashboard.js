@@ -47,7 +47,6 @@ const useStyles = makeStyles(theme => ({
 function ClippedDrawer(props) {
     const classes = useStyles();
 
-
     const logoutHandler = () => {
         localStorage.removeItem("token");
         props.history.push('/');
@@ -64,7 +63,7 @@ function ClippedDrawer(props) {
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
                     <Typography variant="h6" noWrap>
-                        PICT PLACEMENT
+                        PICT PLACEMENT - {localStorage.getItem('token')}
                     </Typography>
                     <Button onClick={() => logoutHandler(props)} className={classes.logout} color="inherit">Logout</Button>
                 </Toolbar>

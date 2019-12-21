@@ -22,7 +22,6 @@ class Student extends Component {
     render() {
         return (
             <div>
-                <Route exact path="/student" component={Login} />
                 <ProtectedRoute path="/student/dashboard" component={() =>
                     <Dashboard drawerList={this.drawerList}>
                         <Route exact path='/student/dashboard/profile' component={Profile} />

@@ -106,7 +106,11 @@ export default function AddUser() {
         type: '',
     })
 
-    const types = ['Admin','Student','Company']
+    const types = {
+        'Admin':'admin',
+        'Company':'company',
+        'Student':'student',
+    }
 
     const [open, setOpen] = React.useState(false);
 
@@ -184,8 +188,8 @@ export default function AddUser() {
                             onChange={changeHandler('type')}
                             value={state.type}
                         >
-                            {types.map(option => (
-                                <MenuItem key={option} value={option}>
+                            {Object.keys(types).map(option => (
+                                <MenuItem key={option} value={types[option]}>
                                     {option}
                                 </MenuItem>
                             ))}

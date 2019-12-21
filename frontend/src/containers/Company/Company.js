@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 import Login from '../Login/Login'
 import ProtectedRoute from '../../components/ProtectedRoute'
 import Dashboard from '../../components/Dashboard/Dashboard'
@@ -12,10 +12,10 @@ class Company extends Component {
         'Profile':['profile', <DashboardIcon />],
     }
 
+
     render() {
         return (
             <div>
-                <Route exact path="/company" component={Login} />
                 <ProtectedRoute path="/company/dashboard" component={() =>
                     <Dashboard drawerList={this.drawerList}>
                         <Route exact path="/company/dashboard/profile" component={Profile} />
@@ -27,4 +27,4 @@ class Company extends Component {
 
 }
 
-export default Company;
+export default withRouter(Company);

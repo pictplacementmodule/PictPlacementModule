@@ -148,18 +148,27 @@ const MenuProps = {
 function Profile(props) {
     const classes = useStyles();
 
-    const [skills,setSkills] = React.useState([]);
-    const [cities,setCities] = React.useState([]);
+    const [skills, setSkills] = React.useState([]);
+    const [cities, setCities] = React.useState([]);
 
     const [open, setOpen] = React.useState(false);
 
-    useEffect(() => {
-        axios.get('/industry/getAllSkills')
-            .then((response) => {
-                console.log(response.data)
-            })
-            .catch()
-    });
+    // useEffect(() => {
+    //     axios.get('/industry/getAllSkills')
+    //         .then((response) => {
+    //             setSkills([...response.data]);
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //         },[])
+    //     axios.get('/industry/getAllLocations')
+    //         .then((response) => {
+    //             setCities([...response.data]);
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //         },[])
+    // });
 
     const [state, setState] = React.useState({
         name: '',
@@ -202,15 +211,15 @@ function Profile(props) {
     const [emptyError, setEmptyError] = React.useState({
     });
 
-    const keys = ['name','cpName','cpEmail1','contactNo1','package']
+    const keys = ['name', 'cpName', 'cpEmail1', 'contactNo1', 'package']
 
     let e = {
     }
-    function validate(){
+    function validate() {
         setEmptyError({});
         keys.map((key) => {
-            if(state[key].length==0){
-                e[key]='Empty'
+            if (state[key].length == 0) {
+                e[key] = 'Empty'
             }
         })
         setEmptyError(e);
@@ -222,6 +231,7 @@ function Profile(props) {
         // setOpen(true);
         event.preventDefault();
         var industry = {
+            id: localStorage.getItem("token"),
             name: state.name,
             cpname: state.cpName,
             cpemail1: state.cpEmail1,
@@ -244,22 +254,24 @@ function Profile(props) {
         }
         validate();
         var valid = true;
-        if(Object.values(formErrors).some((error) => error.length>0)||Object.keys(e).length>0){
+        if (Object.values(formErrors).some((error) => error.length > 0) || Object.keys(e).length > 0) {
             valid = false;
         }
-        else{
+        else {
             valid = true;
         }
+        valid = true;
         console.log(valid);
-        if(valid){
+        console.log(industry);
+        if (valid) {
             axios.post('/industry/add', industry)
-            .then((response) => {
-                console.log(response);
-                setOpen(true);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+                .then((response) => {
+                    console.log(response);
+                    setOpen(true);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         }
     }
     const handleChange = (name) => (event) => {
@@ -427,7 +439,7 @@ function Profile(props) {
                                     fullWidth
                                     onChange={handleChange('name')}
                                     value={state.name}
-                                    error={formErrors.name.length>0||emptyError.name}
+                                    error={formErrors.name.length > 0 || emptyError.name}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -436,7 +448,7 @@ function Profile(props) {
                                     fullWidth
                                     onChange={handleChange('cpName')}
                                     value={state.cpName}
-                                    error={formErrors.cpName.length > 0||emptyError.cpName}
+                                    error={formErrors.cpName.length > 0 || emptyError.cpName}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -445,7 +457,7 @@ function Profile(props) {
                                     fullWidth
                                     onChange={handleChange('cpEmail1')}
                                     value={state.cpEmail1}
-                                    error={formErrors.cpEmail1.length > 0||emptyError.cpEmail1}
+                                    error={formErrors.cpEmail1.length > 0 || emptyError.cpEmail1}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -463,7 +475,7 @@ function Profile(props) {
                                     fullWidth
                                     onChange={handleChange('contactNo1')}
                                     value={state.contactNo1}
-                                    error={formErrors.contactNo1.length > 0||emptyError.contactNo1}
+                                    error={formErrors.contactNo1.length > 0 || emptyError.contactNo1}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -499,7 +511,7 @@ function Profile(props) {
                                     fullWidth
                                     onChange={handleChange('package')}
                                     value={state.package}
-                                    error={formErrors.package.length > 0||emptyError.package}
+                                    error={formErrors.package.length > 0 || emptyError.package}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>

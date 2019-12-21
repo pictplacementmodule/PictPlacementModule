@@ -37,43 +37,43 @@ const MenuProps = {
 
 const useStyles = makeStyles(theme => ({
   paper: {
-      marginTop: theme.spacing(1),
-      marginBottom: theme.spacing(1),
-      padding: theme.spacing(2),
-      boxSizing: 'border-box',
-      width: '68vw',
-      marginLeft: 'auto',
-      marginRight: 'auto',
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    padding: theme.spacing(2),
+    boxSizing: 'border-box',
+    width: '68vw',
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   container: {
-      display: 'flex',
-      flexWrap: 'wrap',
+    display: 'flex',
+    flexWrap: 'wrap',
   },
   button: {
-      margin: theme.spacing(1),
+    margin: theme.spacing(1),
   },
   textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: 200,
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
   },
   root: {
-      width: '100%',
+    width: '100%',
   },
   chips: {
-      display: 'flex',
-      flexWrap: 'wrap',
+    display: 'flex',
+    flexWrap: 'wrap',
   },
   chip: {
-      margin: 2,
+    margin: 2,
   },
   formControl: {
-      margin: theme.spacing(0),
-      minWidth: '100%',
-      maxWidth: '100vw',
+    margin: theme.spacing(0),
+    minWidth: '100%',
+    maxWidth: '100vw',
   },
   divider: {
-      margin: theme.spacing(2, 0),
+    margin: theme.spacing(2, 0),
   },
 }));
 
@@ -88,26 +88,19 @@ function Academic(props) {
     props.onSwitch('diploma', checked)
   };
 
-  const skills = [
-    'JAVA',
-    'CPP',
-    'PYTHON',
-    'SPRING',
-    'REACT',
-    'MYSQL',
-    'POSTGRESQL'
-  ];
-  const cities = [
-    'PUNE',
-    'DELHI',
-    'SANGAMNER',
-    'NAGPUR',
-    'MUMBAI',
-    'BARSHI',
-    'SOLAPUR',
-    'KOLHAPUR',
-    'SATARA'
-  ]
+  const [skills, setSkills] = React.useState([]);
+
+  const [open, setOpen] = React.useState(false);
+
+  // useEffect(() => {
+  //     axios.get('/industry/getAllSkills')
+  //         .then((response) => {
+  //             setSkills([...response.data]);
+  //         })
+  //         .catch((error) => {
+  //             console.log(error);
+  //         },[])
+  // });
 
   let twelfth = null;
 
