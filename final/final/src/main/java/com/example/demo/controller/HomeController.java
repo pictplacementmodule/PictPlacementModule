@@ -15,14 +15,17 @@ import com.example.demo.model.Academicdetails;
 import com.example.demo.model.Branches;
 import com.example.demo.model.Studentdetails;
 import com.example.demo.model.countofplaced;
+import com.example.demo.model.industry;
 import com.example.demo.model.users;
+import com.example.demo.repository.industryrepo;
 import com.example.demo.service.Userservice;
 @CrossOrigin(origins="*",allowedHeaders="*")
 @RestController
 public class HomeController {
 @Autowired
 private Userservice userservice;
-
+@Autowired
+private industryrepo industryrepo;
 private BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
 
 @RequestMapping("/home")
@@ -89,7 +92,19 @@ public List<Studentdetails> getPersonaldetails()
 
 @RequestMapping("/adduser")//for adding sign up details
 public void addUser(@RequestBody users user)
-{
+{	
+
+//	if(user.getType().equals("Company"))
+//	{
+//		
+//		industry obj=new industry();
+//		obj.setUser(user);
+//		obj.setId(user.getId());
+//		System.out.println(obj.getUser().getId());
+//		industryrepo.save(obj);
+//	
+//		
+//	}
 	user.setPass(passwordEncoder.encode(user.getPass()));
 	System.out.println(user.getId() + " " + user.getPass());
 	userservice.adduser(user);
