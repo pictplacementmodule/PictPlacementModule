@@ -91,6 +91,8 @@ public List<Academicdetails> sortbyskills(int id) {
 	List<String> skills;
 	
 	 skills=acarepo.sortbyskills(id);
+	 if (skills.isEmpty())
+		 return findAllstu();
 	 return check(skills,id);
 }
 public List<Academicdetails> check(List<String> skills,int cid)

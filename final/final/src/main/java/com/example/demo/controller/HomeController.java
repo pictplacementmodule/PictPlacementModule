@@ -42,7 +42,7 @@ public List<Academicdetails> findallstu()
 	return userservice.findAllstu();
 }
 @RequestMapping(value="/authenticate") //for authentication of login details
-public boolean authenticate(@RequestBody users user)
+public String authenticate(@RequestBody users user)
 {
 	
 	System.out.println(user.getPass());
@@ -53,7 +53,7 @@ public boolean authenticate(@RequestBody users user)
 if(user1==null)
 {
 	System.out.println("does not exist");
-	return false;
+	return "FALSE";
 }
 else
 {
@@ -62,19 +62,14 @@ else
 
 	if(passwordEncoder.matches(user.getPass(),user1.getPass()))
 	{
-		if(user.getType().equals(user1.getType()))
-		{System.out.println("exists");
-		return true;
-		}
-		else
-		{
-			return false;
-		}
+		return user1.getType();
+		
+		
 	}
 	else
 	{
 		System.out.println("not exists");
-		return false;
+		return "FALSE";
 	}
 
 }

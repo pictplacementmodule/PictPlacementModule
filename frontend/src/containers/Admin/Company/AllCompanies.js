@@ -17,6 +17,20 @@ import DateFnsUtils from '@date-io/date-fns';
 import axios from '../../../axios'
 import CompanyDetails from './CompanyDetails'
 
+
+import PropTypes from 'prop-types';
+import clsx from 'clsx';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import ErrorIcon from '@material-ui/icons/Error';
+import InfoIcon from '@material-ui/icons/Info';
+import CloseIcon from '@material-ui/icons/Close';
+import { amber, green } from '@material-ui/core/colors';
+import IconButton from '@material-ui/core/IconButton';
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import WarningIcon from '@material-ui/icons/Warning';
+
+
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
@@ -24,12 +38,27 @@ import {
 
 const styles = (theme => ({
 
+    icon: {
+        fontSize: 20,
+    },
+    success: {
+        backgroundColor: green[600],
+    },
+    iconVariant: {
+        opacity: 0.9,
+        marginRight: "20dp",
+    },
+    message: {
+        display: 'flex',
+        alignItems: 'center',
+    },
+
     palette: {
         type: 'dark',
     },
     root: {
         width: '85%',
-        marginTop: theme.spacing(3),
+        // marginTop: theme.spacing(3),
         overflowX: 'auto',
         display: 'flex',
         justifyContent: 'center',
@@ -40,7 +69,7 @@ const styles = (theme => ({
         minWidth: 650,
     },
     button: {
-        margin: theme.spacing(1),
+        // margin: theme.spacing(1),
         margin: 'auto'
     },
     tableText: {
@@ -55,6 +84,54 @@ const styles = (theme => ({
         cursor: 'pointer'
     }
 }));
+const variantIcon = {
+    success: CheckCircleIcon,
+    warning: WarningIcon,
+    error: ErrorIcon,
+    info: InfoIcon,
+};
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+        },
+    },
+};
+
+function MySnackbarContentWrapper(props) {
+    const classes = styles();
+    const { className, message, onClose, variant, ...other } = props;
+    const Icon = variantIcon[variant];
+
+    return (
+        <SnackbarContent
+            className={clsx(classes[variant], className)}
+            aria-describedby="client-snackbar"
+            message={
+                <span id="client-snackbar" className={classes.message}>
+                    <Icon className={clsx(classes.icon, classes.iconVariant)} />
+                    {message}
+                </span>
+            }
+            action={[
+                <IconButton key="close" aria-label="close" color="inherit" onClick={onClose}>
+                    <CloseIcon className={classes.icon} />
+                </IconButton>,
+            ]}
+            {...other}
+        />
+    );
+}
+MySnackbarContentWrapper.propTypes = {
+    className: PropTypes.string,
+    message: PropTypes.string,
+    onClose: PropTypes.func,
+    variant: PropTypes.oneOf(['error', 'info', 'success', 'warning']).isRequired,
+};
 
 class AllCompanies extends Component {
 
@@ -96,7 +173,19 @@ class AllCompanies extends Component {
             entc: false,
         },
         companies: [],
+        open: false,
     }
+
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        this.setState({
+            ...this.state,
+            open: false,
+        })
+    };
 
     dateChangeHandler = (date, name) => {
         this.setState({
@@ -104,7 +193,7 @@ class AllCompanies extends Component {
             [name]: date,
         })
     }
-    
+
     dateChangeHandlerPersonal = (date, index) => {
         var newCompanies = [...this.state.companies]
         console.log(newCompanies)
@@ -121,7 +210,7 @@ class AllCompanies extends Component {
 
     companyHandler = (company) => {
         console.log("clicked" + company.name);
-        window.open("http://localhost:3000/admin/company-details/"+company.id, '_blank');
+        window.open("http://localhost:3000/admin/company-details/" + company.id, '_blank');
     }
 
     submitHandler = () => {
@@ -164,10 +253,14 @@ class AllCompanies extends Component {
 
 
 
-    submitHandler3 = (industry) =>{
-       console.log(industry);
-        axios.post('/industry/add', industry    )
+    submitHandler3 = (industry) => {
+        console.log(industry);
+        axios.post('/industry/add', industry)
             .then((response) => {
+                this.setState({
+                    ...this.state,
+                    open: true,
+                })
                 this.setState(response.data);
             })
             .catch((error) => {
@@ -176,14 +269,14 @@ class AllCompanies extends Component {
     }
 
 
-   submitHandler2 = (company) => {
-        
-         var final = this.state.finalDate;
-          let state = this.state;
-         console.log(final);
-          axios.post('/industry/findById', null,{params:{id:company.id}})
+    submitHandler2 = (company) => {
+
+        var final = this.state.finalDate;
+        let state = this.state;
+        console.log(final);
+        axios.post('/industry/findById', null, { params: { id: company.id } })
             .then((response) => {
-                this.setState( response.data)
+                this.setState(response.data)
                 console.log(this.state);
                 this.state.finalDate = final;
                 this.state.final_date = this.state.finalDate;
@@ -192,35 +285,50 @@ class AllCompanies extends Component {
             .catch((error) => {
                 console.log(error);
             })
-      
-       
+
+
     }
 
     printDocument = () => {
-        document.getElementById("printbtn").style.visibilty="hidden";
-        document.getElementById("paper1").style.visibility="hidden";
-        document.getElementById("btncol").style.visibility="hidden";
+        document.getElementById("printbtn").style.visibilty = "hidden";
+        document.getElementById("paper1").style.visibility = "hidden";
+        document.getElementById("btncol").style.visibility = "hidden";
         window.print();
-        document.getElementById("printbtn").style.visibilty="visible";
-        document.getElementById("paper1").style.visibility="visible";
-        document.getElementById("btncol").style.visibility="visible";
+        document.getElementById("printbtn").style.visibilty = "visible";
+        document.getElementById("paper1").style.visibility = "visible";
+        document.getElementById("btncol").style.visibility = "visible";
 
-      }
-   
-   
+    }
+
+
     render() {
         const { classes } = this.props;
 
         return (
             <React.Fragment>
-                 <Button
-            variant="contained"
-            color="primary"
-            id="printbtn"
-            className={classes.button}
-            onClick={this.printDocument}
-          >
-            Print
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}
+                    open={this.state.open}
+                    autoHideDuration={6000}
+                    onClose={this.handleClose}
+                >
+                    <MySnackbarContentWrapper
+                        onClose={this.handleClose}
+                        variant="success"
+                        message="Date Alloted!"
+                    />
+                </Snackbar>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    id="printbtn"
+                    className={classes.button}
+                    onClick={this.printDocument}
+                >
+                    Print
           </Button>
                 <Paper className={classes.root} id="paper1">
                     <Grid container className={classes.classGrid}>
@@ -266,26 +374,26 @@ class AllCompanies extends Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {this.state.companies.map((company,index) => (
+                            {this.state.companies.map((company, index) => (
                                 <TableRow key={company.id} className={classes.tableRow}>
-                                    <TableCell component="th" scope="row" onClick={()=>this.companyHandler(company)}>
+                                    <TableCell component="th" scope="row" onClick={() => this.companyHandler(company)}>
                                         {company.name}
                                     </TableCell>
                                     <TableCell align="right">{company.start_date}</TableCell>
                                     <TableCell align="right" id="btncol"> <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                <KeyboardDatePicker
-                                    margin="normal"
-                                    label="Final Date"
-                                    value={company.final_date}
-                                    onChange={(date) => this.dateChangeHandlerPersonal(date,index )}
-                                    KeyboardButtonProps={{
-                                        'aria-label': 'change date',
-                                    }}
-                                />
-                            </MuiPickersUtilsProvider></TableCell>
-                            <TableCell>
-                                 <Button className={classes.button} variant="contained" color="primary" onClick={()=>this.submitHandler3(company)} >Allot</Button>
-                            </TableCell>
+                                        <KeyboardDatePicker
+                                            margin="normal"
+                                            label="Final Date"
+                                            value={company.final_date}
+                                            onChange={(date) => this.dateChangeHandlerPersonal(date, index)}
+                                            KeyboardButtonProps={{
+                                                'aria-label': 'change date',
+                                            }}
+                                        />
+                                    </MuiPickersUtilsProvider></TableCell>
+                                    <TableCell>
+                                        <Button className={classes.button} variant="contained" color="primary" onClick={() => this.submitHandler3(company)} >Allot</Button>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import axios from '../../axios'
+import MenuItem from '@material-ui/core/MenuItem';
 
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -99,11 +100,14 @@ export default function AddUser() {
 
     const classes = useStyles();
 
-    const [state,setState] = React.useState({
+    const [state, setState] = React.useState({
         id: '',
         pass: '',
-    })    
-    
+        type: '',
+    })
+
+    const types = ['Admin','Student','Company']
+
     const [open, setOpen] = React.useState(false);
 
 
@@ -115,7 +119,7 @@ export default function AddUser() {
     }
 
     const submitHandler = () => {
-        axios.post('/adduser',state)
+        axios.post('/adduser', state)
             .then((response) => {
                 console.log(response.data);
                 setOpen(true);
@@ -147,7 +151,7 @@ export default function AddUser() {
                 <MySnackbarContentWrapper
                     onClose={handleClose}
                     variant="success"
-                    message="Company Profile edited successfully!"
+                    message="User Added!"
                 />
             </Snackbar>
             <Paper className={classes.paper}>
@@ -171,7 +175,23 @@ export default function AddUser() {
                             onChange={changeHandler('pass')}
                         />
                     </Grid>
-                    <Grid item xs={12} style={{marginTop:"3vh"}}>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            select
+                            label="Type"
+                            margin="normal"
+                            fullWidth
+                            onChange={changeHandler('type')}
+                            value={state.type}
+                        >
+                            {types.map(option => (
+                                <MenuItem key={option} value={option}>
+                                    {option}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    </Grid>
+                    <Grid item xs={12} style={{ marginTop: "3vh" }}>
                         <Button onClick={submitHandler} size="large" variant="contained" color="primary">Submit</Button>
                     </Grid>
                 </Grid>
