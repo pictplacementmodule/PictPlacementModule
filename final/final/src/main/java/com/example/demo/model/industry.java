@@ -24,8 +24,11 @@ public class industry {
 	public users getUser() {
 		return user;
 	}
+
+	public void setUser(users user) {
+		this.user = user;
+	}
 	@Id
-	@GeneratedValue
 	private int id;
 	private String name;
 	private String cpname;
@@ -50,11 +53,20 @@ public class industry {
 	private Date final_date;
 	private Boolean computer;
 
+<<<<<<< HEAD
 	
 	public industry() {
 		criteria = (float) 0.0;
 		no_of_students = 0;
 		package_lpa = (float) 0.0;		
+=======
+	public industry() 
+	{	
+		criteria = (float)0.0;
+		no_of_students = 0;
+		package_lpa = (float)0.0;
+		id = user.getId();
+>>>>>>> 62f3f0a3cfada3e83e5d18f5cadf0580dbe4fd05
 	}
 	
 	public Boolean getComputer() {
