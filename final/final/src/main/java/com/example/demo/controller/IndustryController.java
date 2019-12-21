@@ -81,5 +81,20 @@ public class IndustryController {
 	 {
 		 return industryrepo.ByPackage();
 	 }
+	 
+	 
+	 @GetMapping("/getAllSkills")
+		public List<String> getAllSkills()
+		{
+			
+			return industryrepo.finaAllSkills();
+		}
 
+	 
+	 @GetMapping("/getAllLocations")
+		public List<String> getAllLocations()
+		{
+			
+			return industryrepo.finaAllLocations();
+		}
 }
