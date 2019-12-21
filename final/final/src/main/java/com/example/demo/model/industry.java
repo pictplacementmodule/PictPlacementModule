@@ -1,7 +1,5 @@
 package com.example.demo.model;
 
-import java.security.Timestamp;
-
 import java.sql.Date;
 import java.util.List;
 
@@ -9,7 +7,6 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

@@ -21,6 +21,7 @@ import CountReport from './CountReport'
 import SkillsReport from './SkillsReport'
 import StudentReport from './StudentReport'
 import AddUser from './AddUser'
+import PendingRequests from './pendingRequest'
 
 class Admin extends Component {
 
@@ -33,6 +34,8 @@ class Admin extends Component {
         'Branch Report': ['branch-report', <Receipt />],
         'Placement Report': ['placement-report', <Receipt />],
         'Skills Report': ['skills-report', <Receipt />],
+        'Pending Request':['pending-request',<Receipt/>]
+
     }
 
     render() {
@@ -51,6 +54,7 @@ class Admin extends Component {
                         <Route exact path="/admin/dashboard/branch-report" component={BranchReport} />
                         <Route exact path="/admin/dashboard/placement-report" component={CountReport} />
                         <Route exact path="/admin/dashboard/skills-report" component={SkillsReport} />
+                        <Route exact path="/admin/dashboard/pending-request" component={PendingRequests} />
                         <Route exact path="/admin/dashboard/" component={AllCompanies} />
                     </Dashboard>
                 }

@@ -4,9 +4,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManagerFactory;
-
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.model.AdminPlaced;
 import com.example.demo.model.Studentdetails;
 import com.example.demo.model.industry;
+import com.example.demo.model.placedstudents;
 import com.example.demo.repository.industryrepo;
+import com.example.demo.repository.placedstudentsrepo;
 import com.example.demo.service.industryservice;
 
 @RestController
@@ -29,6 +29,9 @@ public class IndustryController {
 	private industryrepo industryrepo;
 	@Autowired
 	private industryservice industryserv;
+	@Autowired
+	private placedstudentsrepo placedrepo;
+	
 	@PostMapping("/add")
 	public industry addIndystry(@RequestBody industry industry)
 	{
@@ -80,6 +83,18 @@ public class IndustryController {
 	 public List<industry> ByPackage()
 	 {
 		 return industryrepo.ByPackage();
+	 }
+	 
+	 @PostMapping("/pushPlacedByCompany")
+	 public void pushPlaced(@RequestBody List<placedstudents> p) {
+		 placedrepo.saveAll(p);
+		 
+	 }
+	 
+
+	 @PostMapping("/finalPlaced")
+	 public void finalPlaced(@RequestBody List<placedstudents> p) {
+		 placedrepo.saveAll(p);
 	 }
 
 }

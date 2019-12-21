@@ -120,7 +120,7 @@ class Profile extends Component {
         else {
           newActiveStep = this.state.activeStep;
         }
-        // newActiveStep = this.state.activeStep + 1;
+       newActiveStep = this.state.activeStep + 1;
         console.log(p);
         console.log("before");
         axios.post('/addPersonaldetails',p)

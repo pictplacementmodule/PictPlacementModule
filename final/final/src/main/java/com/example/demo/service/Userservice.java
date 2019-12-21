@@ -1,20 +1,20 @@
 package com.example.demo.service;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.daoimplmentation.CustomerDao;
 import com.example.demo.model.Academicdetails;
+import com.example.demo.model.AdminPlaced;
 import com.example.demo.model.Studentdetails;
 import com.example.demo.model.countofplaced;
-import com.example.demo.model.placedstudents;
 import com.example.demo.model.users;
 import com.example.demo.repository.Academicrepository;
 import com.example.demo.repository.Personalrepository;
-import com.example.demo.repository.userrepository;
 import com.example.demo.repository.placedstudentsrepo;
+import com.example.demo.repository.userrepository;
 
 @Service
 public class Userservice {
@@ -135,4 +135,7 @@ public List<Academicdetails> check(List<String> skills,int cid)
 	}
 	return sel;
 }
+public List<AdminPlaced> adminplaced() {
+	 List<AdminPlaced> x=customerDao.adminplaced();
+	    return x;}
 }

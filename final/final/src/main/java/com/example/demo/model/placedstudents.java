@@ -5,11 +5,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="placedstudents",schema = "public")
+@Table(name="placedstudents")
 public class placedstudents {
 	
 @OneToOne(cascade = CascadeType.ALL)
@@ -29,15 +30,44 @@ public int getId() {
 public void setId(int id) {
 	this.id = id;
 }
-public String getIndname() {
-	return indname;
+
+public int getCompId() {
+	return compId;
 }
-public void setIndname(String indname) {
-	this.indname = indname;
+public void setCompId(int compId) {
+	this.compId = compId;
 }
+
+
+
 @Id
 int id;
-@Column
-private String indname;
+int compId;
+int package_lpa;
+String location;
+
+
+public String getLocation() {
+	return location;
+}
+public void setLocation(String location) {
+	this.location = location;
+}
+public int getPackage_lpa() {
+	return package_lpa;
+}
+public void setPackage_lpa(int package_lpa) {
+	this.package_lpa = package_lpa;
+}
+public Boolean getPL_status() {
+	return PL_status;
+}
+public void setPL_status(Boolean pL_status) {
+	PL_status = pL_status;
+}
+
+
+
+Boolean PL_status;
 
 }

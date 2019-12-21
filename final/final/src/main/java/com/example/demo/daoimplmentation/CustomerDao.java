@@ -2,6 +2,7 @@ package com.example.demo.daoimplmentation;
 
 import java.util.List;
 
+import com.example.demo.model.AdminPlaced;
 import com.example.demo.model.countofplaced;
 
 public interface CustomerDao {
@@ -12,5 +13,7 @@ public interface CustomerDao {
 	 // String findNameById(long cust_id);
 	  int getTotalNumberCustomer();
 	  List<countofplaced> countofstudents();
+	  List<AdminPlaced> adminplaced();
+
 	}
 
