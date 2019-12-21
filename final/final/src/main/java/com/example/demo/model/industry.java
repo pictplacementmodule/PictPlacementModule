@@ -23,6 +23,7 @@ public class industry {
 	public users getUser() {
 		return user;
 	}
+
 	public void setUser(users user) {
 		this.user = user;
 	}
@@ -51,12 +52,17 @@ public class industry {
 	private Date final_date;
 	private Boolean computer;
 
+
+	
+	
+
 	public industry() 
 	{	
 		criteria = (float)0.0;
 		no_of_students = 0;
 		package_lpa = (float)0.0;
 		id = user.getId();
+
 	}
 	
 	public Boolean getComputer() {

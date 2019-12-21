@@ -79,6 +79,7 @@ public class IndustryController {
 	{
 		return industryrepo.findById(id).get();
 	}
+	
 	 @PostMapping("/sortbypackage")
 	 public List<industry> ByPackage()
 	 {

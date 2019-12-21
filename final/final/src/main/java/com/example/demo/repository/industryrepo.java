@@ -49,4 +49,6 @@ public interface industryrepo extends JpaRepository<industry,Integer>{
 	
 	@Query(value = "SELECT distinct skills from industry_locality",nativeQuery=true)
 	public List<String> finaAllLocations();
+	
+	
 	}
