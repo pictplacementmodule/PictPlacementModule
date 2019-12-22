@@ -10,18 +10,7 @@ import com.example.demo.model.Studentdetails;
 import com.example.demo.model.industry;
 
 public interface industryrepo extends JpaRepository<industry,Integer>{
-	//@Query("SELECT count(*) > 0 from industry where (?1 between start_date and end_date) or (?2 between start_date and end_date)")
-		//public boolean addIndustry(Date d1,Date d2);
-		
-//		@Query("select end_date from industry")
-//		public List<Date> addEndDates();
-		
-//		@Query("select start_date from industry")
-//		public List<Date> addStartDates();
-		
-//		@Query(value="SELECT * FROM industry where (?1 between start_date and end_date) or (?2 between start_date and end_date) or ((start_date between ?1 and ?2) and (end_date between ?1 and ?2))",nativeQuery=true)
-//		public List<industry> findIndustryByDate(Date d1,Date d2);
-		
+	
 	@Query(value="select * from industry order by id ASC",nativeQuery = true)
 	public List<industry> findAll2();
 
@@ -52,3 +41,16 @@ public interface industryrepo extends JpaRepository<industry,Integer>{
 	
 	
 	}
+
+//@Query("SELECT count(*) > 0 from industry where (?1 between start_date and end_date) or (?2 between start_date and end_date)")
+		//public boolean addIndustry(Date d1,Date d2);
+		
+//		@Query("select end_date from industry")
+//		public List<Date> addEndDates();
+		
+//		@Query("select start_date from industry")
+//		public List<Date> addStartDates();
+		
+//		@Query(value="SELECT * FROM industry where (?1 between start_date and end_date) or (?2 between start_date and end_date) or ((start_date between ?1 and ?2) and (end_date between ?1 and ?2))",nativeQuery=true)
+//		public List<industry> findIndustryByDate(Date d1,Date d2);
+		
