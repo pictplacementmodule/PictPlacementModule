@@ -34,7 +34,7 @@ class Login extends Component {
     }
     axios.post("/authenticate", user)
       .then((response) => {
-        console.log(response.data)
+        console.log(response.data);
         switch (response.data) {
           case 'admin':
           case 'company':

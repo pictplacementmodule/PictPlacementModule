@@ -70,6 +70,15 @@ class BranchReport extends Component {
     window.print();
     document.getElementById("Submitbtn").style.visibility = "visible";
     document.getElementById("printbtn").style.visibility = "visible";
+
+    // var divContents = document.getElementById("blah2").innerHTML;
+    // var a = window.open('', '', 'height=500, width=500');
+    // a.document.write('<html>');
+    // a.document.write('<body > <h1>Div contents are <br>');
+    // a.document.write(divContents);
+    // a.document.write('</body></html>');
+    // a.document.close();
+    // a.print();
   }
 
 
@@ -80,14 +89,14 @@ class BranchReport extends Component {
       entc: this.state.entc,
     }
     console.log(pass)
-    axios.post("/sortbybranch",pass)
+    axios.post("/sortbybranch", pass)
       .then((response) => {
         this.setState({
           ...this.state,
           students: response.data,
         })
       })
-      .catch((error)=>{
+      .catch((error) => {
         console.log(error);
       })
   };
@@ -115,7 +124,7 @@ class BranchReport extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
-                  style={{marginLeft:"5vw"}}
+                    style={{ marginLeft: "5vw" }}
                     checked={this.state.it}
                     onChange={this.handleChange('it')}
                     value="it"
@@ -126,7 +135,7 @@ class BranchReport extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
-                  style={{marginLeft:"5vw"}}
+                    style={{ marginLeft: "5vw" }}
                     checked={this.state.entc}
                     onChange={this.handleChange('entc')}
                     value="entc"
@@ -159,30 +168,44 @@ class BranchReport extends Component {
         </Paper>
         <br></br>
         <br></br>
-        <Paper className={classes.root}>
-          <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell align="right">Name</TableCell>
-                <TableCell align="right">Roll Number</TableCell>
-                <TableCell align="right">SGPA</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.state.students.map(s => (
-                <TableRow key={s.student.rollno}>
-                  <TableCell component="th" scope="row">
-                    {s.student.rollno}
-                  </TableCell>
-                  <TableCell align="right">{s.student.firstName}</TableCell>
-                  <TableCell align="right">{s.student.rollno}</TableCell>
-                  <TableCell align="right">{s.sgpaAggregate}</TableCell>
+        <div id="blah" style={{ display: "none" }}>
+          <table border="1px">
+            <tr>
+              <td>computer</td>
+              <td>Algorithm</td>
+            </tr>
+            <tr>
+              <td>Microwave</td>
+              <td>Infrared</td>
+            </tr>
+          </table>
+        </div>
+        <div id="blah2">
+          <Paper className={classes.root}>
+            <Table className={classes.table} id="printArea">
+              <TableHead>
+                <TableRow>
+                  <TableCell>ID</TableCell>
+                  <TableCell align="right">Name</TableCell>
+                  <TableCell align="right">Roll Number</TableCell>
+                  <TableCell align="right">SGPA</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Paper>
+              </TableHead>
+              <TableBody>
+                {this.state.students.map(s => (
+                  <TableRow key={s.student.rollno}>
+                    <TableCell component="th" scope="row">
+                      {s.student.rollno}
+                    </TableCell>
+                    <TableCell align="right">{s.student.firstName}</TableCell>
+                    <TableCell align="right">{s.student.rollno}</TableCell>
+                    <TableCell align="right">{s.sgpaAggregate}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Paper>
+        </div>
       </React.Fragment>
     );
   }
