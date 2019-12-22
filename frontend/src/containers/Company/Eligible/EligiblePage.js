@@ -1,22 +1,15 @@
 import React, { Component } from "react";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Checkbox from '@material-ui/core/Checkbox';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
 import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import axios from "../../axios";
-import { ButtonGroup } from "@material-ui/core";
-import FormGroup from '@material-ui/core/FormGroup';
+import axios from '../../../axios';
 
 const styles = theme => ({
   palette: {
@@ -43,7 +36,7 @@ const styles = theme => ({
   button: {
     margin: theme.spacing(1),
     marginTop:theme.spacing(5),
-    marginLeft:theme.spacing(115)
+    marginLeft:theme.spacing(110)
   },
   group: {
     margin: theme.spacing(1, 0)
@@ -58,10 +51,12 @@ class BranchReport extends Component {
 
   constructor() {
     super();
-    axios.post('/fetchToAdminPendingStudents')
+    let a =  localStorage.getItem("token");
+   
+    axios.post('/fetchToCompanyEligibleStudents',null,{params:{a:a}})
         .then((response) => {
             console.log(response.data);
-             this.setState({ students: response.data });
+            this.setState({ students: response.data });
         })
         .catch((error) => {
             console.log(error);
@@ -90,10 +85,10 @@ class BranchReport extends Component {
             a.push(this.state.students[i].roll);
         }
         console.log(a);
-        axios.post("/getStatusOfPlaced",a).catch((error) => {
+        axios.post("/selectByCompany",null,{params:{comp_id:localStorage.getItem("token"),b:a}}).catch((error) => {
           console.log(error);
         });;
-        window.location.reload(false);
+       // window.location.reload(false);
   };
 
   render() {
@@ -108,9 +103,8 @@ class BranchReport extends Component {
               <TableRow>
                 <TableCell>Roll Number</TableCell>
                 <TableCell align="right">Student Name</TableCell>
-                <TableCell align="right">Company Name</TableCell>
-                <TableCell align="right">Package LPA</TableCell>
-                <TableCell align="right">Location</TableCell>
+                <TableCell align="right">CGPA</TableCell>
+                {/* <TableCell align="right">Skills</TableCell> */}
                 <TableCell align="right">Approve</TableCell>
               </TableRow>
             </TableHead>
@@ -118,10 +112,8 @@ class BranchReport extends Component {
               {this.state.students.map((s,index) => (
                 <TableRow key={s.roll}>
                      <TableCell align="right">{s.roll}</TableCell>
-                  <TableCell align="right">{s.stu_name}</TableCell>
-                  <TableCell align="right">{s.comp_name}</TableCell>
-                  <TableCell align="right">{s.package_lpa}</TableCell>
-                  <TableCell align="right">{s.location}</TableCell>
+                  <TableCell align="right">{s.name}</TableCell>
+                  <TableCell align="right">{s.sgpaTEFS}</TableCell>
               <TableCell align="right"><FormControlLabel
                 control={
                   <Checkbox
