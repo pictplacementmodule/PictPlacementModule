@@ -65,20 +65,20 @@ class BranchReport extends Component {
   };
 
   printDocument = () => {
-    document.getElementById("Submitbtn").style.visibility = "hidden";
-    document.getElementById("printbtn").style.visibility = "hidden";
-    window.print();
-    document.getElementById("Submitbtn").style.visibility = "visible";
-    document.getElementById("printbtn").style.visibility = "visible";
+    // document.getElementById("Submitbtn").style.visibility = "hidden";
+    // document.getElementById("printbtn").style.visibility = "hidden";
+    // window.print();
+    // document.getElementById("Submitbtn").style.visibility = "visible";
+    // document.getElementById("printbtn").style.visibility = "visible";
 
-    // var divContents = document.getElementById("blah2").innerHTML;
-    // var a = window.open('', '', 'height=500, width=500');
-    // a.document.write('<html>');
-    // a.document.write('<body > <h1>Div contents are <br>');
-    // a.document.write(divContents);
-    // a.document.write('</body></html>');
-    // a.document.close();
-    // a.print();
+    var divContents = document.getElementById("blah").innerHTML;
+    var a = window.open('', '', 'height=500, width=500');
+    a.document.write('<html>');
+    a.document.write('<body > <h1>Div contents are <br>');
+    a.document.write(divContents);
+    a.document.write('</body></html>');
+    a.document.close();
+    a.print();
   }
 
 

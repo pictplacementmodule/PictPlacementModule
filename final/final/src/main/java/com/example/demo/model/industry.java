@@ -52,9 +52,6 @@ public class industry {
 	private Date final_date;
 	private Boolean computer;
 
-
-	
-	
 	public Boolean getComputer() {
 		return computer;
 	}

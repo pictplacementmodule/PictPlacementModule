@@ -14,7 +14,6 @@ class Company extends Component {
          'Eligible_Students':['eligible_student',<DashboardIcon />]
     }
 
-
     render() {
         return (
             <div>

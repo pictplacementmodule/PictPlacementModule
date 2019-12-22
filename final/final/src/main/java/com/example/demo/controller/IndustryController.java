@@ -35,6 +35,7 @@ public class IndustryController {
 	@PostMapping("/add")
 	public industry addIndystry(@RequestBody industry industry)
 	{
+		System.out.println(industry);
 		if(!industryrepo.addIndustry(industry.getStart_date())) {
 			industryrepo.save(industry);
 			return industryrepo.findById(industry.getId()).get();
@@ -77,7 +78,13 @@ public class IndustryController {
 	@PostMapping("/findById")
 	public industry findIndustryById(@RequestParam("id") int id)
 	{
-		return industryrepo.findById(id).get();
+		try {
+			return industryrepo.findById(id).get();
+
+		}
+		catch(Exception e) {
+			return null;
+		}
 	}
 	
 	 @PostMapping("/sortbypackage")
