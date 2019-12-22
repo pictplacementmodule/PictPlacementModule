@@ -63,8 +63,11 @@ function ClippedDrawer(props) {
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
                     <Typography variant="h6" noWrap>
-                        PICT PLACEMENT - {localStorage.getItem('token')}
+                        PICT PLACEMENT
                     </Typography>
+                    {/* <Typography variant="h6" style={{marginLeft:"auto"}}>
+                        <marquee>Welcome to Pict Placement Module - {localStorage.getItem('token')}</marquee>
+                    </Typography> */}
                     <Button onClick={() => logoutHandler(props)} className={classes.logout} color="inherit">Logout</Button>
                 </Toolbar>
             </AppBar>

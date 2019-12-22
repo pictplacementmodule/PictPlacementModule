@@ -17,6 +17,7 @@ import Button from "@material-ui/core/Button";
 import axios from "../../axios";
 import { ButtonGroup } from "@material-ui/core";
 import FormGroup from '@material-ui/core/FormGroup';
+import ReactToPrint from 'react-to-print'
 
 const styles = theme => ({
   palette: {
@@ -63,24 +64,6 @@ class BranchReport extends Component {
       [name]: event.target.checked
     });
   };
-
-  printDocument = () => {
-    // document.getElementById("Submitbtn").style.visibility = "hidden";
-    // document.getElementById("printbtn").style.visibility = "hidden";
-    // window.print();
-    // document.getElementById("Submitbtn").style.visibility = "visible";
-    // document.getElementById("printbtn").style.visibility = "visible";
-
-    var divContents = document.getElementById("blah").innerHTML;
-    var a = window.open('', '', 'height=500, width=500');
-    a.document.write('<html>');
-    a.document.write('<body > <h1>Div contents are <br>');
-    a.document.write(divContents);
-    a.document.write('</body></html>');
-    a.document.close();
-    a.print();
-  }
-
 
   clickHandler = () => {
     var pass = {
@@ -154,57 +137,49 @@ class BranchReport extends Component {
               >
                 Submit
             </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                id="printbtn"
-                className={classes.button}
-                onClick={this.printDocument}
-              >
-                Print
-            </Button>
+              <ReactToPrint
+                trigger={() => <Button
+                  variant="contained"
+                  color="primary"
+                  id="printbtn"
+                  className={classes.button}
+                >
+                  Print
+                </Button>}
+                content={() => this.componentRef}
+              />
             </ButtonGroup>
           </FormControl>
         </Paper>
         <br></br>
         <br></br>
-        <div id="blah" style={{ display: "none" }}>
-          <table border="1px">
-            <tr>
-              <td>computer</td>
-              <td>Algorithm</td>
-            </tr>
-            <tr>
-              <td>Microwave</td>
-              <td>Infrared</td>
-            </tr>
-          </table>
-        </div>
         <div id="blah2">
-          <Paper className={classes.root}>
-            <Table className={classes.table} id="printArea">
-              <TableHead>
-                <TableRow>
-                  <TableCell>ID</TableCell>
-                  <TableCell align="right">Name</TableCell>
-                  <TableCell align="right">Roll Number</TableCell>
-                  <TableCell align="right">SGPA</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {this.state.students.map(s => (
-                  <TableRow key={s.student.rollno}>
-                    <TableCell component="th" scope="row">
-                      {s.student.rollno}
-                    </TableCell>
-                    <TableCell align="right">{s.student.firstName}</TableCell>
-                    <TableCell align="right">{s.student.rollno}</TableCell>
-                    <TableCell align="right">{s.sgpaAggregate}</TableCell>
+          <div>
+            <Paper ref={el => (this.componentRef = el)} className={classes.root}>
+              <Table className={classes.table} id="printArea">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>ID</TableCell>
+                    <TableCell align="right">Name</TableCell>
+                    <TableCell align="right">Roll Number</TableCell>
+                    <TableCell align="right">SGPA</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Paper>
+                </TableHead>
+                <TableBody>
+                  {this.state.students.map(s => (
+                    <TableRow key={s.student.rollno}>
+                      <TableCell component="th" scope="row">
+                        {s.student.rollno}
+                      </TableCell>
+                      <TableCell align="right">{s.student.firstName}</TableCell>
+                      <TableCell align="right">{s.student.rollno}</TableCell>
+                      <TableCell align="right">{s.sgpaAggregate}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Paper>
+          </div>
         </div>
       </React.Fragment>
     );

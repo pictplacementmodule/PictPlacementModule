@@ -244,7 +244,6 @@ function Profile(props) {
         setEmptyError(e);
     }
 
-
     const submitHandler = (event) => {
 
         // setOpen(true);

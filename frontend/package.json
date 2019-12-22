@@ -24,6 +24,7 @@
     "react-scripts": "^3.3.0",
     "react-table": "^6.10.3",
     "react-to-pdf": "0.0.8",
+    "react-to-print": "^2.5.0",
     "redux": "^4.0.4"
   },
   "scripts": {
