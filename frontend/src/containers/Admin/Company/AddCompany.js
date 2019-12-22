@@ -152,24 +152,8 @@ function Profile(props) {
     const [cities, setCities] = React.useState([]);
 
     const [open, setOpen] = React.useState(false);
-    const [disabled,setDisabled] = React.useState(false);
 
     useEffect(() => {
-        axios.post('/industry/findById',null,{params:{id:localStorage.getItem('token')}})
-            .then((response) => {
-                console.log(response.data)
-                if(response.data===""){
-                }
-                else{
-                    setState({
-                        ...response.data
-                    })
-                    setDisabled(true);
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            })
         axios.get('/industry/getAllSkills')
             .then((response) => {
                 setSkills([
@@ -192,45 +176,48 @@ function Profile(props) {
     }, []);
 
     const [state, setState] = React.useState({
-        id: localStorage.getItem('token'),
+        id: '',
         name: '',
-        cpname: '',
-        cpemail1: '',
-        cpemail2: '',
-        contactno1: '',
-        contactno2: '',
-        contactno3: '',
+        cpName: '',
+        cpEmail1: '',
+        cpEmail2: '',
+        contactNo1: '',
+        contactNo2: '',
+        contactNo3: '',
         criteria: '',
-        passive_backlogs: false,
-        active_backlogs: false,
-        package_lpa: '',
-        start_date: new Date(),
-        end_date: '',
-        no_of_students: '',
-        skills: [],
-        locality: [],
-        computer: false,
-        it: false,
-        entc: false,
+        passiveBacklogs: false,
+        activeBacklogs: false,
+        package: '',
+        startDate: new Date(),
+        endDate: new Date(),
+        numberOfStudents: '',
+        skill: [],
+        city: [],
+        branches: {
+            computer: false,
+            it: false,
+            entc: false,
+        },
+        successSnackBar: false,
     })
     var da = [];
     const [formErrors, setError] = React.useState({
         name: '',
-        cpname: '',
-        cpemail1: '',
-        cpemail2: '',
-        contactno1: '',
-        contactno2: '',
-        contactno3: '',
+        cpName: '',
+        cpEmail1: '',
+        cpEmail2: '',
+        contactNo1: '',
+        contactNo2: '',
+        contactNo3: '',
         criteria: '',
-        package_lpa: '',
-        no_of_students: '',
+        package: '',
+        numberOfStudents: '',
     })
 
     const [emptyError, setEmptyError] = React.useState({
     });
 
-    const keys = ['name', 'cpname', 'cpemail1', 'contactno1', 'package_lpa']
+    const keys = ['name', 'cpName', 'cpEmail1', 'contactNo1', 'package']
 
     let e = {
     }
@@ -249,6 +236,28 @@ function Profile(props) {
 
         // setOpen(true);
         event.preventDefault();
+        var industry = {
+            id: state.id,
+            name: state.name,
+            cpname: state.cpName,
+            cpemail1: state.cpEmail1,
+            cpemail2: state.cpEmail2,
+            contactno1: state.contactNo1,
+            contactno2: state.contactNo2,
+            contactno3: state.contactNo3,
+            criteria: state.criteria,
+            passive_backlogs: state.passiveBacklogs,
+            active_backlogs: state.activeBacklogs,
+            package_lpa: state.package,
+            start_date: state.startDate,
+            end_date: state.endDate,
+            no_of_students: state.numberOfStudents,
+            skills: state.skill,
+            locality: state.city,
+            computer: state.branches.computer,
+            it: state.branches.it,
+            entc: state.branches.entc,
+        }
         validate();
         var valid = true;
         if (Object.values(formErrors).some((error) => error.length > 0) || Object.keys(e).length > 0) {
@@ -259,9 +268,8 @@ function Profile(props) {
         }
         // valid = true;
         console.log(valid);
-        console.log(state);
         if (valid) {
-            axios.post('/industry/add', state)
+            axios.post('/industry/add', industry)
                 .then((response) => {
                     console.log(response);
                     setOpen(true);
@@ -270,7 +278,6 @@ function Profile(props) {
                     console.log(error);
                 });
         }
-        window.location.reload(true);
     }
     const handleChange = (name) => (event) => {
         setState({
@@ -281,29 +288,29 @@ function Profile(props) {
         let error = '';
         let reg = '';
         switch (name) {
-            case 'cpname':
+            case 'cpName':
                 reg = /^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/
                 error = reg.test(value) ? '' : 'Invalid CPName';
                 break;
-            case 'cpemail1':
-            case 'cpemail2':
+            case 'cpEmail1':
+            case 'cpEmail2':
                 reg = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
                 error = reg.test(value) ? '' : 'Invalid Email';
                 break;
-            case 'contactno1':
-            case 'contactno2':
-            case 'contactno3':
+            case 'contactNo1':
+            case 'contactNo2':
+            case 'contactNo3':
                 reg = /^\d{10}$/
                 error = reg.test(value) ? '' : 'Invalid Phone Number';
                 break;
             case 'criteria':
                 error = (Number(value) > 0 && Number(value) < 10) ? '' : 'Invalid Criteria';
                 break;
-            case 'package_lpa':
+            case 'package':
                 reg = /^[0-9]+$/
                 error = reg.test(value) ? '' : 'Invalid Package';
                 break;
-            case 'no_of_students':
+            case 'numberOfStudents':
                 error = Number(value) > 0 ? '' : 'Invalid Number Of Students';
                 break;
         }
@@ -317,8 +324,12 @@ function Profile(props) {
         console.log(event.target.checked);
         setState({
             ...state,
-            [name]: event.target.checked,
+            branches: {
+                ...state.branches,
+                [name]: event.target.checked,
+            }
         })
+        console.log(state.branches);
     }
 
     const handleDateChange = (date, name) => {
@@ -346,8 +357,6 @@ function Profile(props) {
             .catch((error) => {
                 console.log(error);
             })
-
-
     }
     getDates();
 
@@ -409,78 +418,79 @@ function Profile(props) {
                 <Typography component="h2" variant="h4" align="center">
                     Company Profile
                 </Typography>
-                {/* <Divider className={classes.divider} /> */}
+                <br></br>
                 <div id="divToPrint">
                     <form className={classes.container} noValidate autoComplete="off">
                         <Grid container spacing={3}>
-                            <Grid item xs={12} sm={12}>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    label="Company Id"
+                                    fullWidth
+                                    onChange={handleChange('id')}
+                                    value={state.id}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
                                 <TextField
                                     label="Company Name"
                                     fullWidth
                                     onChange={handleChange('name')}
                                     value={state.name}
                                     error={formErrors.name.length > 0 || emptyError.name}
-                                    disabled={disabled}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
                                 <TextField
                                     label="Contact Person Name"
                                     fullWidth
-                                    onChange={handleChange('cpname')}
-                                    value={state.cpname}
-                                    error={formErrors.cpname.length > 0 || emptyError.cpName}
-                                    disabled={disabled}
+                                    onChange={handleChange('cpName')}
+                                    value={state.cpName}
+                                    error={formErrors.cpName.length > 0 || emptyError.cpName}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
                                 <TextField
                                     label=" Email id 1"
                                     fullWidth
-                                    onChange={handleChange('cpemail1')}
-                                    value={state.cpemail1}
-                                    error={formErrors.cpemail1.length > 0 || emptyError.cpEmail1}
-                                    disabled={disabled}
+                                    onChange={handleChange('cpEmail1')}
+                                    value={state.cpEmail1}
+                                    error={formErrors.cpEmail1.length > 0 || emptyError.cpEmail1}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
                                 <TextField
                                     label=" Email id 2"
                                     fullWidth
-                                    onChange={handleChange('cpemail2')}
-                                    value={state.cpemail2}
-                                    error={formErrors.cpemail2.length > 0}
-                                    disabled={disabled}
+                                    onChange={handleChange('cpEmail2')}
+                                    value={state.cpEmail2}
+                                    error={formErrors.cpEmail2.length > 0}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
                                 <TextField
                                     label="Contact Number 1"
                                     fullWidth
-                                    onChange={handleChange('contactno1')}
-                                    value={state.contactno1}
-                                    error={formErrors.contactno1.length > 0 || emptyError.contactNo1}
-                                    disabled={disabled}
+                                    onChange={handleChange('contactNo1')}
+                                    value={state.contactNo1}
+                                    error={formErrors.contactNo1.length > 0 || emptyError.contactNo1}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
                                 <TextField
                                     label="Contact Number 2"
                                     fullWidth
-                                    onChange={handleChange('contactno2')}
-                                    value={state.contactno2}
-                                    error={formErrors.contactno2.length > 0}
-                                    disabled={disabled}
+                                    onChange={handleChange('contactNo2')}
+                                    value={state.contactNo2}
+                                    error={formErrors.contactNo2.length > 0}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
                                 <TextField
                                     label="Contact Number 3"
                                     fullWidth
-                                    onChange={handleChange('contactno3')}
-                                    value={state.contactno3}
-                                    error={formErrors.contactno3.length > 0}
-                                    disabled={disabled}
+                                    onChange={handleChange('contactNo3')}
+                                    value={state.contactNo3}
+                                    error={formErrors.contactNo3.length > 0}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -490,57 +500,52 @@ function Profile(props) {
                                     onChange={handleChange('criteria')}
                                     value={state.criteria}
                                     error={formErrors.criteria.length > 0}
-                                    disabled={disabled}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     label="Package"
                                     fullWidth
-                                    onChange={handleChange('package_lpa')}
-                                    value={state.package_lpa}
-                                    error={formErrors.package_lpa.length > 0 || emptyError.package_lpa}
-                                    disabled={disabled}
+                                    onChange={handleChange('package')}
+                                    value={state.package}
+                                    error={formErrors.package.length > 0 || emptyError.package}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
                                 <TextField
                                     label="Number of Students"
                                     fullWidth
-                                    onChange={handleChange('no_of_students')}
-                                    value={state.no_of_students}
-                                    error={formErrors.no_of_students.length > 0}
-                                    disabled={disabled}
+                                    onChange={handleChange('numberOfStudents')}
+                                    value={state.numberOfStudents}
+                                    error={formErrors.numberOfStudents.length > 0}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4} >
                                 <FormControlLabel
                                     control={
                                         <Switch
-                                            checked={state.passive_backlogs}
-                                            onChange={toggleBacklogs('passive_backlogs')}
+                                            checked={state.passiveBacklogs}
+                                            onChange={toggleBacklogs('passiveBacklogs')}
                                             color="primary"
                                         />
                                     }
                                     style={{ boxSizing: 'border-box', marginLeft: '50px', marginTop: '20px' }}
                                     label="Passive Backlogs"
                                     fullWidth
-                                    disabled={disabled}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
                                 <FormControlLabel
                                     control={
                                         <Switch
-                                            checked={state.active_backlogs}
-                                            onChange={toggleBacklogs('active_backlogs')}
+                                            checked={state.activeBacklogs}
+                                            onChange={toggleBacklogs('activeBacklogs')}
                                             color="primary"
                                         />
                                     }
                                     style={{ boxSizing: 'border-box', marginTop: '20px' }}
                                     label="Active Backlogs"
                                     fullWidth
-                                    disabled={disabled}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={2}>
@@ -549,30 +554,27 @@ function Profile(props) {
                             <Grid item xs={2} align='left'>
                                 <FormControlLabel
                                     control={
-                                        <Checkbox checked={state.computer} onChange={handleChecked('computer')} value="computer" />
+                                        <Checkbox checked={state.branches.computer} onChange={handleChecked('computer')} value="computer" />
                                     }
                                     label="Computer"
                                     style={{ boxSizing: 'border-box', marginLeft: '30px' }}
-                                    disabled={disabled}
                                 />
                             </Grid>
                             <Grid item xs={4}>
                                 <FormControlLabel
                                     control={
-                                        <Checkbox checked={state.it} onChange={handleChecked('it')} value="it" />
+                                        <Checkbox checked={state.branches.it} onChange={handleChecked('it')} value="it" />
                                     }
                                     label="Information Technology"
                                     style={{ boxSizing: 'border-box', marginLeft: '45px' }}
-                                    disabled={disabled}
                                 />
                             </Grid>
                             <Grid item xs={4}>
                                 <FormControlLabel
                                     control={
-                                        <Checkbox checked={state.entc} onChange={handleChecked('entc')} value="entc" />
+                                        <Checkbox checked={state.branches.entc} onChange={handleChecked('entc')} value="entc" />
                                     }
                                     label="Electronics and Telecommunication"
-                                    disabled={disabled}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -581,13 +583,12 @@ function Profile(props) {
                                         fullWidth
                                         label="Preffered date"
                                         fullWidth
-                                        value={state.start_date}
-                                        onChange={(date) => handleDateChange(date, "start_date")}
+                                        value={state.startDate}
+                                        onChange={(date) => handleDateChange(date, "startDate")}
                                         KeyboardButtonProps={{
                                             'aria-label': 'change date',
                                         }}
                                         shouldDisableDate={retrieve}
-                                        disabled={disabled}
 
                                     />
                                 </MuiPickersUtilsProvider>
@@ -598,8 +599,8 @@ function Profile(props) {
                                     <InputLabel htmlFor="select-multiple-checkbox">Skills Required</InputLabel>
                                     <Select
                                         multiple
-                                        value={state.skills}
-                                        onChange={handleChange('skills')}
+                                        value={state.skill}
+                                        onChange={handleChange('skill')}
                                         input={<Input id="select-multiple-chip" />}
                                         renderValue={selected => (
                                             <div className={classes.chips}>
@@ -610,7 +611,6 @@ function Profile(props) {
                                         )}
                                         MenuProps={MenuProps}
                                         fullWidth
-                                        disabled={disabled}
                                     >
                                         {skills.map(s => (
                                             <MenuItem key={s} value={s}>
@@ -626,8 +626,8 @@ function Profile(props) {
                                     <InputLabel htmlFor="select-multiple-checkbox">Locations</InputLabel>
                                     <Select
                                         multiple
-                                        value={state.locality}
-                                        onChange={handleChange('locality')}
+                                        value={state.city}
+                                        onChange={handleChange('city')}
                                         input={<Input id="select-multiple-chip" />}
                                         renderValue={selected => (
                                             <div className={classes.chips}>
@@ -638,7 +638,6 @@ function Profile(props) {
                                         )}
                                         MenuProps={MenuProps}
                                         fullWidth
-                                        disabled={disabled}
                                     >
                                         {cities.map(c => (
                                             <MenuItem key={c} value={c}>
@@ -649,9 +648,14 @@ function Profile(props) {
                                     </Select>
                                 </FormControl>
                             </Grid>
+
                             <Grid item xs={12} align="right" onClick={submitHandler}>
-                                <Button size="large" variant="contained" color="primary" disabled={disabled}>Submit</Button>
+                                <Button size="large" variant="contained" color="primary">Submit</Button>
                             </Grid>
+
+
+
+
                         </Grid>
 
                     </form>

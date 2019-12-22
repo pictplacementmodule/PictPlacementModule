@@ -12,7 +12,6 @@ class Company extends Component {
         'Profile':['profile', <DashboardIcon />],
     }
 
-
     render() {
         return (
             <div>

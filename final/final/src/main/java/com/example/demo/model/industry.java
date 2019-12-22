@@ -52,19 +52,6 @@ public class industry {
 	private Date final_date;
 	private Boolean computer;
 
-
-	
-	
-
-	public industry() 
-	{	
-		criteria = (float)0.0;
-		no_of_students = 0;
-		package_lpa = (float)0.0;
-		id = user.getId();
-
-	}
-	
 	public Boolean getComputer() {
 		return computer;
 	}

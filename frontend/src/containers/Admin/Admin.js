@@ -24,6 +24,7 @@ import AddUser from './AddUser'
 import PendingRequests from './pendingRequest'
 import Place from '@material-ui/icons/Place'
 import PlaceStudents from './PlaceStudents'
+import AddCompany from './Company/AddCompany'
 
 class Admin extends Component {
 
@@ -37,7 +38,6 @@ class Admin extends Component {
         'Placement Report': ['placement-report', <Receipt />],
         'Skills Report': ['skills-report', <Receipt />],
         'Pending Request':['pending-request',<Receipt/>]
-
     }
 
     render() {
@@ -48,7 +48,7 @@ class Admin extends Component {
                 {/* <Route path="/admin/dashboard" component={Dashboard2} /> */}
                 <ProtectedRoute path="/admin/dashboard" component={() =>
                     <Dashboard drawerList={this.drawerList}>
-                        <Route exact path="/admin/dashboard/add-company" component={AddVisited} />
+                        <Route exact path="/admin/dashboard/add-company" component={AddCompany} />
                         <Route exact path="/admin/dashboard/add-user" component={AddUser} />
                         <Route exact path="/admin/dashboard/student-profile" component={Profile} />
                         <Route exact path="/admin/dashboard/edit-company" component={EditCompany} />
