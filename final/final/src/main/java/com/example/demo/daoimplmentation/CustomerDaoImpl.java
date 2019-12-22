@@ -8,10 +8,12 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.model.AdminPlaced;
+import com.example.demo.model.EligibleStudents;
 import com.example.demo.model.countofplaced;
 //-------------CLASS FOR WRITING SQL QUERIES IN JDBC---------------------
 @Repository
@@ -90,6 +92,33 @@ public class CustomerDaoImpl extends JdbcDaoSupport implements CustomerDao{
 	    }
 	    return result;
 	  }
+	 
+	 @Override
+	 public List<EligibleStudents> eligibility( String comp_id){
+		 int i;
+		 System.out.println("\n"+comp_id);
+	    String sql = "select s.rollno as sid,concat(s.fn,' ',s.ln) as sname,a.sgpatefs as sgpa from studentpersonal_details as s,academic_details as a,industry as i where a.sgpatefs>=i.criteria AND s.rollno=a.college_id AND a.placed='false' AND i.id =?";
+	    try{
+	        i = Integer.parseInt(comp_id);
+	
+	    } catch(NumberFormatException ex){ // handle your exception
+	    	System.out.print("come here");
+	        i=0;
+	    }
+	    List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql,new Object[] {i});
+	    
+	    List<EligibleStudents> result = new ArrayList<EligibleStudents>();
+	    for(Map<String, Object> row:rows){
+	      EligibleStudents cus = new EligibleStudents();
+	      cus.setRoll((int)row.get("sid"));
+	      cus.setName((String)row.get("sname"));
+	      cus.setSgpaTEFS((float)row.get("sgpa"));
+
+	      result.add(cus);
+	    }
+	    return result;
+	  }
+	 
 /*
 	@Override
 	  public Customer findCustomerById(long cust_id) {

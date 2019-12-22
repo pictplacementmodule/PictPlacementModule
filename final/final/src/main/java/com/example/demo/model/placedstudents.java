@@ -67,7 +67,7 @@ public void setPL_status(Boolean pL_status) {
 }
 
 
-
+@Column(columnDefinition="Boolean default 'false'")
 Boolean PL_status;
 
 }
