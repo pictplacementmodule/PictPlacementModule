@@ -14,7 +14,12 @@ import Container from '@material-ui/core/Container';
 import { BrowserRouter, Route, Redirect, withRouter } from 'react-router-dom'
 import classes from './Login.module.css'
 import axios from '../../axios'
-
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Paper from '@material-ui/core/Paper';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import { blue } from '@material-ui/core/colors';
 
 class Login extends Component {
 
@@ -46,8 +51,8 @@ class Login extends Component {
               error: false,
             });
             this.props.history.push({
-              pathname: '/'+response.data+'/dashboard',
-          });
+              pathname: '/' + response.data + '/dashboard',
+            });
             break;
           default:
             this.setState({
@@ -69,9 +74,33 @@ class Login extends Component {
 
   render() {
     return (
-      <Container component="main" maxWidth="xs">
+      <Grid container component="main" className={classes.root}>
         <CssBaseline />
-        <div className={classes.paper}>
+        <Grid item xs={12} sm={4} md={7}>
+
+
+          <div className={classes.root}>
+            <AppBar position="static">
+              <Toolbar variant="dense">
+                <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                  <MenuIcon />
+                </IconButton>
+                <Typography variant="h6" noWrap>
+                  PICT PLACEMENT
+                  </Typography>
+                <Button >Logout</Button>
+              </Toolbar>
+            </AppBar>
+          </div>
+        </Grid>
+
+        <Grid item xs={12} sm={4} md={7} >
+          <div className={classes.image}>
+
+          </div>
+        </Grid>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
@@ -118,11 +147,11 @@ class Login extends Component {
             </Button>
           </form>
         </div>
-        <Box mt={5}>
-        </Box>
-      </Container>
-    )
+        </Grid>
+      </Grid>
+    );
   }
 }
 
 export default withRouter(Login);
+

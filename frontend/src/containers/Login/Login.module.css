@@ -1,56 +1,57 @@
-body{
-    background-color: white;
-    margin-top: 10vh;
-}
 
-.paper{
-  margin-top: 8vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+body{
+  background-color: white;
   margin-top: 10vh;
 }
 
+.paper{
+margin-top: 8vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-top: 10vh;
+}
+
 .avatar{
-  margin: 1vh;
-  background-color:white;
-  background-image: url("https://img.collegepravesh.com/2017/02/PICT-Logo.jpg")
-  
-  
+margin: 1vh;
+background-color:white;
+background-image: url("https://img.collegepravesh.com/2017/02/PICT-Logo.jpg")
+
+
 }
 
 .form{
-  width: 100%;
-  margin-top: 5vh;
+width: 100%;
+margin-top: 5vh;
 }
 
-  .root{
-    height: '100vh',
-  }
-  .image{
-    background-image:  url("https://img.collegepravesh.com/2017/02/PICT-Pune.jpg");
-    background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  height: 100vh;
-  }
-  .paper {
-    margin: 3vh;
-    margin-top: 20vh;
-    
-    
-    
-    
-    
-  }
+.root{
+  height: '100vh',
+}
+.image{
+  background-image:  url("https://img.collegepravesh.com/2017/02/PICT-Pune.jpg");
+  background-repeat: no-repeat;
+background-size: cover;
+background-position: center center;
+height: 100vh;
+}
+.paper {
+  margin: 3vh;
+  margin-top: 20vh;
   
- 
   
+  
+  
+  
+}
+
+
+
 
 
 .submit{
-  margin: 3vh;
-  height: 7vh;
+margin: 3vh;
+height: 7vh;
 }
 
 
@@ -58,17 +59,17 @@ body{
 
 
 content{
-  flexGrow: 1,
-  
+flexGrow: 1,
+
 }
 
 .logout {
-  margin-left: 'auto';
-  font-weight: 'bold';
-  font-size: '1rem';
+margin-left: 'auto';
+font-weight: 'bold';
+font-size: '1rem';
 }
 .navbar{
-  background-color:white;
+background-color:white;
 
 
 }
