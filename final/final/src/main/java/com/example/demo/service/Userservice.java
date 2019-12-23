@@ -144,7 +144,6 @@ public class Userservice {
 	}
 	
 	public List<EligibleStudents> eligible(String a) {
-		System.out.print("Eligibie jsdlfk");
 		List<EligibleStudents> x = customerDao.eligibility( a);
 		return x;
 	}
