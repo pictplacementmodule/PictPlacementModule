@@ -14,6 +14,8 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import axios from "../../axios";
+import ReactToPrint from 'react-to-print'
+
 
 import Typography from '@material-ui/core/Typography';
 
@@ -23,11 +25,11 @@ const styles = theme => ({
     },
     root: {
         width: "85%",
-        marginTop: theme.spacing(3),
+        marginTop: theme.spacing(1),
         overflowX: "auto",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        // display: "flex",
+        // justifyContent: "center",
+        // alignItems: "center",
         margin: "auto"
     },
     table: {
@@ -38,9 +40,9 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing(1),
-        margin: "auto",
-        left:"47%"
-      },
+        // margin: "auto",
+        left: "47%"
+    },
     formControl: {
         margin: theme.spacing(3)
     },
@@ -82,11 +84,7 @@ class StudentReport extends Component {
                 console.log(error);
             });
     }
-    printDocument = () => {
-        document.getElementById("printbtn").style.display="none";
-        window.print();
-        document.getElementById("printbtn").style.display="none";
-      }
+
     state = {
         students: [],
         company: {},
@@ -104,55 +102,59 @@ class StudentReport extends Component {
         return (
             <React.Fragment>
                 <div>
-                
-                <br></br>
-                <Paper className={classes.root}>
-                
-                    <Grid container>
-                        <Grid item xs={12}>
-                        <Typography variant="h6" gutterBottom style={{ marginTop: '10vh', marginLeft:'auto',marginRight:'auto',textAlign:'center' }}>
-                        <Button
-                    variant="contained"
-                    color="primary"
-                    id="printbtn"
-                    className={classes.button}
-                    onClick={this.printDocument}
-                >
-                    Print
-                </Button>
-                            </Typography>
-                            <Typography variant="h6" gutterBottom style={{ marginTop: '10vh', marginLeft:'auto',marginRight:'auto',textAlign:'center' }}>
+                    <Paper className={classes.root}>
+
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <Typography variant="h6" gutterBottom style={{ marginTop: '5vh', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}>
+                                    <ReactToPrint
+                                        trigger={() => <Button
+                                            variant="contained"
+                                            color="primary"
+                                            id="printbtn"
+                                            className={classes.button}
+                                        >
+                                            Print
+                                            </Button>}
+                                        content={() => this.componentRef}
+                                    />
+
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                        <br></br>
+                        <Grid container ref={el => (this.componentRef = el)}>
+                            <Typography variant="h6" gutterBottom style={{ marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}>
                                 Company Name: {this.state.company.name}
                             </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Table className={classes.table}>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>ID</TableCell>
-                                        <TableCell align="right">Name</TableCell>
-                                        <TableCell align="right">Roll Number</TableCell>
-                                        <TableCell align="right">SGPA</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {this.state.students.map(s => (
-                                        <TableRow key={s.student.rollno}>
-                                            <TableCell component="th" scope="row">
-                                                {s.student.rollno}
-                                            </TableCell>
-                                            <TableCell align="right">{s.student.firstName}</TableCell>
-                                            <TableCell align="right">{s.student.rollno}</TableCell>
-                                            <TableCell align="right">{s.sgpaAggregate}</TableCell>
+                            <Grid item xs={12}>
+                                <Table className={classes.table}>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>ID</TableCell>
+                                            <TableCell align="right">Name</TableCell>
+                                            <TableCell align="right">Roll Number</TableCell>
+                                            <TableCell align="right">SGPA</TableCell>
                                         </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
+                                    </TableHead>
+                                    <TableBody>
+                                        {this.state.students.map(s => (
+                                            <TableRow key={s.student.rollno}>
+                                                <TableCell component="th" scope="row">
+                                                    {s.student.rollno}
+                                                </TableCell>
+                                                <TableCell align="right">{s.student.firstName}</TableCell>
+                                                <TableCell align="right">{s.student.rollno}</TableCell>
+                                                <TableCell align="right">{s.sgpaAggregate}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Paper>
+                    </Paper>
                 </div>
-            </React.Fragment>
+            </React.Fragment >
         );
     }
 }

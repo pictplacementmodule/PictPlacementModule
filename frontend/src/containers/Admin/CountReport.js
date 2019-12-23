@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import axios from '../../axios'
 import { fontSize } from '@material-ui/system';
 import Button from "@material-ui/core/Button";
+import ReactToPrint from 'react-to-print'
 
 
 const styles = (theme => ({
@@ -67,16 +68,19 @@ class CountReport extends Component {
         const { classes } = this.props;
         return (
             <div>
-                <Button
-            variant="contained"
-            color="primary"
-            id="printbtn"
-            className={classes.button}
-            onClick={this.printDocument}
-          >
-            Print
-          </Button>
-            <Paper className={classes.root}>
+                <ReactToPrint
+                trigger={() => <Button
+                    variant="contained"
+                    color="primary"
+                    id="printbtn"
+                    className={classes.button}
+                    onClick={this.printDocument}
+                  >
+                    Print
+                  </Button>}
+                content={() => this.componentRef}
+              />
+            <Paper ref={el => (this.componentRef = el)} r className={classes.root}>
                 <Table className={classes.table}>
                     <TableHead>
                         <TableRow >

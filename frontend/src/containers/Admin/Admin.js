@@ -36,7 +36,7 @@ class Admin extends Component {
         'Edit company': ['edit-company', <EditIcon />],
         'Branch Report': ['branch-report', <Receipt />],
         'Placement Report': ['placement-report', <Receipt />],
-        'Skills Report': ['skills-report', <Receipt />],
+        'Eligibility Report': ['skills-report', <Receipt />],
         'Pending Request':['pending-request',<Receipt/>]
     }
 

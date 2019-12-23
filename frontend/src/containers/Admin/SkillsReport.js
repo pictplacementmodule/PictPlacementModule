@@ -104,7 +104,7 @@ class SkillsReport extends React.Component {
         const { classes } = this.props;
         return (
         <div>
-            <Button
+            {/* <Button
             variant="contained"
             color="primary"
             id="printbtn"
@@ -112,7 +112,7 @@ class SkillsReport extends React.Component {
             onClick={this.printDocument}
           >
             Print
-          </Button>
+          </Button> */}
             <Paper className={classes.root}>
                 <Table className={classes.table}>
                     <TableHead>

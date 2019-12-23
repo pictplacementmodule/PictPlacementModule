@@ -376,8 +376,8 @@ class AllCompanies extends Component {
                         <TableBody>
                             {this.state.companies.map((company, index) => (
                                 <TableRow key={company.id} className={classes.tableRow}>
-                                    <TableCell component="th" scope="row" onClick={() => this.companyHandler(company)}>
-                                        {company.name}
+                                    <TableCell style={{color:"#3f51b5"}}  component="th" scope="row" onClick={() => this.companyHandler(company)}>
+                                        <u>{company.name}</u>
                                     </TableCell>
                                     <TableCell align="right">{company.start_date}</TableCell>
                                     <TableCell align="right" id="btncol"> <MuiPickersUtilsProvider utils={DateFnsUtils}>
