@@ -13,22 +13,30 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.daoimplmentation.CustomerDao;
 import com.example.demo.model.Academicdetails;
 import com.example.demo.model.AdminPlaced;
 import com.example.demo.model.Branches;
 import com.example.demo.model.EligibleStudents;
 import com.example.demo.model.Studentdetails;
 import com.example.demo.model.countofplaced;
+import com.example.demo.model.location;
 import com.example.demo.model.placedstudents;
 import com.example.demo.model.users;
 import com.example.demo.repository.Academicrepository;
 import com.example.demo.repository.industryrepo;
+import com.example.demo.repository.locationrepo;
 import com.example.demo.repository.placedstudentsrepo;
+import com.example.demo.repository.skillsrepo;
 import com.example.demo.service.Userservice;
-
+import com.example.demo.model.skills;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class HomeController {
+	@Autowired
+	private skillsrepo skillrepo;
+	@Autowired
+	private locationrepo locationrep;
 	@Autowired
 	private Userservice userservice;
 	@Autowired
@@ -190,5 +198,24 @@ public class HomeController {
 //			System.out.println(sid.get(i));
 //		}
 	}
-
+	@PostMapping("/addskills")
+	public void skills(@RequestBody skills skill)
+	{
+		skillrepo.save(skill);
+	}
+	@PostMapping("/findallskills")
+	public List<skills> skills()
+	{
+	return	skillrepo.findAll();
+	}
+	@PostMapping("/addlocation")
+	public void skills(@RequestBody location loc)
+	{
+		locationrep.save(loc);
+	}
+	@PostMapping("/findalllocation")
+	public List<location> location()
+	{
+	return	locationrep.findAll();
+	}
 }

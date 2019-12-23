@@ -28,6 +28,12 @@ public List<String> sortbyskills(int id);
 public List<Integer> findid();
 @Query(value = "select skills from academicdetails_skills where academicdetails_college_id=?1", nativeQuery = true)
 public List<String> getskills(int id);
+@Modifying
+@Transactional
+
+@Query(value = "update academic_details set placed="+"true"+" where college_id IN ?1", nativeQuery = true)
+public void finalplaced(List<Integer> id);
+
 
 
 	

@@ -155,8 +155,8 @@ class BranchReport extends Component {
         <br></br>
         <div id="blah2">
           <div>
-            <Paper ref={el => (this.componentRef = el)} className={classes.root}>
-              <Table className={classes.table} id="printArea">
+            <Paper className={classes.root}>
+              <Table ref={el => (this.componentRef = el)} className={classes.table} id="printArea">
                 <TableHead>
                   <TableRow>
                     <TableCell>ID</TableCell>
