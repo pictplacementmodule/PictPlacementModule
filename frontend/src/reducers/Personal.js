@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/Student'
 
 const initialState = {
-    rollNo: '',
+    rollno: '',
     aadharNumber: '',
     pancardNumber: '',
     firstName: '',
@@ -17,7 +17,7 @@ const initialState = {
     permanentAddress: '',
     valid: false,
     formErrors: {
-        rollNo: '',
+        rollno: '',
         aadharNumber: '',
         //pancardNumber:'',
         email:'',
@@ -37,7 +37,7 @@ const reducer = (state = initialState, action) => {
             }
             let error = ''
             switch (action.parName) {
-                case 'rollNo':
+                case 'rollno':
                     error = (value.length ===5 && value[0]==='3') ? '': 'TE roll number should be 5 digits and start with 3'
                     break;
                 case 'aadharNumber':

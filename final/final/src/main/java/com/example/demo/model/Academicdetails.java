@@ -36,6 +36,24 @@ public class Academicdetails {
 		this.roll_no = roll_no;
 	}
 
+	@Override
+	public String toString() {
+		return "Academicdetails [student=" + student + ", collegeId=" + collegeId + ", roll_no=" + roll_no + ", branch="
+				+ branch + ", prnNumber=" + prnNumber + ", skills=" + skills + ", diploma=" + diploma
+				+ ", percentageTenth=" + percentageTenth + ", percentageTwelfth=" + percentageTwelfth
+				+ ", percentageDiploma=" + percentageDiploma + ", placed=" + placed + ", percentageEngineering="
+				+ percentageEngineering + ", boeTenth=" + boeTenth + ", boeTwelfth=" + boeTwelfth + ", boeDiploma="
+				+ boeDiploma + ", yopTenth=" + yopTenth + ", yopTwelfth=" + yopTwelfth + ", yopDiploma=" + yopDiploma
+				+ ", gapTenth=" + gapTenth + ", gapTwelfth=" + gapTwelfth + ", gapDiploma=" + gapDiploma + ", rogTenth="
+				+ rogTenth + ", rogTwelfth=" + rogTwelfth + ", rogDiploma=" + rogDiploma + ", engineeringStartYear="
+				+ engineeringStartYear + ", sgpaFEFS=" + sgpaFEFS + ", sgpaFESS=" + sgpaFESS + ", sgpaSEFS=" + sgpaSEFS
+				+ ", sgpaSESS=" + sgpaSESS + ", sgpaTEFS=" + sgpaTEFS + ", sgpaTESS=" + sgpaTESS + ", sgpaAggregate="
+				+ sgpaAggregate + ", marksFEFS=" + marksFEFS + ", marksFESS=" + marksFESS + ", marksSEFS=" + marksSEFS
+				+ ", marksSESS=" + marksSESS + ", marksTEFS=" + marksTEFS + ", marksTESS=" + marksTESS
+				+ ", activeBacklogs=" + activeBacklogs + ", passiveBacklogs=" + passiveBacklogs + ", yeardowns="
+				+ yeardowns + "]";
+	}
+
 	@Column(name="roll_no") //new field added for roll no .Does not have linking with anything independent field
 	int roll_no;
 	

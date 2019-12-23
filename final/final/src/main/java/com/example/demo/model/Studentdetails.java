@@ -9,6 +9,14 @@ import javax.persistence.*;
 @Entity
 @Table(name="Studentpersonal_Details",schema="public")
 public class Studentdetails implements Serializable {
+	@Override
+	public String toString() {
+		return "Studentdetails [user=" + user + ", rollno=" + rollno + ", aadharNumber=" + aadharNumber + ", firstName="
+				+ firstName + ", middleName=" + middleName + ", lastName=" + lastName + ", mobileNumber1="
+				+ mobileNumber1 + ", mobileNumber2=" + mobileNumber2 + ", email=" + email + ", dateOfBirth="
+				+ dateOfBirth + ", gender=" + gender + ", currentAddress=" + currentAddress + ", permanentAddress="
+				+ permanentAddress + "]";
+	}
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="rollno",referencedColumnName="id",unique = true)
 	private users user;

@@ -38,11 +38,11 @@ class Personal extends Component {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={4}>
             <TextField
-              label="TE Roll Number"
+              label="User Id"
               autoComplete="rn"
               fullWidth
-              onChange={this.props.onChange('rollno')}
-              value={this.props.rollno}
+              disabled={true}
+              value={localStorage.getItem("token")}
               /*error={formErrors.rollno.length>0||this.props.errors.rollno.length>0}*/
             />
           </Grid>

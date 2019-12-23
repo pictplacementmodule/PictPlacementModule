@@ -40,7 +40,8 @@ class Login extends Component {
       .post("/authenticate", user)
       .then(response => {
         console.log(response.data);
-        switch (response.data) {
+        const s = response.data;
+        switch (s.toLowerCase()) {
           case "admin":
           case "company":
           case "student":

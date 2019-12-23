@@ -90,6 +90,7 @@ public class HomeController {
 
 	@RequestMapping("/addPersonaldetails") // for adding student personal details
 	public void addPersonaldetails(@RequestBody Studentdetails user) {
+		System.out.println(user);
 		userservice.addpd(user);
 	}
 
@@ -119,6 +120,7 @@ public class HomeController {
 
 	@RequestMapping("/addacademicdetails")
 	public void a(@RequestBody Academicdetails user) {
+		System.out.println(user);
 		userservice.saveaca(user);
 	}
 

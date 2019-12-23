@@ -89,7 +89,11 @@ class Profile extends Component {
     let newActiveStep = this.state.activeStep;
     switch (this.state.activeStep) {
       case 0:
-        let p = this.props.statePersonal;
+        let p = {
+          ...this.props.statePersonal,
+          rollno: localStorage.getItem("token"),
+        };
+        console.log(p);
         let valid = p.valid;
         let keys = Object.keys(p).slice(0, -2);
         let e = {
@@ -134,8 +138,9 @@ class Profile extends Component {
       case 1:
         let a = this.props.stateAcademic;
         let academic = {
+          collegeId: localStorage.getItem("token"),
           branch: a.branch,
-          collegeId: a.collegeId,
+          roll_no: a.collegeId,
           prnNumber: a.prnNumber,
           diploma: a.diploma,
           percentageTenth: a.percentage.tenth,
@@ -206,6 +211,7 @@ class Profile extends Component {
         // }
         // console.log(academic);
         newActiveStep = this.state.activeStep + 1;
+        console.log(academic);
         axios.post('/addacademicdetails',academic)
           .then((response) => {
             console.log(response);
