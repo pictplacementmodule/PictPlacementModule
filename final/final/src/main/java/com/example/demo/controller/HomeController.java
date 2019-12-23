@@ -13,23 +13,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.daoimplmentation.CustomerDao;
 import com.example.demo.model.Academicdetails;
 import com.example.demo.model.AdminPlaced;
 import com.example.demo.model.Branches;
+import com.example.demo.model.Companyv;
 import com.example.demo.model.EligibleStudents;
 import com.example.demo.model.Studentdetails;
 import com.example.demo.model.countofplaced;
 import com.example.demo.model.location;
 import com.example.demo.model.placedstudents;
+import com.example.demo.model.skills;
 import com.example.demo.model.users;
 import com.example.demo.repository.Academicrepository;
+import com.example.demo.repository.CompanyVisitedRepo;
 import com.example.demo.repository.industryrepo;
 import com.example.demo.repository.locationrepo;
 import com.example.demo.repository.placedstudentsrepo;
 import com.example.demo.repository.skillsrepo;
 import com.example.demo.service.Userservice;
-import com.example.demo.model.skills;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class HomeController {
@@ -45,6 +47,8 @@ public class HomeController {
 	private placedstudentsrepo placedrepo;
 	@Autowired
 	private Academicrepository academicrepo;
+	@Autowired
+	private CompanyVisitedRepo cvr;
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	@RequestMapping("/home")
@@ -101,18 +105,6 @@ public class HomeController {
 
 	@RequestMapping("/adduser") // for adding sign up details
 	public void addUser(@RequestBody users user) {
-
-//	if(user.getType().equals("Company"))
-//	{
-//		
-//		industry obj=new industry();
-//		obj.setUser(user);
-//		obj.setId(user.getId());
-//		System.out.println(obj.getUser().getId());
-//		industryrepo.save(obj);
-//	
-//		
-//	}
 		user.setPass(passwordEncoder.encode(user.getPass()));
 		System.out.println(user.getId() + " " + user.getPass());
 		userservice.adduser(user);
@@ -199,37 +191,40 @@ public class HomeController {
 		int len = myParams.size();
 		System.out.print(len);
 
-		
-		int comp_id = Integer.parseInt(myParams.get(len-1));
+		int comp_id = Integer.parseInt(myParams.get(len - 1));
 		for (int i = 0; i < len - 1; i++) {
 			placedstudents ps = new placedstudents();
-				ps.setCompId(comp_id);
-				ps.setId(Integer.parseInt(myParams.get(i)));
-				ps.setPackage_lpa((float)ir.findById(comp_id).get().getPackage_lpa());
-				ps.setLocation("MUMBAI");
-				ps.setPL_status(false);
-				placedrepo.save(ps);
+			ps.setCompId(comp_id);
+			ps.setId(Integer.parseInt(myParams.get(i)));
+			ps.setPackage_lpa((float) ir.findById(comp_id).get().getPackage_lpa());
+			ps.setLocation("MUMBAI");
+			ps.setPL_status(false);
+			placedrepo.save(ps);
 		}
 
 	}
+
 	@PostMapping("/addskills")
-	public void skills(@RequestBody skills skill)
-	{
+	public void skills(@RequestBody skills skill) {
 		skillrepo.save(skill);
 	}
+
 	@PostMapping("/findallskills")
-	public List<skills> skills()
-	{
-	return	skillrepo.findAll();
+	public List<skills> skills() {
+		return skillrepo.findAll();
 	}
+
 	@PostMapping("/addlocation")
-	public void skills(@RequestBody location loc)
-	{
+	public void skills(@RequestBody location loc) {
 		locationrep.save(loc);
 	}
+
 	@PostMapping("/findalllocation")
-	public List<location> location()
-	{
-	return	locationrep.findAll();
+	public List<location> location() {
+		return locationrep.findAll();
+	}
+	@PostMapping("/findallCompaniesVisited")
+	public List<Companyv> returnCompanyvisited(){
+		return cvr.findAll();
 	}
 }

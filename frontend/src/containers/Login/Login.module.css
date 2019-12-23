@@ -1,14 +1,13 @@
 
 body{
   background-color: white;
-  margin-top: 10vh;
+  
 }
 
 .paper{
-margin-top: 8vh;
-display: flex;
-flex-direction: column;
+flex-direction: row;
 align-items: center;
+margin: 3vh;
 margin-top: 10vh;
 }
 
@@ -21,7 +20,7 @@ background-image: url("https://img.collegepravesh.com/2017/02/PICT-Logo.jpg")
 }
 
 .form{
-width: 100%;
+width: 80%;
 margin-top: 5vh;
 }
 
@@ -35,41 +34,8 @@ background-size: cover;
 background-position: center center;
 height: 100vh;
 }
-.paper {
-  margin: 3vh;
-  margin-top: 20vh;
-  
-  
-  
-  
-  
-}
-
-
-
-
 
 .submit{
 margin: 3vh;
 height: 7vh;
-}
-
-
-
-
-
-content{
-flexGrow: 1,
-
-}
-
-.logout {
-margin-left: 'auto';
-font-weight: 'bold';
-font-size: '1rem';
-}
-.navbar{
-background-color:white;
-
-
 }

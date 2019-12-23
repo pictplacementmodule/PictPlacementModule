@@ -1,33 +1,58 @@
 package com.example.demo.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
-
-@Table
+@Entity
+@Table(name="companyvisitec")
 public class Companyv {
-String SrNo;
-	
+@Id
+	String SrNo;
+@Column
+
 	String Company ;
-		float CGPA ;
-		
-		String Branch ;
+	@Column
+		String CGPA ;
+	@Column
+String Branch ;
+	@Column
+
 		String BEC ;
+	@Column
+
 		String CE ;
+	@Column
+
 		  String BEE ;
+	@Column
 		String ENTC ;
+	@Column
 		String BEIT ;
+	@Column
 		String MECE ;
+	@Column
 		String MEENTC ;
+	@Column
 		String MEIT ;
+	@Column
 		String M ;
+	@Column
 		String F ;
+	@Column
 		String T;
-		float SalLPA ;
+	@Column
+		String SalLPA ;
+	@Column
 		String VisitDate ;
-		float TSalLPA ;
+	@Column
+		String TSalLPA ;
+	
 	    public Companyv(){
+	
 	    }
 	 
-	    public Companyv(String SrNo,String Company ,float CGPA ,String Branch ,String BEC ,String CE ,String BEE ,String ENTC ,String BEIT ,String MECE ,String MEENTC,String MEIT,String M ,String F,String T,float SalLPA,String VisitDate,float TSalLPA)     {
+	    public Companyv(String SrNo,String Company ,String CGPA ,String Branch ,String BEC ,String CE ,String BEE ,String ENTC ,String BEIT ,String MECE ,String MEENTC,String MEIT,String M ,String F,String T,String SalLPA,String VisitDate,String TSalLPA)     {
 	    	this.SrNo = SrNo;
 	    	this.Company  = Company;
 	    	this.CGPA  = CGPA;
@@ -67,11 +92,11 @@ String SrNo;
 			Company = company;
 		}
 
-		public float getCGPA() {
+		public String getCGPA() {
 			return CGPA;
 		}
 
-		public void setCGPA(float cGPA) {
+		public void setCGPA(String cGPA) {
 			CGPA = cGPA;
 		}
 
@@ -171,11 +196,11 @@ String SrNo;
 			T = t;
 		}
 
-		public float getSalLPA() {
+		public String getSalLPA() {
 			return SalLPA;
 		}
 
-		public void setSalLPA(float salLPA) {
+		public void setSalLPA(String salLPA) {
 			SalLPA = salLPA;
 		}
 
@@ -187,11 +212,11 @@ String SrNo;
 			VisitDate = visitDate;
 		}
 
-		public float getTSalLPA() {
+		public String getTSalLPA() {
 			return TSalLPA;
 		}
 
-		public void setTSalLPA(float tSalLPA) {
+		public void setTSalLPA(String tSalLPA) {
 			TSalLPA = tSalLPA;
 		}
 		@Override

@@ -81,14 +81,7 @@ class Login extends Component {
           <div className={classes.root}>
             <AppBar position="static">
               <Toolbar variant="dense">
-                <IconButton
-                  edge="start"
-                  className={classes.menuButton}
-                  color="inherit"
-                  aria-label="menu"
-                >
-                  <MenuIcon />
-                </IconButton>
+                
                 <Typography variant="h6" noWrap>
                   PICT PLACEMENT
                 </Typography>
@@ -97,9 +90,7 @@ class Login extends Component {
           </div>
         </Grid>
 
-        <Grid item xs={12} sm={4} md={7}>
-          <div className={classes.image}></div>
-        </Grid>
+     
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
