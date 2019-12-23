@@ -20,6 +20,7 @@ import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { blue } from "@material-ui/core/colors";
+import Logo from './Pict_logo.png'
 
 class Login extends Component {
   state = {
@@ -77,18 +78,10 @@ class Login extends Component {
     return (
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
-        <Grid item xs={12} sm={4} md={7}>
+        <Grid item xs={12}>
           <div className={classes.root}>
             <AppBar position="static">
               <Toolbar variant="dense">
-                <IconButton
-                  edge="start"
-                  className={classes.menuButton}
-                  color="inherit"
-                  aria-label="menu"
-                >
-                  <MenuIcon />
-                </IconButton>
                 <Typography variant="h6" noWrap>
                   PICT PLACEMENT
                 </Typography>
