@@ -218,9 +218,14 @@ public class HomeController {
 		skillrepo.save(skill);
 	}
 	@PostMapping("/findallskills")
-	public List<skills> skills()
+	public List<String> skills()
+	{List<String> ski=new ArrayList<String>();
+	List<skills> s=	skillrepo.findAll();
+	for(int i=0;i<s.size();i++)
 	{
-	return	skillrepo.findAll();
+		ski.add(s.get(i).getSkills());
+	}
+	return ski;
 	}
 	@PostMapping("/addlocation")
 	public void skills(@RequestBody location loc)
