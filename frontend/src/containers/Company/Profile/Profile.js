@@ -170,25 +170,22 @@ function Profile(props) {
             .catch((error) => {
                 console.log(error);
             })
-        axios.get('/industry/getAllSkills')
+        axios.get('/findallskills')
             .then((response) => {
-                setSkills([
-                    ...response.data
-                ]);
+                console.log(response.data);
+                setSkills([...response.data]);
             })
             .catch((error) => {
                 console.log(error);
             });
-    //     axios.get('/industry/getAllLocations')
-    //         .then((response) => {
-    //             console.log(response.data);
-    //             setCities([
-    //                 ...response.data
-    //             ]);
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         });
+        axios.get('/findalllocation')
+            .then((response) => {
+                console.log(response.data);
+                setCities([...response.data]);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }, []);
 
     const [state, setState] = React.useState({
@@ -269,7 +266,7 @@ function Profile(props) {
                     console.log(error);
                 });
         }
-        window.location.reload(true);
+        // window.location.reload(true);
     }
     const handleChange = (name) => (event) => {
         setState({
@@ -613,7 +610,7 @@ function Profile(props) {
                                     >
                                         {skills.map(s => (
                                             <MenuItem key={s} value={s}>
-                                                <Checkbox checked={state.skill.indexOf(s) > -1} />
+                                                <Checkbox checked={state.skills.indexOf(s) > -1} />
                                                 <ListItemText primary={s} />
                                             </MenuItem>
                                         ))}
@@ -641,7 +638,7 @@ function Profile(props) {
                                     >
                                         {cities.map(c => (
                                             <MenuItem key={c} value={c}>
-                                                <Checkbox checked={state.city.indexOf(c) > -1} />
+                                                <Checkbox checked={state.locality.indexOf(c) > -1} />
                                                 <ListItemText primary={c} />
                                             </MenuItem>
                                         ))}
