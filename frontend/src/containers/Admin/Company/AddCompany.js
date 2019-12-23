@@ -154,25 +154,22 @@ function Profile(props) {
     const [open, setOpen] = React.useState(false);
 
     useEffect(() => {
-        axios.get('/industry/getAllSkills')
+        axios.get('/findallskills')
             .then((response) => {
-                setSkills([
-                    ...response.data
-                ]);
+                console.log(response.data);
+                setSkills([...response.data]);
             })
             .catch((error) => {
                 console.log(error);
             });
-    //     axios.get('/industry/getAllLocations')
-    //         .then((response) => {
-    //             console.log(response.data);
-    //             setCities([
-    //                 ...response.data
-    //             ]);
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         });
+        axios.get('/findalllocation')
+            .then((response) => {
+                console.log(response.data);
+                setCities([...response.data]);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }, []);
 
     const [state, setState] = React.useState({
@@ -416,7 +413,7 @@ function Profile(props) {
             </Snackbar>
             <Paper className={classes.paper}>
                 <Typography component="h2" variant="h4" align="center">
-                    Company Profile
+                    Add Company
                 </Typography>
                 <br></br>
                 <div id="divToPrint">

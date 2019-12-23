@@ -20,6 +20,7 @@ import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { blue } from "@material-ui/core/colors";
+import Logo from "./Pict_logo.png";
 
 class Login extends Component {
   state = {
@@ -75,34 +76,40 @@ class Login extends Component {
 
   render() {
     return (
-      <Grid container component="main" className={classes.root}>
-        <CssBaseline />
-        <Grid item xs={12} sm={4} md={7}>
-          <div className={classes.root}>
-            <AppBar position="static">
-              <Toolbar variant="dense">
-                
-                <Typography variant="h6" noWrap>
-                  PICT PLACEMENT
-                </Typography>
-              </Toolbar>
-            </AppBar>
-          </div>
-        </Grid>
+      <div>
+        <div
+          style={{
+            width: "100%",
+            height: "7vh",
 
-     
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            font: "Bold",
+            fontSize: "4vh",
+            fontFamily: "Comicsans",
+            color: "white"
+          }}
+        >
+          <AppBar position="static">
+            <Toolbar variant="dense">
+              <Typography style={{ marginLeft: "2vw" }} variant="h6">
+                PICT PLACEMENT
+              </Typography>
+            </Toolbar>
+          </AppBar>
+        </div>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
           <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Pict_logo.png"
+              style={{ height: "12vh", width: "7vw", borderRadius: 125 }}
+            ></img>{" "}
             <Typography component="h1" variant="h5">
               Sign in
-            </Typography>
+            </Typography>{" "}
             <form
-              onSubmit={this.loginHandler}
               className={classes.form}
               noValidate
+              onSubmit={this.loginHandler}
             >
               <TextField
                 variant="outlined"
@@ -141,10 +148,13 @@ class Login extends Component {
               >
                 Sign In
               </Button>
-            </form>
-          </div>
-        </Grid>
-      </Grid>
+              <Grid container>
+                <Grid item xs></Grid>
+              </Grid>{" "}
+            </form>{" "}
+          </div>{" "}
+        </Container>
+      </div>
     );
   }
 }
