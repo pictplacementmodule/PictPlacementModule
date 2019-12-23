@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -205,19 +206,27 @@ public class HomeController {
 	{
 		skillrepo.save(skill);
 	}
-	@PostMapping("/findallskills")
-	public List<skills> skills()
+	@GetMapping("/findallskills")
+	public List<String> skills()
 	{
-	return	skillrepo.findAll();
+		List<String>skills = new ArrayList<String>();
+		for(skills s:skillrepo.findAll()) {
+			skills.add(s.getSkills());
+		}
+	return skills;
 	}
 	@PostMapping("/addlocation")
 	public void skills(@RequestBody location loc)
 	{
 		locationrep.save(loc);
 	}
-	@PostMapping("/findalllocation")
-	public List<location> location()
+	@GetMapping("/findalllocation")
+	public List<String> location()
 	{
-	return	locationrep.findAll();
+		List<String>cities = new ArrayList<String>();
+		for(location l:locationrep.findAll()) {
+			cities.add(l.getLocation());
+		}
+	return cities;
 	}
 }

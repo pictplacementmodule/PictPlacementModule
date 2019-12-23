@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -20,6 +20,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles'
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
+import axios from '../../../axios'
 
 const branches = ['Computer', 'IT', 'ENTC']
 
@@ -92,15 +93,16 @@ function Academic(props) {
 
   const [open, setOpen] = React.useState(false);
 
-  // useEffect(() => {
-  //     axios.get('/industry/getAllSkills')
-  //         .then((response) => {
-  //             setSkills([...response.data]);
-  //         })
-  //         .catch((error) => {
-  //             console.log(error);
-  //         },[])
-  // });
+  useEffect(() => {
+    axios.get('/findallskills')
+        .then((response) => {
+            console.log(response.data);
+            setSkills([...response.data]);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}, []);
 
   let twelfth = null;
 

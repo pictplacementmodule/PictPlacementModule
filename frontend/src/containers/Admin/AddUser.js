@@ -19,6 +19,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
+import Chip from '@material-ui/core/Chip'
 
 const useStyles = makeStyles(theme => ({
     icon: {
@@ -106,10 +107,13 @@ export default function AddUser() {
         type: '',
     })
 
+    const [skill, setSkill] = React.useState('');
+    const [city, setCity] = React.useState('');
+
     const types = {
-        'Admin':'admin',
-        'Company':'company',
-        'Student':'student',
+        'Admin': 'admin',
+        'Company': 'company',
+        'Student': 'student',
     }
 
     const [open, setOpen] = React.useState(false);
@@ -120,6 +124,14 @@ export default function AddUser() {
             ...state,
             [name]: event.target.value,
         })
+    }
+
+    const changeSkill = () => (event) => {
+        setSkill(event.target.value);
+    }
+
+    const changeCity = () => (event) => {
+        setCity(event.target.value);
     }
 
     const submitHandler = () => {
@@ -141,6 +153,33 @@ export default function AddUser() {
         setOpen(false);
     };
 
+    const submitSkill = () => {
+        const pass = {
+            skills: skill.toUpperCase(),
+        }
+        axios.post("addskills/",pass)
+            .then((response) => {
+                console.log(response.data);
+                setOpen(true);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+    const submitCity = () => {
+        const pass = {
+            location: city.toUpperCase(),
+        }
+        axios.post("addlocation/",pass)
+            .then((response) => {
+                console.log(response.data);
+                setOpen(true);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
     return (
         <React.Fragment>
             <Snackbar
@@ -155,12 +194,12 @@ export default function AddUser() {
                 <MySnackbarContentWrapper
                     onClose={handleClose}
                     variant="success"
-                    message="User Added!"
+                    message="Added!"
                 />
             </Snackbar>
             <Paper className={classes.paper}>
-                <Typography variant="h4" gutterBottom align="center">
-                    Add User
+                <Typography variant="h6" gutterBottom align="center">
+                    ADD USER
                 </Typography>
                 <Grid container spacing={2} direction="column">
                     <Grid item xs={12} sm={6}>
@@ -197,6 +236,53 @@ export default function AddUser() {
                     </Grid>
                     <Grid item xs={12} style={{ marginTop: "3vh" }}>
                         <Button onClick={submitHandler} size="large" variant="contained" color="primary">Submit</Button>
+                    </Grid>
+                </Grid>
+            </Paper>
+
+            <Paper className={classes.paper}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm={3} style={{ marginTop: "20px", }}>
+                        <Chip style={{ width: "80%" }} size="large" label="Add Skill" fullWidth />
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <TextField
+                            label="Skill"
+                            fullWidth
+                            value={skill}
+                            onChange={changeSkill()}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <Button 
+                            style={{marginTop:"10px",marginLeft:"50%"}}
+                            onClick={submitSkill} 
+                            variant="contained" 
+                            color="primary">
+                                Add
+                        </Button>
+                    </Grid>
+                </Grid>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm={3} style={{ marginTop: "20px", }}>
+                        <Chip style={{ width: "80%" }} size="large" label="Add City" fullWidth />
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <TextField
+                            label="City"
+                            fullWidth
+                            value={city}
+                            onChange={changeCity()}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <Button 
+                            style={{marginTop:"10px",marginLeft:"50%"}}
+                            onClick={submitCity} 
+                            variant="contained" 
+                            color="primary">
+                                Add
+                        </Button>
                     </Grid>
                 </Grid>
             </Paper>
