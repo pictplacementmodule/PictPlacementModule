@@ -43,7 +43,7 @@ public void setCompId(int compId) {
 @Id
 int id;
 int compId;
-int package_lpa;
+float package_lpa;
 String location;
 
 
@@ -53,11 +53,11 @@ public String getLocation() {
 public void setLocation(String location) {
 	this.location = location;
 }
-public int getPackage_lpa() {
+public float getPackage_lpa() {
 	return package_lpa;
 }
-public void setPackage_lpa(int package_lpa) {
-	this.package_lpa = package_lpa;
+public void setPackage_lpa(float f) {
+	this.package_lpa = f;
 }
 public Boolean getPL_status() {
 	return PL_status;
