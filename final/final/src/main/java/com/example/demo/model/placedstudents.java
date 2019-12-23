@@ -46,7 +46,17 @@ int compId;
 int package_lpa;
 String location;
 
+public String getIndname() {
+	return indname;
+}
+public void setIndname(String indname) {
+	this.indname = indname;
+}
 
+
+
+@Column
+String indname;
 public String getLocation() {
 	return location;
 }

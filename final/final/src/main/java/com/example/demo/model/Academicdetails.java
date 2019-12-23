@@ -26,6 +26,19 @@ public class Academicdetails {
 	@Id
 	@Column(name = "collegeId")
 	int collegeId;
+	
+	
+	public int getRoll_no() {
+		return roll_no;
+	}
+
+	public void setRoll_no(int roll_no) {
+		this.roll_no = roll_no;
+	}
+
+	@Column(name="roll_no") //new field added for roll no .Does not have linking with anything independent field
+	int roll_no;
+	
 	@Column(name = "br")
 	String branch;
 

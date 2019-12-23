@@ -148,4 +148,8 @@ public class Userservice {
 		List<EligibleStudents> x = customerDao.eligibility( a);
 		return x;
 	}
+	public void finalplaced(List<Integer> p)//to change value of placed field from 0 to 1
+	{
+		acarepo.finalplaced(p);
+	}
 }

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.io.PrintStream;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +20,15 @@ import com.example.demo.model.industry;
 import com.example.demo.model.placedstudents;
 import com.example.demo.repository.industryrepo;
 import com.example.demo.repository.placedstudentsrepo;
+import com.example.demo.service.Userservice;
 import com.example.demo.service.industryservice;
 
 @RestController
 @CrossOrigin(origins = "*",allowedHeaders="*")
 @RequestMapping("/industry")
 public class IndustryController {
+	@Autowired
+	private Userservice userservice;
 	@Autowired
 	private industryrepo industryrepo;
 	@Autowired
@@ -100,9 +104,20 @@ public class IndustryController {
 	 }
 	 
 
-	 @PostMapping("/finalPlaced")
+	 @PostMapping("/finalPlaced")//for placing the students and changing placed field to 1
 	 public void finalPlaced(@RequestBody List<placedstudents> p) {
 		 placedrepo.saveAll(p);
+		 System.out.print("hvhjbhj");
+
+		 List<Integer> x=new ArrayList<Integer>();
+
+		 for(int i=0;i<p.size();i++)
+		 {
+			 	 x.add(p.get(i).getId());
+		 }
+		 System.out.print(x);
+		 
+		 userservice.finalplaced(x);
 	 }
 	 
 	 @GetMapping("/getAllSkills")
