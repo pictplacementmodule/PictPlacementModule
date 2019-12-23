@@ -84,8 +84,9 @@ class BranchReport extends Component {
             if(this.state.students[i].status===true)
             a.push(this.state.students[i].roll);
         }
-        console.log(a);
-        axios.post("/selectByCompany",null,{params:{comp_id:localStorage.getItem("token"),b:a}}).catch((error) => {
+        let comp_id=localStorage.getItem("token");
+        a.push(comp_id)
+        axios.post("/selectByCompany",a).catch((error) => {
           console.log(error);
         });;
        // window.location.reload(false);

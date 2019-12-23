@@ -40,7 +40,7 @@ public class HomeController {
 	@Autowired
 	private Userservice userservice;
 	@Autowired
-	private industryrepo industryrepo;
+	private industryrepo ir;
 	@Autowired
 	private placedstudentsrepo placedrepo;
 	@Autowired
@@ -148,7 +148,7 @@ public class HomeController {
 		if (b.isIt()) {
 			branches.add("IT");
 		}
-		if (b.isEntc()) { 
+		if (b.isEntc()) {
 			branches.add("ENTC");
 		}
 		return userservice.sortbybranch(branches);
@@ -173,11 +173,9 @@ public class HomeController {
 
 	@PostMapping("/fetchToCompanyEligibleStudents")
 	public List<EligibleStudents> fetchToCompany(@RequestParam("a") String a) {
-		System.out.println(a);
 		return userservice.eligible(a);
 	}
 
-	
 	@PostMapping("/getStatusOfPlaced")
 	public void ChangeStatusOfPlaced(@RequestBody List<Integer> a) {
 		placedstudents p;
@@ -192,13 +190,27 @@ public class HomeController {
 			System.out.print(p.getId());
 		}
 	}
-	
+
+	@SuppressWarnings("null")
 	@PostMapping("/selectByCompany")
-	public void selectByCompany(@RequestParam("comp_id") String cid,@RequestParam(name="b[]") String[] sid) {
-		System.out.println(cid);
-//		for(int i=0;i<sid.size();i++) {
-//			System.out.println(sid.get(i));
-//		}
+	public void selectByCompany(@RequestBody List<String> myParams) {
+		System.out.println(myParams);
+		// myParams.size() -1 will contain the company id
+		int len = myParams.size();
+		System.out.print(len);
+
+		
+		int comp_id = Integer.parseInt(myParams.get(len-1));
+		for (int i = 0; i < len - 1; i++) {
+			placedstudents ps = new placedstudents();
+				ps.setCompId(comp_id);
+				ps.setId(Integer.parseInt(myParams.get(i)));
+				ps.setPackage_lpa((float)ir.findById(comp_id).get().getPackage_lpa());
+				ps.setLocation("MUMBAI");
+				ps.setPL_status(false);
+				placedrepo.save(ps);
+		}
+
 	}
 	@PostMapping("/addskills")
 	public void skills(@RequestBody skills skill)
