@@ -31,7 +31,7 @@ public class CustomerDaoImpl extends JdbcDaoSupport implements CustomerDao{
 
 	@Override
 	 public List<countofplaced> countofstudents(){
-	    String sql = "SElect count(id),indname from placedstudents group by indname";
+	    String sql = "Select count(id),indname from placedstudents group by indname";
 	    List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
 	    
 	    List<countofplaced> result = new ArrayList<countofplaced>();

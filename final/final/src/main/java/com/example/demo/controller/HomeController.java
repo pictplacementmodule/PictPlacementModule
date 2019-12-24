@@ -199,6 +199,7 @@ public class HomeController {
 			ps.setId(Integer.parseInt(myParams.get(i)));
 			ps.setPackage_lpa((float) ir.findById(comp_id).get().getPackage_lpa());
 			ps.setLocation("MUMBAI");
+			ps.setIdname(ir.findById(comp_id).get().getName());
 			ps.setPL_status(false);
 			placedrepo.save(ps);
 		}
@@ -231,6 +232,7 @@ public class HomeController {
 	@PostMapping("/findallCompaniesVisited")
 	public List<Companyv> returnCompanyvisited(){
 		return cvr.findAll();
+	}
 	@GetMapping("/findalllocation")
 	public List<String> location()
 	{

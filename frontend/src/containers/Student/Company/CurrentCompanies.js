@@ -51,6 +51,7 @@ class Current extends Component {
                             <TableCell>Name</TableCell>
                             <TableCell align="right">Criteria</TableCell>
                             <TableCell align="right">Average Salary</TableCell>
+                            <TableCell align="right">Tentative Date</TableCell>
                             <TableCell align="right">Skills</TableCell>
                         </TableRow>
                     </TableHead>
@@ -62,7 +63,8 @@ class Current extends Component {
                                 </TableCell>
                                 <TableCell align="right">{company.criteria}</TableCell>
                                 <TableCell align="right">{company.package_lpa}</TableCell>
-                                <TableCell align="right">{company.skills}</TableCell>
+                                <TableCell align="right">{company.final_date}</TableCell>
+                                <TableCell align="right">{company.skills.join(", ")}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

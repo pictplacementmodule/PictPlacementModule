@@ -92,7 +92,7 @@ class CountReport extends Component {
                         {this.state.companies.map(company => (
                             <TableRow key={company.id}>
                                 <TableCell component="th" scope="row">
-                                    <u>{company.name}</u>
+                                    {company.idname}
                                 </TableCell>
                                 <TableCell align="right">{company.count}</TableCell>
                             </TableRow>
