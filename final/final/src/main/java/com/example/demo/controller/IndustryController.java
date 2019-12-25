@@ -42,6 +42,7 @@ public class IndustryController {
 		System.out.println(industry);
 		if(!industryrepo.addIndustry(industry.getStart_date())) {
 			industryrepo.save(industry);
+			
 			return industryrepo.findById(industry.getId()).get();
 		}
 		System.out.print("choose different date\n");
@@ -109,7 +110,7 @@ public class IndustryController {
 		 placedrepo.saveAll(p);
 		 System.out.print("hvhjbhj");
 
-		 List<Integer> x=new ArrayList<Integer>();
+		 ArrayList<Integer> x=new ArrayList<Integer>();
 
 		 for(int i=0;i<p.size();i++)
 		 {
@@ -118,6 +119,7 @@ public class IndustryController {
 		 System.out.print(x);
 		 
 		 userservice.finalplaced(x);
+		 userservice.mail(x);
 	 }
 	 
 	 @GetMapping("/getAllSkills")

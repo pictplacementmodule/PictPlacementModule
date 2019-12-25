@@ -20,6 +20,10 @@ import javax.persistence.Table;
 @Table(name = "academic_details", schema = "public")
 
 public class Academicdetails {
+	Academicdetails()
+	{
+		placed=false;
+	}
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "collegeId", referencedColumnName = "rollno")
 	private Studentdetails student;

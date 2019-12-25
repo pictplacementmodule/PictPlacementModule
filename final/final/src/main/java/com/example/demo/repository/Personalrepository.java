@@ -1,4 +1,6 @@
 package com.example.demo.repository;
+import java.util.ArrayList;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,4 +22,7 @@ public interface Personalrepository extends JpaRepository<Studentdetails,Integer
 @Transactional
 @Query(value = "select * from student", nativeQuery = true)
 public users addToTable(@Param("columnName") String columnName, @Param("dataType") String dataType);
+@Query(value = "select email from studentpersonal_details where rollno in ?1", nativeQuery = true)
+public ArrayList<String> getmails(ArrayList<Integer> id);
+
 }

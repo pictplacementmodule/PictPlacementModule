@@ -47,24 +47,36 @@ public class CustomerDaoImpl extends JdbcDaoSupport implements CustomerDao{
 	  }
 	 @Override
 	 public List<AdminPlaced> adminplaced(){
-	    String sql = "select p.id as pid,concat(s.fn,' ',s.ln) as sfn,c.name as cname,p.package_lpa as pack,p.location as loc,p.pl_status as status from placedstudents as p,Studentpersonal_Details as s,industry as c where p.id = s.rollno AND c.id = p.comp_id AND p.pl_status='false'";
+		    List<AdminPlaced> result = new ArrayList<AdminPlaced>();
+
+		 try
+	  
+	  {
+		 String sql = "select p.id as pid,concat(s.fn,' ',s.ln) as sfn,c.name as cname,p.package_lpa as pack,p.location as loc,p.pl_status as status from placedstudents as p,Studentpersonal_Details as s,industry as c where p.id = s.rollno AND c.id = p.comp_id AND p.pl_status='false'";
 	    List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
 	    
-	    List<AdminPlaced> result = new ArrayList<AdminPlaced>();
 	    for(Map<String, Object> row:rows){
 	      AdminPlaced cus = new AdminPlaced();
-	      cus.setRoll((int)row.get("pid"));
+	      cus.setRoll(((int)row.get("pid")));
 	      System.out.print(cus.getRoll());
 	      cus.setStu_name((String)row.get("sfn"));
 	      cus.setComp_name((String)row.get("cname"));
-	      cus.setPackage_lpa((int)row.get("pack"));
+	      cus.setPackage_lpa(((Float)row.get("pack")).intValue());
+	      System.out.print(cus.getPackage_lpa());
+
 	      cus.setLocation((String)row.get("loc"));
 	      cus.setStatus((Boolean)row.get("status"));
 	     
 
 	      result.add(cus);
 	    }
+	  }
+	  catch(Exception e)
+	  {
+		System.out.println(e);  
+	  }
 	    return result;
+
 	  }
 	 
 	 @Override
@@ -92,6 +104,7 @@ public class CustomerDaoImpl extends JdbcDaoSupport implements CustomerDao{
 
 	      result.add(cus);
 	    }
+	    System.out.println(result);
 	    return result;
 	  }
 

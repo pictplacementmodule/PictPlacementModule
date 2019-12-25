@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.daoimplmentation.CustomerDao;
@@ -12,6 +14,7 @@ import com.example.demo.model.AdminPlaced;
 import com.example.demo.model.EligibleStudents;
 import com.example.demo.model.Studentdetails;
 import com.example.demo.model.countofplaced;
+import com.example.demo.model.placedstudents;
 import com.example.demo.model.users;
 import com.example.demo.repository.Academicrepository;
 import com.example.demo.repository.Personalrepository;
@@ -27,12 +30,15 @@ public class Userservice {
 	@Autowired
 	private userrepository userrepo;// repository for admin
 	@Autowired
-
+	
 	private Personalrepository personalrepo;// repository for personaldetails
+	
 	@Autowired
 
 	private Academicrepository acarepo;// repository for academic details
 
+	@Autowired
+    private JavaMailSender javaMailSender;
 	public users findById(int id) {
 		System.out.println("n");
 		return userrepo.findById(id).orElse(null);
@@ -150,5 +156,33 @@ public class Userservice {
 	public void finalplaced(List<Integer> p)//to change value of placed field from 0 to 1
 	{
 		acarepo.finalplaced(p);
+	}
+	public void mail(ArrayList<Integer> x)
+	{
+		
+	List<String> m=personalrepo.getmails(x);
+	for(int i=0;i<m.size();i++)
+	{
+		System.out.println("Sending Email...");
+
+		
+		try {
+		        SimpleMailMessage msg = new SimpleMailMessage();
+		        msg.setTo(m.get(i));
+
+		        msg.setSubject("Testing from Spring Boot");
+		        msg.setText("CONGRATS YOU ARE PLACED !!");
+
+		        javaMailSender.send(msg);
+		}
+		catch(Throwable e)
+		{
+			System.out.println(e);
+
+		}
+
+
+		System.out.println("Done");
+	}
 	}
 }

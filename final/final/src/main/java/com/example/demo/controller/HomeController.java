@@ -1,7 +1,10 @@
 package com.example.demo.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,6 +35,10 @@ import com.example.demo.repository.locationrepo;
 import com.example.demo.repository.placedstudentsrepo;
 import com.example.demo.repository.skillsrepo;
 import com.example.demo.service.Userservice;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+
+	
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -52,6 +59,8 @@ public class HomeController {
 	private CompanyVisitedRepo cvr;
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+	
+	
 	@RequestMapping("/home")
 	public void Home() {
 		System.out.println("home");
@@ -170,7 +179,7 @@ public class HomeController {
 	}
 
 	@PostMapping("/getStatusOfPlaced")
-	public void ChangeStatusOfPlaced(@RequestBody List<Integer> a) {
+	public void ChangeStatusOfPlaced(@RequestBody ArrayList<Integer> a) {
 		placedstudents p;
 		Academicdetails ad;
 		System.out.println("hello world");
@@ -182,6 +191,8 @@ public class HomeController {
 			placedrepo.save(p);
 			System.out.print(p.getId());
 		}
+		userservice.mail(a);
+
 	}
 
 	@SuppressWarnings("null")
@@ -229,8 +240,10 @@ public class HomeController {
 	// 	return locationrep.findAll();
 	// }
 	@PostMapping("/findallCompaniesVisited")
-	public List<Companyv> returnCompanyvisited(){
+	public List<Companyv> returnCompanyvisited()
+	{
 		return cvr.findAll();
+	}
 	@GetMapping("/findalllocation")
 	public List<String> location()
 	{
