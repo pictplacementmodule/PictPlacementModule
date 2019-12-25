@@ -246,7 +246,7 @@ function Profile(props) {
             passive_backlogs: state.passiveBacklogs,
             active_backlogs: state.activeBacklogs,
             package_lpa: state.package,
-            start_date: state.startDate,
+            start_date: state.endDate,
             end_date: state.endDate,
             no_of_students: state.numberOfStudents,
             skills: state.skill,
