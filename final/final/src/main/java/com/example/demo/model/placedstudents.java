@@ -44,6 +44,16 @@ public void setCompId(int compId) {
 int id;
 int compId;
 float package_lpa;
+String idname;
+public String getIdname() {
+	return idname;
+}
+public void setIdname(String idname) {
+	this.idname = idname;
+}
+
+
+
 String location;
 
 public String getIndname() {

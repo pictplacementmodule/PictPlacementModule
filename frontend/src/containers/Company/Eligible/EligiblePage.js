@@ -112,7 +112,7 @@ class BranchReport extends Component {
             <TableBody>
               {this.state.students.map((s,index) => (
                 <TableRow key={s.roll}>
-                     <TableCell align="right">{s.roll}</TableCell>
+                  <TableCell align="left">{s.roll}</TableCell>
                   <TableCell align="right">{s.name}</TableCell>
                   <TableCell align="right">{s.sgpaTEFS}</TableCell>
               <TableCell align="right"><FormControlLabel
