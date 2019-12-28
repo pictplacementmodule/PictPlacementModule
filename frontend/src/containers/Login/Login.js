@@ -91,7 +91,7 @@ class Login extends Component {
           <AppBar position="static">
             <Toolbar variant="dense">
               <Typography style={{ marginLeft: "2vw" }} variant="h6">
-                PICT PLACEMENT
+                PUNE INSTITUTE OF COMPUTER TECHNOLOGY PLACEMENT-CELL
               </Typography>
             </Toolbar>
           </AppBar>

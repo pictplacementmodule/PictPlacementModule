@@ -31,14 +31,14 @@ public class CustomerDaoImpl extends JdbcDaoSupport implements CustomerDao{
 
 	@Override
 	 public List<countofplaced> countofstudents(){
-	    String sql = "Select count(id),indname from placedstudents group by indname";
+	    String sql = "Select count(id),idname from placedstudents group by idname";
 	    List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
 	    
 	    List<countofplaced> result = new ArrayList<countofplaced>();
 	    for(Map<String, Object> row:rows){
 	      countofplaced cus = new countofplaced();
 	      cus.setCount((Long)row.get("count"));
-	      cus.setName((String)row.get("indname"));
+	      cus.setName((String)row.get("idname"));
 		    System.out.println(cus.getCount()+" name "+cus.getName());
 
 	      result.add(cus);

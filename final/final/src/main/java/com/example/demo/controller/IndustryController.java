@@ -39,7 +39,7 @@ public class IndustryController {
 	@PostMapping("/add")
 	public industry addIndystry(@RequestBody industry industry)
 	{
-		System.out.println(industry.getId());
+		System.out.println(industry.getStart_date());
 		if(!industryrepo.addIndustry(industry.getStart_date())) {
 			industryrepo.save(industry);
 			
