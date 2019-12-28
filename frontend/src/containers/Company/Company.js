@@ -6,12 +6,16 @@ import Dashboard from '../../components/Dashboard/Dashboard'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import Profile from './Profile/Profile'
 import Eligible_Students from './Eligible/EligiblePage'
+import Filter from './Filter'
+import FilterListIcon from '@material-ui/icons/FilterList';
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 
 class Company extends Component {
 
     drawerList = {
         'Profile':['profile', <DashboardIcon />],
-         'Eligible_Students':['eligible_student',<DashboardIcon />]
+        'Eligible Students':['eligible_students',<DoneOutlineIcon />],
+        'Filter':['eligible_students2',<FilterListIcon />]
     }
 
     render() {
@@ -20,7 +24,8 @@ class Company extends Component {
                 <ProtectedRoute path="/company/dashboard" component={() =>
                     <Dashboard drawerList={this.drawerList}>
                         <Route exact path="/company/dashboard/profile" component={Profile} />
-                       <Route exact path="/company/dashboard/eligible_student" component={Eligible_Students} />
+                        <Route exact path="/company/dashboard/eligible_students" component={Eligible_Students} />
+                        <Route exact path="/company/dashboard/eligible_students2" component={Filter} />
                     </Dashboard>
                 } />
             </div>

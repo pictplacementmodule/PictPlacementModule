@@ -242,8 +242,6 @@ function Profile(props) {
     }
 
     const submitHandler = (event) => {
-
-        // setOpen(true);
         event.preventDefault();
         validate();
         var valid = true;

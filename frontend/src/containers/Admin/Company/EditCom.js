@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{ useEffect } from 'react'
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles'
@@ -145,26 +145,8 @@ export default function AddVisited() {
 
     const classes = useStyles();
 
-    const skills = [
-        'JAVA',
-        'CPP',
-        'PYTHON',
-        'SPRING',
-        'REACT',
-        'MYSQL',
-        'POSTGRESQL'
-      ];
-      const cities = [
-        'PUNE',
-        'DELHI',
-        'SANGAMNER',
-        'NAGPUR',
-        'MUMBAI',
-        'BARSHI',
-        'SOLAPUR',
-        'KOLHAPUR',
-        'SATARA'
-      ]
+    const [skills, setSkills] = React.useState([]);
+    const [cities, setCities] = React.useState([]);
 
     const [open, setOpen] = React.useState(false);
 
@@ -192,6 +174,27 @@ export default function AddVisited() {
 
     const [snackState, setSnackState] = React.useState(false);
 
+    const [message,setMessage] = React.useState("Company Profile edited successfully!");
+    const [variant,setVariant] = React.useState("success");
+
+    useEffect(() => {
+        axios.get('/findallskills')
+            .then((response) => {
+                console.log(response.data);
+                setSkills([...response.data]);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        axios.get('/findalllocation')
+            .then((response) => {
+                console.log(response.data);
+                setCities([...response.data]);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
 
     const [formErrors, setError] = React.useState({
         cpname: '',
@@ -209,16 +212,20 @@ export default function AddVisited() {
 
         event.preventDefault();
         var name = state.name;
-        console.log(name);
         axios.post('/industry/findById', null, { params: { id: state.name } })
             .then((response) => {
-                if (response.data != null) {
+                if (response.data != "") {
+                    console.log(response.data)
                        setState({
                            ...response.data,
                        });
-                    console.log(response.data)
+                       setVariant("success");
                 }
-
+                else{
+                    setMessage("No such company profile found!");
+                    setVariant("error");
+                    setOpen(true);
+                }
             })
             .catch((error) => {
                 console.log(error);
@@ -227,8 +234,10 @@ export default function AddVisited() {
     }
     const submitHandler2 = (event) => {
         event.preventDefault();
+        console.log(state);
         axios.post('/industry/add', state)
             .then((response) => {
+                setMessage("Company Profile edited successfully!")
                 setOpen(true);
             })
             .catch((error) => {
@@ -322,8 +331,8 @@ export default function AddVisited() {
             >
                 <MySnackbarContentWrapper
                     onClose={handleClose}
-                    variant="success"
-                    message="Company Profile edited successfully!"
+                    variant={variant}
+                    message={message}
                 />
             </Snackbar>
             <Paper className={classes.paper}>
