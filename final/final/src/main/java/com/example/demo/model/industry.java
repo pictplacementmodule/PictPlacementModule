@@ -41,7 +41,7 @@ public class industry {
 	@ElementCollection
 	private List<String> skills;
 	private float criteria;
-
+	
 	@ElementCollection
 	private List<String> locality;
 	private float package_lpa;
@@ -51,8 +51,24 @@ public class industry {
 	@JsonFormat(timezone = "Asia/Kolkata",pattern="yyyy-MM-dd")
 	private Date final_date;
 	private Boolean computer;
+	public Date getJoindate() {
+		return joindate;
+	}
 
+	public void setJoindate(Date joindate) {
+		this.joindate = joindate;
+	}
+	private Date joindate;
+	
+	public String getOnlinetest() {
+		return onlinetest;
+	}
 
+	public void setOnlinetest(String onlinetest) {
+		this.onlinetest = onlinetest;
+	}
+	
+	private String onlinetest;
 	
 	
 	public Boolean getComputer() {

@@ -53,6 +53,55 @@ public class Studentdetails implements Serializable {
     private String currentAddress;
     @Column(name="padd")
     private String permanentAddress;
+	@Column(name="fathersname")
+	private String fatname;
+	public int getRollno() {
+		return rollno;
+	}
+	public void setRollno(int rollno) {
+		this.rollno = rollno;
+	}
+	public String getFatname() {
+		return fatname;
+	}
+	public void setFatname(String fatname) {
+		this.fatname = fatname;
+	}
+	public String getMotname() {
+		return motname;
+	}
+	public void setMotname(String motname) {
+		this.motname = motname;
+	}
+	public String getAnninc() {
+		return anninc;
+	}
+	public void setAnninc(String anninc) {
+		this.anninc = anninc;
+	}
+	public String getOccupation() {
+		return occupation;
+	}
+	public void setOccupation(String occupation) {
+		this.occupation = occupation;
+	}
+	public String getDisability() {
+		return disability;
+	}
+	public void setDisability(String disability) {
+		this.disability = disability;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	@Column(name="mothersname")
+	private String motname;
+	@Column(name="annincome")
+	private String anninc;
+	@Column(name="occupation")
+	private String occupation;
+	@Column(name="disability")
+	private String disability;
 	
     public int getrollno() {
 		return rollno;
