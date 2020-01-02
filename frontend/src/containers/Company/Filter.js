@@ -66,22 +66,8 @@ class Filter extends React.Component {
         active_backlogs: true,
         passive_backlogs: true,
         internship: 0,
-        stu:{
-                    roll:0,
-                    name:"",
-                    sgpaTEFS:0,
-                    skills:"",
-                    status:false
-                }
     }
-    
-//    x={
-//         roll:0,
-//         name:"",
-//         sgpaTEFS:0,
-//         skills:"",
-//         status:false
-//     }
+
     componentDidMount() {
         axios.post('/findallstu', null, { params: { a: localStorage.getItem('token') } })
             .then((response) => {
@@ -89,20 +75,11 @@ class Filter extends React.Component {
                 this.setState({
                     students: response.data,
                     temp: response.data,
-                    stu:{
-                        roll:response.data.collegeId,
-                        name:response.data.firstName,
-                        sgpaTEFS:response.data.sgpaTEFS,
-                        skills:response.data.skills,
-                        status:false
-                    },
                 });
-                {console.log(this.state.stu);}
             })
             .catch((error) => {
                 console.log(error);
             })
-            console.log(this.state.stu);
     }
 
     handleChange = (name) => (event) => {
@@ -143,35 +120,6 @@ class Filter extends React.Component {
             temp: temp2,
         });
     }
-    clickHandlerForAccept = () => {
-        console.log(this.state.students)
-        var i = 0;
-        var a = []
-       
-        for (i = 0; i < this.state.students.length; i++) {
-            if (this.state.students[i].status === true)
-                a.push(this.state.students[i].roll);
-        }
-        let comp_id = localStorage.getItem("token");
-        a.push(comp_id)
-        console.log(a);
-        // axios.post("/selectByCompany", a).catch((error) => {
-        //     console.log(error);
-        // });;
-        // window.location.reload(false);
-    };
-
-
-    handleChangeIndex = index => event => {
-        let s = this.state.students[index]
-        s.status = event.target.checked
-        let a = [...this.state.students]
-        a[index] = s
-        this.setState({
-            ...this.state,
-            students: a,
-        })
-    };
 
     render() {
 
@@ -270,11 +218,10 @@ class Filter extends React.Component {
                                     <TableCell align="right">SGPA</TableCell>
                                     <TableCell align="right">10th Percentage</TableCell>
                                     <TableCell align="right">12th Percentage</TableCell>
-                                    <TableCell align="right">Approve</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {this.state.temp.map((s, index) => (
+                                {this.state.temp.map(s => (
                                     <TableRow key={s.roll}>
                                         <TableCell component="th" scope="row">
                                             {s.collegeId}
@@ -284,32 +231,11 @@ class Filter extends React.Component {
                                         <TableCell align="right">{s.sgpaTEFS}</TableCell>
                                         <TableCell align="right">{s.percentageTenth}</TableCell>
                                         <TableCell align="right">{s.percentageTwelfth}</TableCell>
-                                        <TableCell align="right"><FormControlLabel
-                                            control={
-                                                <Checkbox
-                                                    style={{ marginLeft: "5vw" }}
-                                                    onChange={this.handleChangeIndex(index)}
-                                                    value={s.status}
-                                                />
-                                            }
-                                            label="Accept"
-                                        /></TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
-
                         </Table>
-                       
                     </Paper>
-                    <Button
-                            variant="contained"
-                            color="primary"
-                            id="printbtn"
-                            className={classes.button}
-                            onClick={this.clickHandlerForAccept}
-                        >
-                            Allot
-                         </Button>
                 </div>
             </React.Fragment>
         );

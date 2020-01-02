@@ -144,7 +144,6 @@ public class HomeController {
 	@RequestMapping("/sortbybranch")
 	public List<Academicdetails> show(@RequestBody Branches b) {
 		List<String> branches = new ArrayList<String>();
-		
 		if (b.isComputer()) {
 			branches.add("Computer");
 		}

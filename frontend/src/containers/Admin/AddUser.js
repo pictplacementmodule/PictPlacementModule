@@ -243,7 +243,7 @@ export default function AddUser() {
             <Paper className={classes.paper}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={3} style={{ marginTop: "20px", }}>
-                        <Chip style={{ width: "80%" }} size="large" label="Add Skill" fullWidth />
+                        <Chip style={{ width: "80%" }} size="large" label="Add Skill to Skillset" fullWidth />
                     </Grid>
                     <Grid item xs={12} sm={4}>
                         <TextField
@@ -265,7 +265,7 @@ export default function AddUser() {
                 </Grid>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={3} style={{ marginTop: "20px", }}>
-                        <Chip style={{ width: "80%" }} size="large" label="Add City" fullWidth />
+                        <Chip style={{ width: "80%" }} size="large" label="Add a City to Locations" fullWidth />
                     </Grid>
                     <Grid item xs={12} sm={4}>
                         <TextField

@@ -111,7 +111,7 @@ class BranchReport extends Component {
                 <TableCell align="right">Company Name</TableCell>
                 <TableCell align="right">Package LPA</TableCell>
                 <TableCell align="right">Location</TableCell>
-                <TableCell align="right">Approve</TableCell>
+                <TableCell align="right">Approve selection</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -146,7 +146,7 @@ class BranchReport extends Component {
                 className={classes.button}
                 onClick={this.clickHandler} 
               >
-               Allot
+               Accept
         </Button>
       </React.Fragment>
     );

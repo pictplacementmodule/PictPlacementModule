@@ -248,6 +248,26 @@ function Profile(props) {
     setEmptyError(e);
   }
 
+// const submitHandler = event => {
+//     // setOpen(true);
+//     event.preventDefault();
+//     validate();
+//     var valid = true;
+//     if (
+//       Object.values(formErrors).some(error => error.length > 0) ||
+//       Object.keys(e).length > 0
+//     ) {
+//       valid = false;
+//     } else {
+//       valid = true;
+//     }
+
+    // if (valid) {
+    //   axios
+    //     .post("/industry/add", state)
+    //     .then(response => {
+    //       console.log(response);
+    //       setOpen(true);
     const submitHandler = (event) => {
         event.preventDefault();
         validate();
@@ -271,106 +291,98 @@ function Profile(props) {
                     console.log(error);
                 });
         }
-        if(valid === true){
-          props.history.push({
-            pathname: "/company/dashboard/job_details"
-          });
-        }
-      
         // window.location.reload(true);
     }
-  //   const handleChange = (name) => (event) => {
-  //       setState({
-  //           ...state,
-  //           [name]: event.target.value
-  //       })
-  //       const value = event.target.value;
-  //       let error = '';
-  //       let reg = '';
-  //       switch (name) {
-  //           case 'cpname':
-  //               reg = /^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/
-  //               error = reg.test(value) ? '' : 'Invalid CPName';
-  //               break;
-  //           case 'cpemail1':
-  //           case 'cpemail2':
-  //               reg = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-  //               error = reg.test(value) ? '' : 'Invalid Email';
-  //               break;
-  //           case 'contactno1':
-  //           case 'contactno2':
-  //           case 'contactno3':
-  //               reg = /^\d{10}$/
-  //               error = reg.test(value) ? '' : 'Invalid Phone Number';
-  //               break;
-  //           case 'criteria':
-  //               error = (Number(value) > 0 && Number(value) < 10) ? '' : 'Invalid Criteria';
-  //               break;
-  //           case 'package_lpa':
-  //               reg = /^[0-9]+$/
-  //               error = reg.test(value) ? '' : 'Invalid Package';
-  //               break;
-  //           case 'no_of_students':
-  //               error = Number(value) > 0 ? '' : 'Invalid Number Of Students';
-  //               break;
-  //       }
-  //       setError({
-  //           ...formErrors,
-  //           [name]: error,
-  //       })
-  //       .catch(error => {
-  //         console.log(error);
-  //       });
+    const handleChange = (name) => (event) => {
+        setState({
+            ...state,
+            [name]: event.target.value
+        })
+        const value = event.target.value;
+        let error = '';
+        let reg = '';
+        switch (name) {
+            case 'cpname':
+                reg = /^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/
+                error = reg.test(value) ? '' : 'Invalid CPName';
+                break;
+            case 'cpemail1':
+            case 'cpemail2':
+                reg = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+                error = reg.test(value) ? '' : 'Invalid Email';
+                break;
+            case 'contactno1':
+            case 'contactno2':
+            case 'contactno3':
+                reg = /^\d{10}$/
+                error = reg.test(value) ? '' : 'Invalid Phone Number';
+                break;
+            case 'criteria':
+                error = (Number(value) > 0 && Number(value) < 10) ? '' : 'Invalid Criteria';
+                break;
+            case 'package_lpa':
+                reg = /^[0-9]+$/
+                error = reg.test(value) ? '' : 'Invalid Package';
+                break;
+            case 'no_of_students':
+                error = Number(value) > 0 ? '' : 'Invalid Number Of Students';
+                break;
+        }
+        setError({
+            ...formErrors,
+            [name]: error,
+        })
+        .catch(error => {
+          console.log(error);
+        });
     
-  //   // window.location.reload(true);
-  //   console.log(state);
-  //   props.history.push({
-  //     pathname: "/company/dashboard/job_details"
-  //   });
-  // };
-  const handleChange = name => event => {
-    setState({
-      ...state,
-      [name]: event.target.value
-    });
-    const value = event.target.value;
-    let error = "";
-    let reg = "";
-    switch (name) {
-      case "cpname":
-        reg = /^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/;
-        error = reg.test(value) ? "" : "Invalid CPName";
-        break;
-      case "cpemail1":
-      case "cpemail2":
-        reg = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-        error = reg.test(value) ? "" : "Invalid Email";
-        break;
-      case "contactno1":
-      case "contactno2":
-      case "contactno3":
-        reg = /^\d{10}$/;
-        error = reg.test(value) ? "" : "Invalid Phone Number";
-        break;
-      case "criteria":
-        error =
-          Number(value) > 0 && Number(value) < 10 ? "" : "Invalid Criteria";
-        break;
-      case "package_lpa":
-        reg = /^[0-9]+$/;
-        error = reg.test(value) ? "" : "Invalid Package";
-        break;
-      case "no_of_students":
-        error = Number(value) > 0 ? "" : "Invalid Number Of Students";
-        break;
-    }
-    setError({
-      ...formErrors,
-      [name]: error
-    });
+    // window.location.reload(true);
     console.log(state);
-  
+    props.history.push({
+      pathname: "/company/dashboard/job_details"
+    });
   };
+//   const handleChange = name => event => {
+//     setState({
+//       ...state,
+//       [name]: event.target.value
+//     });
+//     const value = event.target.value;
+//     let error = "";
+//     let reg = "";
+//     switch (name) {
+//       case "cpname":
+//         reg = /^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/;
+//         error = reg.test(value) ? "" : "Invalid CPName";
+//         break;
+//       case "cpemail1":
+//       case "cpemail2":
+//         reg = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+//         error = reg.test(value) ? "" : "Invalid Email";
+//         break;
+//       case "contactno1":
+//       case "contactno2":
+//       case "contactno3":
+//         reg = /^\d{10}$/;
+//         error = reg.test(value) ? "" : "Invalid Phone Number";
+//         break;
+//       case "criteria":
+//         error =
+//           Number(value) > 0 && Number(value) < 10 ? "" : "Invalid Criteria";
+//         break;
+//       case "package_lpa":
+//         reg = /^[0-9]+$/;
+//         error = reg.test(value) ? "" : "Invalid Package";
+//         break;
+//       case "no_of_students":
+//         error = Number(value) > 0 ? "" : "Invalid Number Of Students";
+//         break;
+//     }
+//     setError({
+//       ...formErrors,
+//       [name]: error
+//     });
+//   };
 
   const handleChecked = name => event => {
     console.log(event.target.checked);

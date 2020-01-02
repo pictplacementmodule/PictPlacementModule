@@ -93,8 +93,7 @@ public class Userservice {
 	}
 
 	public List<Academicdetails> sortbybranch(List<String> branches) {
-		System.out.println(branches);
-		
+		System.out.println(acarepo.sortbybranch(branches));
 		return acarepo.sortbybranch(branches);
 	}
 

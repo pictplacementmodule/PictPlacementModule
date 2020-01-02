@@ -118,7 +118,7 @@ class SkillsReport extends React.Component {
                     <TableHead>
                         <TableRow >
                             <TableCell className={classes.tableRow}>Company Name</TableCell>
-                            <TableCell align="right">Criteria</TableCell>
+                            <TableCell align="right">Criteria (CGPA)</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

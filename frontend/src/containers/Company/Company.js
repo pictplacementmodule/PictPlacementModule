@@ -14,46 +14,44 @@ import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 
 
 class Company extends Component {
-  // drawerList = {
-  //   Profile: ["profile", <DashboardIcon />],
-  //   Eligible_Students: ["eligible_student", <DashboardIcon />],
-  //   Job_Details: ["job_details", <DashboardIcon />]
-  // };
+  drawerList = {
+    Profile: ["profile", <DashboardIcon />],
+    Eligible_Students: ["eligible_student", <DashboardIcon />],
+    Job_Details: ["job_details", <DashboardIcon />]
+  };
 
-  // render() {
-  //   return (
-  //     <div>
-  //       <ProtectedRoute
-  //         path="/company/dashboard"
-  //         component={() => (
-  //           <Dashboard drawerList={this.drawerList}>
-  //             <Route
-  //               exact
-  //               path="/company/dashboard/profile"
-  //               component={Profile}
-  //             />
-  //             <Route
-  //               exact
-  //               path="/company/dashboard/eligible_student"
-  //               component={Eligible_Students}
-  //             />
-  //             <Route
-  //               exact
-  //               path="/company/dashboard/job_details"
-  //               component={Job_Details}
-  //             />
-  //           </Dashboard>
-  //         )}
-  //       />
-  //     </div>
-  //   );
-  // }
+  render() {
+    return (
+      <div>
+        <ProtectedRoute
+          path="/company/dashboard"
+          component={() => (
+            <Dashboard drawerList={this.drawerList}>
+              <Route
+                exact
+                path="/company/dashboard/profile"
+                component={Profile}
+              />
+              <Route
+                exact
+                path="/company/dashboard/eligible_student"
+                component={Eligible_Students}
+              />
+              <Route
+                exact
+                path="/company/dashboard/job_details"
+                component={Job_Details}
+              />
+            </Dashboard>
+          )}
+        />
+      </div>
+    );
+  }
     drawerList = {
         'Profile':['profile', <DashboardIcon />],
         'Eligible Students':['eligible_students',<DoneOutlineIcon />],
-        'Filter':['eligible_students2',<FilterListIcon />],
-        'JobDetails':['job_details',<FilterListIcon />]
-
+        'Filter':['eligible_students2',<FilterListIcon />]
     }
 
     render() {
@@ -64,8 +62,6 @@ class Company extends Component {
                         <Route exact path="/company/dashboard/profile" component={Profile} />
                         <Route exact path="/company/dashboard/eligible_students" component={Eligible_Students} />
                         <Route exact path="/company/dashboard/eligible_students2" component={Filter} />
-                        <Route exact path="/company/dashboard/job_details" component={Job_Details} />
-
                     </Dashboard>
                 } />
             </div>
