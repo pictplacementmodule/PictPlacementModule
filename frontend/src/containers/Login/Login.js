@@ -69,14 +69,6 @@ class Login extends Component {
       });
   };
 
-  passwordChangeHandler = (event) =>{
-    event.preventDefault();
-    this.props.history.push({
-      pathname: "/forgtPassword"
-    });
-  }
-
-
   changeHandler = name => event => {
     let newState = { ...this.state, [name]: event.target.value };
     this.setState(newState);
@@ -156,18 +148,6 @@ class Login extends Component {
               >
                 Sign In
               </Button>
-              <button
-               style={{
-               
-                  marginTop:" 2vh",
-                  color:"blue",
-                  border:"none",
-                  background:"none",
-                  alignContent:"right"
-              }}
-              onClick={this.passwordChangeHandler}
-
-              >forgot password ?</button>
               <Grid container>
                 <Grid item xs></Grid>
               </Grid>{" "}

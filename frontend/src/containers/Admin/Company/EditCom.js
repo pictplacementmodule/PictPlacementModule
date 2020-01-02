@@ -337,7 +337,7 @@ export default function AddVisited() {
             </Snackbar>
             <Paper className={classes.paper}>
                 <Typography variant="h6" gutterBottom align="center">
-                    Enter the Company name you want to edit
+                    Edit company details
                 </Typography>
                 <form className={classes.container} noValidate autoComplete="off">
                     <Grid container spacing={3}>

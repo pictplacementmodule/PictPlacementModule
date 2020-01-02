@@ -78,7 +78,6 @@ class BranchReport extends Component {
           ...this.state,
           students: response.data,
         })
-        console.log(this.state.students)
       })
       .catch((error) => {
         console.log(error);
