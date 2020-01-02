@@ -32,13 +32,7 @@ public class Academicdetails {
 	int collegeId;
 	
 	
-	public int getRoll_no() {
-		return roll_no;
-	}
 
-	public void setRoll_no(int roll_no) {
-		this.roll_no = roll_no;
-	}
 
 	@Override
 	public String toString() {
@@ -67,6 +61,14 @@ public class Academicdetails {
 	@Column(name = "prn")
 
 	long prnNumber;
+
+	public int getRoll_no() {
+		return roll_no;
+	}
+
+	public void setRoll_no(int roll_no) {
+		this.roll_no = roll_no;
+	}
 
 	public List<String> getSkills() {
 		return skills;

@@ -103,12 +103,7 @@ public class Studentdetails implements Serializable {
 	@Column(name="disability")
 	private String disability;
 	
-    public int getrollno() {
-		return rollno;
-	}
-	public void setrollno(int rollno) {
-		this.rollno = rollno;
-	}
+    
 	public String getAadharNumber() {
 		return aadharNumber;
 	}
