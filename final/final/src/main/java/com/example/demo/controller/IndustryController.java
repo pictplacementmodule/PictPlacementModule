@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.AdminPlaced;
 import com.example.demo.model.Studentdetails;
 import com.example.demo.model.industry;
-import com.example.demo.model.jobdescription;
+
 import com.example.demo.model.placedstudents;
-import com.example.demo.repository.Jobdescrepo;
+
 import com.example.demo.repository.industryrepo;
 import com.example.demo.repository.placedstudentsrepo;
 import com.example.demo.service.Userservice;
@@ -30,8 +30,8 @@ import com.example.demo.service.industryservice;
 @RequestMapping("/industry")
 public class IndustryController {
 	
-	@Autowired
-	private Jobdescrepo jobdescrepo;
+//	@Autowired
+//	private Jobdescrepo jobdescrepo;
 	@Autowired
 	private Userservice userservice;
 	@Autowired
@@ -61,14 +61,14 @@ public class IndustryController {
 		System.out.println(industryrepo.findAll2());
 		return industryrepo.findAll2();
 	}
-	@PostMapping("/acceptJobDetails")//for adding job details
-	public void acceptjobdetails(@RequestBody jobdescription a)
-	{
-		//System.out.println(a.getIndustry().getId());
-		
-		System.out.println("job details addded");
-		 jobdescrepo.addind(a.getIndustry().getId(),a.getJobDesc(),a.getJobDesignation());
-	}
+//	@PostMapping("/acceptJobDetails")//for adding job details
+//	public void acceptjobdetails(@RequestBody jobdescription a)
+//	{
+//		//System.out.println(a.getIndustry().getId());
+//		
+//		System.out.println("job details addded");
+//		 jobdescrepo.addind(a.getIndustry().getId(),a.getJobDesc(),a.getJobDesignation());
+//	}
 	
 	@GetMapping("/getDateList")
 	public List<Date> getDateList()
