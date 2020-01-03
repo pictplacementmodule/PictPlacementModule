@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import axios from "../../axios";
 import { fontSize } from "@material-ui/system";
 import Button from "@material-ui/core/Button";
 import ReactToPrint from "react-to-print";
+import Pagination from '../../components/Pagination'
+import Typography from '@material-ui/core/Typography'
 
 const styles = theme => ({
   palette: {
@@ -24,7 +21,9 @@ const styles = theme => ({
   button: {
     margin: theme.spacing(1),
     margin: "auto",
-    left: "47%"
+    left: "47%",
+    backgroundColor: "rgb(70,70,120)",
+    outline: "none"
   },
   table: {
     margin: "auto",
@@ -40,8 +39,32 @@ const styles = theme => ({
 
 class CountReport extends Component {
   state = {
-    companies: []
+    companies: [],
+    postsPerPage: 10,
+    currentPage: 1,
+    show: [],
   };
+
+  //////
+  pageStand = (pageNumber) => {
+    const indexOfLastPost = pageNumber * this.state.postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - this.state.postsPerPage;
+    const currentPosts = this.state.students.slice(indexOfFirstPost, indexOfLastPost);
+    this.setState({
+      ...this.state,
+      show: [...currentPosts],
+    })
+  }
+
+  paginate = (pageNumber) => {
+    this.setState({
+      ...this.state,
+      currentPage: pageNumber,
+    })
+    this.pageStand(pageNumber);
+  }
+  ///////
+
 
   constructor() {
     super();
@@ -50,17 +73,12 @@ class CountReport extends Component {
       .then(response => {
         console.log(response.data);
         this.setState({ companies: response.data });
+        this.pageStand(this.state.currentPage);
       })
       .catch(error => {
         console.log(error);
       });
   }
-
-  printDocument = () => {
-    document.getElementById("printbtn").style.visibility = "hidden";
-    window.print();
-    document.getElementById("printbtn").style.visibility = "visible";
-  };
 
   render() {
     const { classes } = this.props;
@@ -80,26 +98,53 @@ class CountReport extends Component {
           )}
           content={() => this.componentRef}
         />
-        <Paper ref={el => (this.componentRef = el)} r className={classes.root}>
-          <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell>Company Name</TableCell>
-                <TableCell align="right">Number of Students placed</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.state.companies.map(company => (
-                <TableRow key={company.id}>
-                  <TableCell component="th" scope="row">
+        <div style={{ display: "none" }}>
+          <Paper ref={el => (this.componentRef = el)} className={classes.root}>
+            <table className="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Company Name</th>
+                  <th align="right">Number of Students placed</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.companies.map(company => (
+                  <tr key={company.id}>
+                    <td component="th" scope="row">
+                      {company.name}
+                    </td>
+                    <td align="right">{company.count}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </Paper>
+        </div>
+        <Paper className={classes.root}>
+          <table className="table table-bordered">
+            <thead>
+              <tr>
+                <th>Company Name</th>
+                <th align="right">Number of Students placed</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.show.map(company => (
+                <tr key={company.id}>
+                  <td component="th" scope="row">
                     {company.name}
-                  </TableCell>
-                  <TableCell align="right">{company.count}</TableCell>
-                </TableRow>
+                  </td>
+                  <td align="right">{company.count}</td>
+                </tr>
               ))}
-            </TableBody>
-          </Table>
+            </tbody>
+          </table>
         </Paper>
+        <Pagination
+              postsPerPage={this.state.postsPerPage}
+              totalPosts={this.state.companies.length}
+              paginate={this.paginate}
+              paginatePrev={this.paginatePrev} />
       </div>
     );
   }

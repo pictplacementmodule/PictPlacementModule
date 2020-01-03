@@ -13,29 +13,47 @@ const styles = makeStyles(theme => ({
         alignItems: "center",
         margin: "auto"
     },
+
+    blah: {
+        backgroundColor: "#b90000",
+        borderRadius: "5px",
+
+        "&:hover": {
+            backgroundColor: "#772e2e",
+        },
+
+        "&:active": {
+            backgroundColor: "#772e2e",
+        }
+    }
 }))
 
 const Pagination = ({ postsPerPage, totalPosts, paginate, paginatePrev }) => {
 
     const pageNumbers = [];
 
+    const [currentPage, setCurrentPage] = React.useState(1);
+
     for (let i = 1; i < Math.ceil(totalPosts / postsPerPage); i++) {
         pageNumbers.push(i);
     }
     const classes = styles();
 
+    const clickHandler = (number) => {
+        setCurrentPage(number);
+        paginate(number);
+    }
+
     return (
         <nav className={classes.root} aria-label="Page navigation example">
             <ul class="pagination justify-content-end">
-                <li class="page-item disabled">
-                    <a class="page-link" tabindex="-1" onClick={() => { paginatePrev() }}>Previous</a>
-                </li>
                 {pageNumbers.map(number => (
-                    <li class="page-item"><a class="page-link" onClick={() => { paginate(number) }}>{number}</a></li>
+                    <li className={currentPage===number?'page-item active':'page-item'}>
+                        <a class="page-link" onClick={() => { clickHandler(number) }}>
+                            {number}
+                        </a>
+                    </li>
                 ))}
-                <li class="page-item disabled">
-                    <a class="page-link" href="#">Next</a>
-                </li>
             </ul>
         </nav>
     );

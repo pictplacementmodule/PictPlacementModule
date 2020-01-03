@@ -114,7 +114,7 @@ public class Studentdetails implements Serializable {
 	}
 
 	@Column(name = "motname")
-	private String motname;
+	private String motname; 
 	@Column(name = "annincome")
 	private String anninc;
 	@Column(name = "occupation")

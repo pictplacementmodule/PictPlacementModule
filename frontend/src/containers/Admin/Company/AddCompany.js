@@ -346,10 +346,26 @@ function Profile(props) {
   };
 
   const toggleBacklogs = name => event => {
-    setState({
-      ...state,
-      [name]: event.target.checked
-    });
+    if(name==="activeBacklogs"&&event.target.checked){
+      setState({
+        ...state,
+        passiveBacklogs:true,
+        [name]: event.target.checked,
+      })
+    }
+    else if(name==="passiveBacklogs"&&!event.target.checked){
+      setState({
+        ...state,
+        activeBacklogs:false,
+        [name]: event.target.checked,
+      })
+    }
+    else{
+      setState({
+        ...state,
+        [name]: event.target.checked,
+      })
+    }
   };
 
   const getDates = () => {

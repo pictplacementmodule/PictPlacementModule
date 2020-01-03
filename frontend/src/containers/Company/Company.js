@@ -56,8 +56,8 @@ class Company extends Component {
     'Profile': ['profile', <DashboardIcon />],
     'Filter': ['eligible_students2', <FilterListIcon />],
     'JobDetails': ['job_details', <DoneOutlineIcon />],
-    'Short_Listed': ["short_listed", <DashboardIcon />],
-    'Pending_Selected': ["pending_selected", <DashboardIcon />],
+    'Short Listed': ["short_listed", <DashboardIcon />],
+    'Pending Selected': ["pending_selected", <DashboardIcon />],
     'Placed': ["placed", <DashboardIcon />]
 
   }
