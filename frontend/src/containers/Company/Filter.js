@@ -66,22 +66,16 @@ class Filter extends React.Component {
         active_backlogs: true,
         passive_backlogs: true,
         internship: 0,
-        stu:{
-                    roll:0,
-                    name:"",
-                    sgpaTEFS:0,
-                    skills:"",
-                    status:false
-                }
+      
     }
     
-//    x={
-//         roll:0,
-//         name:"",
-//         sgpaTEFS:0,
-//         skills:"",
-//         status:false
-//     }
+ x={
+        roll:0,
+        name:"",
+        sgpaTEFS:0,
+        skills:"",
+        status:false
+    };
     componentDidMount() {
         axios.post('/findallstu', null, { params: { a: localStorage.getItem('token') } })
             .then((response) => {
@@ -89,13 +83,6 @@ class Filter extends React.Component {
                 this.setState({
                     students: response.data,
                     temp: response.data,
-                    stu:{
-                        roll:response.data.collegeId,
-                        name:response.data.firstName,
-                        sgpaTEFS:response.data.sgpaTEFS,
-                        skills:response.data.skills,
-                        status:false
-                    },
                 });
                 {console.log(this.state.stu);}
             })
@@ -163,14 +150,13 @@ class Filter extends React.Component {
 
 
     handleChangeIndex = index => event => {
+        console.log(this.state.students[index]);
         let s = this.state.students[index]
         s.status = event.target.checked
-        let a = [...this.state.students]
-        a[index] = s
-        this.setState({
-            ...this.state,
-            students: a,
-        })
+        console.log(event.target.checked);
+        if(s.status){
+             
+        }
     };
 
     render() {

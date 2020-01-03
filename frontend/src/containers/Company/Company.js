@@ -50,9 +50,8 @@ class Company extends Component {
   // }
     drawerList = {
         'Profile':['profile', <DashboardIcon />],
-        'Eligible Students':['eligible_students',<DoneOutlineIcon />],
         'Filter':['eligible_students2',<FilterListIcon />],
-        'JobDetails':['job_details',<FilterListIcon />]
+        'JobDetails':['job_details',<DoneOutlineIcon />]
 
     }
 
@@ -62,7 +61,6 @@ class Company extends Component {
                 <ProtectedRoute path="/company/dashboard" component={() =>
                     <Dashboard drawerList={this.drawerList}>
                         <Route exact path="/company/dashboard/profile" component={Profile} />
-                        <Route exact path="/company/dashboard/eligible_students" component={Eligible_Students} />
                         <Route exact path="/company/dashboard/eligible_students2" component={Filter} />
                         <Route exact path="/company/dashboard/job_details" component={Job_Details} />
 
