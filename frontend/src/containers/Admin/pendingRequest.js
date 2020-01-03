@@ -87,13 +87,13 @@ class BranchReport extends Component {
         var a = []  
         for(i=0;i<this.state.students.length;i++){
             if(this.state.students[i].status===true)
-            a.push(this.state.students[i].roll);
+            a.push(this.state.students[i].count);
         }
         console.log(a);
         axios.post("/getStatusOfPlaced",a).catch((error) => {
           console.log(error);
         });;
-        window.location.reload(false);
+       window.location.reload(false);
   };
 
   render() {

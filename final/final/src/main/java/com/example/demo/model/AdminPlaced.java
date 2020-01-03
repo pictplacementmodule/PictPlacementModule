@@ -4,12 +4,21 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AdminPlaced {
+
 	int roll;
 	String stu_name;
 	String comp_name;
 	int package_lpa;
 	String location;
-	Boolean status;
+	int status;
+	int count;
+	
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	public int getRoll() {
 		return roll;
 	}
@@ -40,10 +49,10 @@ public class AdminPlaced {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public Boolean getStatus() {
+	public int getStatus() {
 		return status;
 	}
-	public void setStatus(Boolean status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 	

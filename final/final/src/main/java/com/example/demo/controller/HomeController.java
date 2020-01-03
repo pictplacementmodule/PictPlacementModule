@@ -1,10 +1,7 @@
 package com.example.demo.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -35,10 +32,6 @@ import com.example.demo.repository.locationrepo;
 import com.example.demo.repository.placedstudentsrepo;
 import com.example.demo.repository.skillsrepo;
 import com.example.demo.service.Userservice;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-
-	
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -59,8 +52,6 @@ public class HomeController {
 	private CompanyVisitedRepo cvr;
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-	
-	
 	@RequestMapping("/home")
 	public void Home() {
 		System.out.println("home");
@@ -158,7 +149,7 @@ public class HomeController {
 
 	@RequestMapping("/sortbyskills")
 	public List<Academicdetails> show(@RequestParam int id) {
-		System.out.println("hey");
+
 		return userservice.sortbyskills(id);
 	}
 
@@ -179,30 +170,28 @@ public class HomeController {
 	}
 
 	@PostMapping("/getStatusOfPlaced")
-	public void ChangeStatusOfPlaced(@RequestBody ArrayList<Integer> a) {
+	public void ChangeStatusOfPlaced(@RequestBody List<Integer> a) {
 		placedstudents p;
 		Academicdetails ad;
-		System.out.println("hello world");
+		
 		for (int i = 0; i < a.size(); i++) {
 			p = placedrepo.findById(a.get(i)).get();
-			p.setPL_status(true);
-			ad = academicrepo.findById(a.get(i)).get();
+			p.setPL_status(2);
+			placedrepo.deleteStuPlaced(p.getId());
+			ad = academicrepo.findById(p.getId()).get();
 			ad.setPlaced(true);
 			placedrepo.save(p);
-			System.out.print(p.getId());
 		}
-		userservice.mail(a);
+		//placedrepo.deleteStuPlaced(a);
+		//userservice.mail(a);
 
 	}
 
 	@SuppressWarnings("null")
 	@PostMapping("/selectByCompany")
 	public void selectByCompany(@RequestBody List<String> myParams) {
-		System.out.println(myParams);
 		// myParams.size() -1 will contain the company id
 		int len = myParams.size();
-		System.out.print(len);
-
 		int comp_id = Integer.parseInt(myParams.get(len - 1));
 		for (int i = 0; i < len - 1; i++) {
 			placedstudents ps = new placedstudents();
@@ -210,10 +199,25 @@ public class HomeController {
 			ps.setId(Integer.parseInt(myParams.get(i)));
 			ps.setPackage_lpa((float) ir.findById(comp_id).get().getPackage_lpa());
 			ps.setLocation("MUMBAI");
+			System.out.println((float) ir.findById(comp_id).get().getPackage_lpa());
 			ps.setIdname(ir.findById(comp_id).get().getName());
-			ps.setPL_status(false);
+			ps.setPL_status(0);
 			placedrepo.save(ps);
 		}
+
+	}
+	
+	@PostMapping("/PlacedByCompany")
+	public void PlacedByCompany(@RequestBody List<String> myParams) {
+		// myParams.size() -1 will contain the company id
+		int len = myParams.size();
+		int comp_id = Integer.parseInt(myParams.get(len - 1));
+		myParams.remove(len-1);
+		List<Integer>p  = new ArrayList<Integer>();
+		for(String s:myParams) {
+			p.add(Integer.parseInt(s));
+		}
+			placedrepo.findByCompIdAndStudent(p,comp_id);
 
 	}
 
@@ -221,14 +225,14 @@ public class HomeController {
 	public void skills(@RequestBody skills skill) {
 		skillrepo.save(skill);
 	}
+
 	@GetMapping("/findallskills")
-	public List<String> skills()
-	{
-		List<String>skills = new ArrayList<String>();
-		for(skills s:skillrepo.findAll()) {
+	public List<String> skills() {
+		List<String> skills = new ArrayList<String>();
+		for (skills s : skillrepo.findAll()) {
 			skills.add(s.getSkills());
 		}
-	return skills;
+		return skills;
 	}
 
 	@PostMapping("/addlocation")
@@ -236,22 +240,65 @@ public class HomeController {
 		locationrep.save(loc);
 	}
 
-	// @PostMapping("/findalllocation")
-	// public List<location> location() {
-	// 	return locationrep.findAll();
-	// }
+	
 	@PostMapping("/findallCompaniesVisited")
-	public List<Companyv> returnCompanyvisited()
-	{
+	public List<Companyv> returnCompanyvisited() {
 		return cvr.findAll();
 	}
+
 	@GetMapping("/findalllocation")
-	public List<String> location()
-	{
-		List<String>cities = new ArrayList<String>();
-		for(location l:locationrep.findAll()) {
+	public List<String> location() {
+		List<String> cities = new ArrayList<String>();
+		for (location l : locationrep.findAll()) {
 			cities.add(l.getLocation());
 		}
-	return cities;
+		return cities;
+	}
+
+	@PostMapping("/short-listed")
+	public List<Academicdetails> shortlisted_details(@RequestParam("comp_id") int id) {
+		List<Integer> stu_id;
+		stu_id = placedrepo.findByComp(id);
+		if (!stu_id.isEmpty()) {
+			return academicrepo.findTheseStu(stu_id,id);
+		}
+		List<Academicdetails> a = new ArrayList<Academicdetails>();
+		//alternate solution for return when false
+		return a;
+	}
+
+	@PostMapping("/filter")
+	public List<Academicdetails> filtered_details(@RequestParam("comp_id") int id) {
+		List<Integer> stu_id;
+		stu_id = placedrepo.findByComp(id);
+		System.out.println(stu_id);
+		if (!stu_id.isEmpty()) {
+			return academicrepo.findExceptTheseStu(stu_id);
+		}
+		return userservice.findAllstu();
+	}
+	
+	@PostMapping("/PendingSelectedByCompany")
+	public List<Academicdetails> SelectedByCompany(@RequestParam("comp_id") int id) {
+		List<Integer> stu_id;
+		stu_id = placedrepo.findByComp(id);
+		if (!stu_id.isEmpty()) {
+			return academicrepo.findPlacedByComp(stu_id,id);
+		}
+		List<Academicdetails> a = new ArrayList<Academicdetails>();
+		//alternate solution for return when false
+		return a;
+	}
+	
+	@PostMapping("/FinalPlaced")
+	public List<Academicdetails> PlacedByAdminToComp(@RequestParam("comp_id") int id) {
+		List<Integer> stu_id;
+		stu_id = placedrepo.findByComp(id);
+		if (!stu_id.isEmpty()) {
+			return academicrepo.findFinalPlacedByComp(stu_id,id);
+		}
+		List<Academicdetails> a = new ArrayList<Academicdetails>();
+		//alternate solution for return when false
+		return a;
 	}
 }

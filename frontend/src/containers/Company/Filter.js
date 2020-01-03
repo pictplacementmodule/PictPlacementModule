@@ -56,7 +56,7 @@ const styles = theme => ({
 
 
 class Filter extends React.Component {
-
+  
     state = {
         students: [],
         temp: [],
@@ -66,20 +66,14 @@ class Filter extends React.Component {
         active_backlogs: true,
         passive_backlogs: true,
         internship: 0,
-      
+        x:[]
     }
     
- x={
-        roll:0,
-        name:"",
-        sgpaTEFS:0,
-        skills:"",
-        status:false
-    };
-    
+
+
 
     componentDidMount() {
-        axios.post('/findallstu', null, { params: { a: localStorage.getItem('token') } })
+        axios.post('/filter', null, { params: { comp_id: localStorage.getItem('token') } })
             .then((response) => {
                 console.log(response.data);
                 this.setState({
@@ -90,6 +84,7 @@ class Filter extends React.Component {
             .catch((error) => {
                 console.log(error);
             })
+        
     }
 
     handleChange = (name) => (event) => {
@@ -131,31 +126,33 @@ class Filter extends React.Component {
         });
     }
     clickHandlerForAccept = () => {
-        console.log(this.state.students)
-        var i = 0;
-        var a = []
-       
-        for (i = 0; i < this.state.students.length; i++) {
-            if (this.state.students[i].status === true)
-                a.push(this.state.students[i].roll);
+        var i=0;  
+        var a = []  
+        for(i=0;i<this.state.x.length;i++){
+            if(this.state.x[i].status===true)
+            a.push(this.state.x[i].roll.toString());
         }
-        let comp_id = localStorage.getItem("token");
+        let comp_id=localStorage.getItem("token");
         a.push(comp_id)
-        console.log(a);
-        // axios.post("/selectByCompany", a).catch((error) => {
-        //     console.log(error);
-        // });;
-        // window.location.reload(false);
+        axios.post("/selectByCompany", a).catch((error) => {
+            console.log(error);
+        });;
+        window.location.reload(true);
     };
 
 
     handleChangeIndex = index => event => {
-        console.log(this.state.students[index]);
         let s = this.state.students[index]
-        s.status = event.target.checked
-        console.log(event.target.checked);
-        if(s.status){
-             
+        if (event.target.checked) {
+            let v = {
+                roll: s.student.rollno,
+                name: s.student.firstName,
+                sgpaTEFS: s.sgpaTEFS,
+                skills: s.skills,
+                status: true
+            }
+            this.state.x.push(v);
+            console.log(this.state.x);
         }
     };
 
@@ -256,10 +253,11 @@ class Filter extends React.Component {
                                     <TableCell align="right">SGPA</TableCell>
                                     <TableCell align="right">10th Percentage</TableCell>
                                     <TableCell align="right">12th Percentage</TableCell>
+                                    <TableCell align="right">Approve</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {this.state.temp.map(s => (
+                                {this.state.temp.map((s,index) => (
                                     <TableRow key={s.roll}>
                                         <TableCell component="th" scope="row">
                                             {s.collegeId}
@@ -269,11 +267,31 @@ class Filter extends React.Component {
                                         <TableCell align="right">{s.sgpaTEFS}</TableCell>
                                         <TableCell align="right">{s.percentageTenth}</TableCell>
                                         <TableCell align="right">{s.percentageTwelfth}</TableCell>
+                                        <TableCell align="right"><FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    style={{ marginLeft: "5vw" }}
+
+                                                    onChange={this.handleChangeIndex(index)}
+                                                    value={s.status}
+                                                />
+                                            }
+                                            label="Accept"
+                                        /></TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
                         </Table>
                     </Paper>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        id="printbtn"
+                        className={classes.button}
+                        onClick={this.clickHandlerForAccept}
+                    >
+                        Allot
+        </Button>
                 </div>
             </React.Fragment>
         );

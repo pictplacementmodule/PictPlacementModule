@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "academic_details", schema = "public")
 
 public class Academicdetails {
-	Academicdetails()
+	public Academicdetails()
 	{
 		placed=false;
 	}
