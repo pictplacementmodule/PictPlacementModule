@@ -5,6 +5,7 @@ const initialState = {
     collegeId: '',
     prnNumber: '',
     diploma: false,
+    twelfth: false,
     percentage: {
         tenth: '',
         twelfth: '',
@@ -136,7 +137,7 @@ const reducer = (state = initialState, action) => {
             console.log(action.value);
             return {
                 ...state,
-                [action.parName]: !action.value,
+                [action.parName]: action.value,
             }
     }
     return state;

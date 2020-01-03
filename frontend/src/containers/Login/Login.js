@@ -47,6 +47,7 @@ class Login extends Component {
           case "company":
           case "student":
             localStorage.setItem("token", user.id);
+            localStorage.setItem("active",0);
             this.setState({
               ...this.state,
               loggedIn: true,

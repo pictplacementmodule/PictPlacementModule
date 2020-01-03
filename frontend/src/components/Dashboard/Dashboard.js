@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
@@ -50,13 +50,31 @@ function ClippedDrawer(props) {
 
   const logoutHandler = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("active");
     props.history.push("/");
   };
   const drawerListNames = Object.keys(props.drawerList);
 
-  const buttonHandler = text => {
+  const [selectedList, setSelected] = React.useState([]);
+
+  useEffect(() => {
+    let temp = [];
+    for (let i = 0; i < drawerListNames.length; i++) {
+      temp.push(false);
+    }
+    temp[localStorage.getItem("active")] = true;
+    console.log(temp);
+    setSelected([
+      ...temp
+    ])
+  }, [])
+
+  const buttonHandler = (text, index) => {
+    localStorage.setItem("active",index);
     props.history.push(props.match.path + "/" + props.drawerList[text][0]);
   };
+
+  console.log(selectedList);
 
   return (
     <div className={classes.root}>
@@ -93,8 +111,9 @@ function ClippedDrawer(props) {
             <div key={text}>
               <ListItem
                 button
+                selected={selectedList[index]}
                 onClick={() => {
-                  buttonHandler(text);
+                  buttonHandler(text, index);
                 }}
               >
                 <ListItemIcon>{props.drawerList[text][1]}</ListItemIcon>

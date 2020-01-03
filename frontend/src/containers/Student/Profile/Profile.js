@@ -32,9 +32,11 @@ const styles = (theme => ({
     width: '65vw',
     marginLeft: 'auto',
     marginRight: 'auto',
+    // backgroundColor: '#fafafa'
   },
   stepper: {
     padding: theme.spacing(3, 0, 5),
+    // backgroundColor: '#fafafa'
   },
   buttons: {
     display: 'flex',
@@ -127,13 +129,13 @@ class Profile extends Component {
        newActiveStep = this.state.activeStep + 1;
         console.log(p);
         console.log("before");
-        axios.post('/addPersonaldetails',p)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        // axios.post('/addPersonaldetails',p)
+        // .then((response) => {
+        //   console.log(response);
+        // })
+        // .catch((error) => {
+        //   console.log(error);
+        // });
         break;
       case 1:
         let a = this.props.stateAcademic;
@@ -143,6 +145,7 @@ class Profile extends Component {
           roll_no: a.collegeId,
           prnNumber: a.prnNumber,
           diploma: a.diploma,
+          twelfth: a.twelfth,
           percentageTenth: a.percentage.tenth,
           percentageTwelfth: null,
           percentageDiploma: null,
@@ -179,7 +182,7 @@ class Profile extends Component {
           skills: a.skill,
         }
 
-        if (a.diploma == false) {
+        if (a.twelfth) {
           academic = {
             ...academic,
             percentageTwelfth: a.percentage.twelfth,
@@ -193,7 +196,7 @@ class Profile extends Component {
             marksFESS: a.marks.fess,
           }
         }
-        else {
+        if (a.diploma) {
           academic = {
             ...academic,
             percentageDiploma: a.percentage.diploma,
@@ -212,13 +215,13 @@ class Profile extends Component {
         // console.log(academic);
         newActiveStep = this.state.activeStep + 1;
         console.log(academic);
-        axios.post('/addacademicdetails',academic)
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        // axios.post('/addacademicdetails',academic)
+        //   .then((response) => {
+        //     console.log(response);
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
         break;
       case 2:
         newActiveStep = this.state.activeStep + 1;
