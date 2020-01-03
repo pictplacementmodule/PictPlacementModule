@@ -15,6 +15,11 @@ const initialState = {
     gender: '',
     currentAddress: '',
     permanentAddress: '',
+    fatname: '',
+    motname: '',
+    disability:'',
+    anninc:'',
+    occupation:'',
     valid: false,
     formErrors: {
         rollno: '',

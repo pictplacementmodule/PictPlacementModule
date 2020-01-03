@@ -4,11 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-import com.ibm.icu.util.RangeValueIterator.Element;
 
-
-
-import ch.qos.logback.classic.Logger;
 
 public class PDFforCompany {
 //	private static final Logger logger = LoggerFactory.getLogger(GeneratePdfReport.class);

@@ -14,21 +14,32 @@ import { connect } from 'react-redux'
 import * as actionTypes from '../../../actions/Student'
 import axios from '../../../axios'
 
-
-
 class Personal extends Component {
 
   genders = ['Female', 'Male', 'Other'];
 
 
+  state = {
+    disability: '',
+  }
+
+  blah = () => (event) => {
+    this.setState({
+      ...this.state,
+      disability: event.target.value,
+    })
+  }
+
   render() {
 
     //errors recieved from reducer are in this.props.formerrors
     //errors recieved from profile.js are in this.props.erros
-    
+
     // console.log(this.props.errors);
     // console.log(this.props.formErrors);
     const formErrors = this.props.formErrors;
+
+
 
     return (
       <React.Fragment>
@@ -43,7 +54,7 @@ class Personal extends Component {
               fullWidth
               disabled={true}
               value={localStorage.getItem("token")}
-              /*error={formErrors.rollno.length>0||this.props.errors.rollno.length>0}*/
+            /*error={formErrors.rollno.length>0||this.props.errors.rollno.length>0}*/
             />
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -54,7 +65,7 @@ class Personal extends Component {
               fullWidth
               onChange={this.props.onChange('aadharNumber')}
               value={this.props.aadharNumber}
-              error={formErrors.aadharNumber.length>0||this.props.errors.aadharNumber.length>0}
+              error={formErrors.aadharNumber.length > 0 || this.props.errors.aadharNumber.length > 0}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -64,21 +75,20 @@ class Personal extends Component {
               fullWidth
               onChange={this.props.onChange('pancardNumber')}
               value={this.props.pancardNumber}
-              error={this.props.errors.pancardNumber.length>0}
+              error={this.props.errors.pancardNumber.length > 0}
             />
           </Grid>
         </Grid>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={4}>
             <TextField
-              id="firstName"
-              name="firstName"
+              required
               label="First name"
               fullWidth
               autoComplete="fname"
               onChange={this.props.onChange('firstName')}
               value={this.props.firstName}
-              error={this.props.errors.firstName.length>0}
+              error={this.props.errors.firstName.length > 0}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -90,7 +100,7 @@ class Personal extends Component {
               autoComplete="mname"
               onChange={this.props.onChange('middleName')}
               value={this.props.middleName}
-              error={this.props.errors.middleName.length>0}
+              error={this.props.errors.middleName.length > 0}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -102,7 +112,7 @@ class Personal extends Component {
               autoComplete="lname"
               onChange={this.props.onChange('lastName')}
               value={this.props.lastName}
-              error={this.props.errors.lastName.length>0}
+              error={this.props.errors.lastName.length > 0}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -111,7 +121,7 @@ class Personal extends Component {
               fullWidth
               onChange={this.props.onChange('mobileNumber1')}
               value={this.props.mobileNumber1}
-              error={formErrors.mobileNumber1.length>0 || this.props.errors.mobileNumber1.length>0}
+              error={formErrors.mobileNumber1.length > 0 || this.props.errors.mobileNumber1.length > 0}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -120,7 +130,7 @@ class Personal extends Component {
               fullWidth
               onChange={this.props.onChange('mobileNumber2')}
               value={this.props.mobileNumber2}
-              error={formErrors.mobileNumber2.length>0||this.props.errors.mobileNumber2.length>0}
+              error={formErrors.mobileNumber2.length > 0 || this.props.errors.mobileNumber2.length > 0}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -131,7 +141,7 @@ class Personal extends Component {
               fullWidth
               onChange={this.props.onChange('email')}
               value={this.props.email}
-              error={formErrors.email.length>0||this.props.errors.email.length>0}
+              error={formErrors.email.length > 0 || this.props.errors.email.length > 0}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -141,7 +151,7 @@ class Personal extends Component {
               fullWidth
               onChange={this.props.onChange('alternateEmail')}
               value={this.props.alternateEmail}
-              error={formErrors.alternateEmail.length>0||this.props.errors.alternateEmail.length>0}
+              error={formErrors.alternateEmail.length > 0 || this.props.errors.alternateEmail.length > 0}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -168,7 +178,7 @@ class Personal extends Component {
               fullWidth
               onChange={this.props.onChange('gender')}
               value={this.props.gender}
-              error={this.props.errors.gender.length>0}
+              error={this.props.errors.gender.length > 0}
             >
               {this.genders.map(option => (
                 <MenuItem key={option} value={option}>
@@ -186,7 +196,7 @@ class Personal extends Component {
               autoComplete="billing address-line1"
               onChange={this.props.onChange('currentAddress')}
               value={this.props.currentAddress}
-              error={this.props.errors.currentAddress.length>0}
+              error={this.props.errors.currentAddress.length > 0}
             />
           </Grid>
           <Grid item xs={12}>
@@ -198,7 +208,47 @@ class Personal extends Component {
               autoComplete="billing address-line2"
               onChange={this.props.onChange('permanentAddress')}
               value={this.props.permanentAddress}
-              error={this.props.errors.permanentAddress.length>0}
+              error={this.props.errors.permanentAddress.length > 0}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label="Father's Name"
+              fullWidth
+              onChange={this.props.onChange('fatname')}
+              value={this.props.fatname}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label="Mother's Name"
+              fullWidth
+              onChange={this.props.onChange('motname')}
+              value={this.props.motname}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label="Occupation"
+              fullWidth
+              onChange={this.props.onChange('occupation')}
+              value={this.props.occupation}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label="Annual Income"
+              fullWidth
+              onChange={this.props.onChange('anninc')}
+              value={this.props.anninc}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label="Disability (If any)"
+              fullWidth
+              onChange={this.props.onChange('disability')}
+              value={this.props.disability}
             />
           </Grid>
         </Grid>
@@ -211,7 +261,7 @@ const mapStateToProps = (state) => {
   return {
     rollno: state.personal.rollno,
     aadharNumber: state.personal.aadharNumber,
-    pancardNumber: state.personal.pancardNumber ,
+    pancardNumber: state.personal.pancardNumber,
     firstName: state.personal.firstName,
     middleName: state.personal.middleName,
     lastName: state.personal.lastName,
@@ -225,6 +275,11 @@ const mapStateToProps = (state) => {
     permanentAddress: state.personal.permanentAddress,
     formErrors: state.personal.formErrors,
     valid: state.personal.valid,
+    fatname: state.personal.fatname,
+    motname: state.personal.motname,
+    disability: state.personal.disability,
+    anninc: state.personal.anninc,
+    occupation: state.personal.occupation,
   };
 }
 

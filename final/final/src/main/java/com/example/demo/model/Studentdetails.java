@@ -58,7 +58,7 @@ public class Studentdetails implements Serializable {
 	private String currentAddress;
 	@Column(name = "padd")
 	private String permanentAddress;
-	@Column(name = "fathersname")
+	@Column(name = "fatname")
 	private String fatname;
 
 	public int getRollno() {
@@ -113,7 +113,7 @@ public class Studentdetails implements Serializable {
 		return serialVersionUID;
 	}
 
-	@Column(name = "mothersname")
+	@Column(name = "motname")
 	private String motname;
 	@Column(name = "annincome")
 	private String anninc;

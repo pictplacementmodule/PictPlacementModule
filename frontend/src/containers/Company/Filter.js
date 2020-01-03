@@ -76,6 +76,8 @@ class Filter extends React.Component {
         skills:"",
         status:false
     };
+    
+
     componentDidMount() {
         axios.post('/findallstu', null, { params: { a: localStorage.getItem('token') } })
             .then((response) => {
@@ -84,12 +86,10 @@ class Filter extends React.Component {
                     students: response.data,
                     temp: response.data,
                 });
-                {console.log(this.state.stu);}
             })
             .catch((error) => {
                 console.log(error);
             })
-            console.log(this.state.stu);
     }
 
     handleChange = (name) => (event) => {
@@ -256,11 +256,10 @@ class Filter extends React.Component {
                                     <TableCell align="right">SGPA</TableCell>
                                     <TableCell align="right">10th Percentage</TableCell>
                                     <TableCell align="right">12th Percentage</TableCell>
-                                    <TableCell align="right">Approve</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {this.state.temp.map((s, index) => (
+                                {this.state.temp.map(s => (
                                     <TableRow key={s.roll}>
                                         <TableCell component="th" scope="row">
                                             {s.collegeId}
@@ -270,32 +269,11 @@ class Filter extends React.Component {
                                         <TableCell align="right">{s.sgpaTEFS}</TableCell>
                                         <TableCell align="right">{s.percentageTenth}</TableCell>
                                         <TableCell align="right">{s.percentageTwelfth}</TableCell>
-                                        <TableCell align="right"><FormControlLabel
-                                            control={
-                                                <Checkbox
-                                                    style={{ marginLeft: "5vw" }}
-                                                    onChange={this.handleChangeIndex(index)}
-                                                    value={s.status}
-                                                />
-                                            }
-                                            label="Accept"
-                                        /></TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
-
                         </Table>
-                       
                     </Paper>
-                    <Button
-                            variant="contained"
-                            color="primary"
-                            id="printbtn"
-                            className={classes.button}
-                            onClick={this.clickHandlerForAccept}
-                        >
-                            Allot
-                         </Button>
                 </div>
             </React.Fragment>
         );
