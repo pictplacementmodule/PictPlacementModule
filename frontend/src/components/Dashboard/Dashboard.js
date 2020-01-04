@@ -63,7 +63,6 @@ function ClippedDrawer(props) {
       temp.push(false);
     }
     temp[localStorage.getItem("active")] = true;
-    console.log(temp);
     setSelected([
       ...temp
     ])
@@ -74,7 +73,6 @@ function ClippedDrawer(props) {
     props.history.push(props.match.path + "/" + props.drawerList[text][0]);
   };
 
-  console.log(selectedList);
 
   return (
     <div className={classes.root}>

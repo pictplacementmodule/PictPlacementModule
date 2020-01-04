@@ -142,16 +142,14 @@ class BranchReport extends Component {
             <tbody>
               {this.state.students.map((s, index) => (
                 <tr key={s.roll}>
-                  <td align="right">{s.roll}</td>
-                  <td align="right">{s.stu_name}</td>
-                  <td align="right">{s.comp_name}</td>
-                  <td align="right">{s.package_lpa}</td>
-                  <td align="right">{s.location}</td>
-                  <td align="right"><FormControlLabel
+                  <td>{s.roll}</td>
+                  <td>{s.stu_name}</td>
+                  <td>{s.comp_name}</td>
+                  <td>{s.package_lpa}</td>
+                  <td>{s.location}</td>
+                  <td><FormControlLabel
                     control={
                       <Checkbox
-                        style={{ marginLeft: "5vw" }}
-
                         onChange={this.handleChange(index)}
                         value={s.status}
                       />

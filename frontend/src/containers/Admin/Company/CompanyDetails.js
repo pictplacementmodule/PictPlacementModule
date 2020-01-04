@@ -35,73 +35,32 @@ class CompanyDetails extends React.Component {
         company: {},
         skills: 'Null',
         locality: '',
-        branchesPreffered: '',
+        branchesPreffered: [],
     }
 
-    constructor(props) {
-        super(props);
-        console.log(this.props);
+    componentDidMount(){
         axios.post('/industry/findById', null, { params: { id: this.props.match.params.id } })
-            .then((response) => {
-                console.log(response.data);
-                this.setState({
-                    ...this.state,
-                    company: response.data,
-                })
-                let skills2 = response.data.skills;
-                let s = this.state.skills.slice(3);
-                let locality2 = response.data.locality;
-                if (skills2.length > 0) {
-                    for (let i = 0; i < skills2.length; i++) {
-                        this.setState({
-                            ...this.state,
-                            skills: s + ", " + skills2[i],
-                        })
-                        s = this.state.skills;
-                    }
-                    this.setState({
-                        ...this.state,
-                        skills: this.state.skills.slice(2),
-                    })
-                }
-                if (locality2.length > 0) {
-                    for (let i = 0; i < locality2.length; i++) {
-                        this.setState({
-                            ...this.state,
-                            locality: this.state.locality + ", " + locality2[i],
-                        })
-                    }
-                }
-                if (response.data.computer) {
-                    this.setState({
-                        ...this.state,
-                        branchesPreffered: this.state.branchesPreffered + ", " + "Computer ",
-                    })
-                }
-                if (response.data.it) {
-                    this.setState({
-                        ...this.state,
-                        branchesPreffered: this.state.branchesPreffered + ", " + "IT ",
-                    })
-                }
-                if (response.data.entc) {
-                    this.setState({
-                        ...this.state,
-                        branchesPreffered: this.state.branchesPreffered + ", " + "ENTC ",
-                    })
-                }
-                console.log(this.state.branchesPreffered);
+        .then((response) => {
+            this.setState({
+                ...this.state,
+                company: response.data,
             })
-            .catch((error) => {
-                console.log(error);
+            let bp = [
+                ["Computer",this.state.company.computer],
+                ["IT",this.state.company.it],
+                ["ENTC",this.state.company.entc],
+            ]
+            let l = bp.filter((val) => {
+                return val[1]
             })
-    }
-
-    printHandler = () => {
-        document.getElementById("printbtn").style.visibility = "hidden";
-        window.print();
-        document.getElementById("printbtn").style.visibility = "visible";
-
+            this.setState({
+                ...this.state,
+                branchesPreffered: l.map((item) => item[0])
+            })
+        })
+        .catch((error) => {
+            console.log(error);
+        })
     }
 
     render() {
@@ -124,56 +83,92 @@ class CompanyDetails extends React.Component {
                 />
                 <br></br>
                 <br></br>
-                <div ref={el => (this.componentRef = el)}>
-                    <h1>Company Details:  {this.state.company.name}</h1>
-                    <Typography variant="h6" gutterBottom style={{ marginTop: "5vh" }}>
-                        Name: {this.state.company.name}
+                <div ref={el => (this.componentRef = el)} style={{marginLeft:"3vw"}}>
+                <br></br>
+                    <Typography variant="h4">
+                        Company Details: {this.state.company.name}
                     </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        Start Date: {this.state.company.start_date}
-                    </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        Final Date: {this.state.company.final_date}
-                    </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        Email 1: {this.state.company.cpemail1}
-                    </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        Email 2: {this.state.company.cpemail2}
-                    </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        Contact Number 1: {this.state.company.contactno1}
-                    </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        Contact Number 2: {this.state.company.contactno2}
-                    </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        Contact Number 3: {this.state.company.contactno3}
-                    </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        Active Backlogs: {String(this.state.company.active_backlogs)}
-                    </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        Passive Backlogs: {String(this.state.company.passive_backlogs)}
-                    </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        Branches Preffered : {this.state.branchesPreffered.slice(2)}
-                    </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        Criteria: {String(this.state.company.criteria)}
-                    </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        Number of students: {String(this.state.company.no_of_students)}
-                    </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        Package LPA: {String(this.state.company.package_lpa)}
-                    </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        Skills required: {this.state.skills}
-                    </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        Locations : {this.state.locality.slice(2)}
-                    </Typography>
+                    <br></br>
+                    <table class="table table-sm table-bordered table-striped" style={{ width: "70%" }}>
+                    <thead>
+                        <th scope="col" style={{width:"30%"}}></th>
+                        <th scope="col"></th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Name</th>
+                            <td>{this.state.company.name}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Start Date</th>
+                            <td>{this.state.company.start_date}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Final Date</th>
+                            <td>{this.state.company.final_date}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Email 1</th>
+                            <td>{this.state.company.cpemail1}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Email 2</th>
+                            <td>{this.state.company.cpemail2}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Email 2</th>
+                            <td>{this.state.company.cpemail2}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Contact Number 1</th>
+                            <td>{this.state.company.contactno1}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Contact Number 2</th>
+                            <td>{this.state.company.contactno2}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Contact Number 3</th>
+                            <td> {this.state.company.contactno3}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Contact Number 3</th>
+                            <td> {this.state.company.contactno3}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Active Backlogs</th>
+                            <td> {String(this.state.company.active_backlogs)}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Passive Backlogs</th>
+                            <td>{String(this.state.company.passive_backlogs)}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Branches Preffered</th>
+                            <td>{Array(this.state.branchesPreffered).length>0?Array(this.state.branchesPreffered).join():'Null'}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Criteria</th>
+                            <td>{String(this.state.company.criteria)}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Number of students</th>
+                            <td>{String(this.state.company.no_of_students)}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Package LPA</th>
+                            <td>{String(this.state.company.package_lpa)}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Skills required</th>
+                            <td>{Array(this.state.company.skills).length>0?Array(this.state.company.skills).join():'Null'}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Locations</th>
+                            <td>{Array(this.state.company.locality).length>0?Array(this.state.company.locality).join():'Null'}</td>
+                        </tr>
+                    </tbody>
+                </table>
                 </div>
             </Paper>
         );

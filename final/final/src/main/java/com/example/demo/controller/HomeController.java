@@ -259,6 +259,10 @@ public class HomeController {
 	public List<Academicdetails> shortlisted_details(@RequestParam("comp_id") int id) {
 		List<Integer> stu_id;
 		stu_id = placedrepo.findByComp(id);
+		System.out.println(stu_id);
+		for(Academicdetails a:academicrepo.findTheseStu(stu_id,id)) {
+			System.out.println(a.getCollegeId());
+		}
 		if (!stu_id.isEmpty()) {
 			return academicrepo.findTheseStu(stu_id,id);
 		}
