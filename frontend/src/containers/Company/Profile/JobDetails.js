@@ -239,7 +239,7 @@ function JobProfile(props) {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="designation"
+                  label="Designation"
                   value={state.jobDesignation}
                   onChange={handleChange("jobDesignation")}
                 />
@@ -255,7 +255,7 @@ function JobProfile(props) {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="job description"
+                  label="Job description"
                   fullWidth
                   multiline
                   rows="4"

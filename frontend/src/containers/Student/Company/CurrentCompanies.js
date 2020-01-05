@@ -46,7 +46,7 @@ class Current extends Component {
         const { classes } = this.props;
         return (
             <Paper className={classes.root}>
-                <table className="table table-bordered">
+                <table className="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>Name</th>

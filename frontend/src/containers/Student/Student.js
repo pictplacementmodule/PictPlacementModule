@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Switch, Route, withRouter } from 'react-router-dom'
+import { Switch, Route, withRouter,Redirect } from 'react-router-dom'
 import Login from '../Login/Login'
 import Dashboard from '../../components/Dashboard/Dashboard'
 import ProtectedRoute from '../../components/ProtectedRoute'
@@ -29,6 +29,7 @@ class Student extends Component {
                         <Route exact path='/student/dashboard/companies-visited' component={Visited} />
                     </Dashboard>
                 } />
+                <Redirect from="/student/dashboard" exact to="/student/dashboard/profile"></Redirect>
             </div>
         );
     }

@@ -34,9 +34,11 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, paginatePrev }) => {
 
     const [currentPage, setCurrentPage] = React.useState(1);
 
-    for (let i = 1; i < Math.ceil(totalPosts / postsPerPage); i++) {
+    for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
         pageNumbers.push(i);
     }
+
+   //if(pageNumbers.length===1) return null;
     const classes = styles();
 
     const clickHandler = (number) => {

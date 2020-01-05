@@ -79,6 +79,9 @@ function ClippedDrawer(props) {
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
+          <div className="col-lg-1">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Pict_logo.png" height="60" width="50"></img>
+          </div>
           <Typography variant="h6" noWrap>
             PICT PLACEMENT
           </Typography>

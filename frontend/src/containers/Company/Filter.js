@@ -21,6 +21,8 @@ import { ButtonGroup } from "@material-ui/core";
 import FormGroup from '@material-ui/core/FormGroup';
 import ReactToPrint from 'react-to-print';
 import Switch from '@material-ui/core/Switch';
+import "bootstrap/dist/css/bootstrap.css";
+import Pagination from '../../components/Pagination';
 
 const styles = theme => ({
     palette: {
@@ -66,7 +68,9 @@ class Filter extends React.Component {
         active_backlogs: true,
         passive_backlogs: true,
         internship: 0,
-        x:[]
+        x:[],
+        postsPerPage: 3,
+        currentPage: 1,
     }
     
 
@@ -139,7 +143,23 @@ class Filter extends React.Component {
         });;
         window.location.reload(true);
     };
-
+    
+    // pageStand = (pageNumber) => {
+    //     const indexOfLastPost = pageNumber * this.state.postsPerPage;
+    //     const indexOfFirstPost = indexOfLastPost - this.state.postsPerPage;
+    //     const currentPosts = this.state.temp.slice(indexOfFirstPost, indexOfLastPost);
+    //     this.setState({
+    //       ...this.state,
+    //       temp: [...currentPosts],
+    //     })
+    //   }
+    // paginate = (pageNumber) => {
+    //     this.setState({
+    //       ...this.state,
+    //       currentPage: pageNumber,
+    //     })
+    //     this.pageStand(pageNumber);
+    //   }
 
     handleChangeIndex = index => event => {
         let s = this.state.students[index]
@@ -244,30 +264,30 @@ class Filter extends React.Component {
                 <br></br>
                 <div>
                     <Paper className={classes.root}>
-                        <Table className={classes.table} id="printArea">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell >ID</TableCell>
-                                    <TableCell align="right">Name</TableCell>
-                                    <TableCell align="right">Roll Number</TableCell>
-                                    <TableCell align="right">SGPA</TableCell>
-                                    <TableCell align="right">10th Percentage</TableCell>
-                                    <TableCell align="right">12th Percentage</TableCell>
-                                    <TableCell align="right">Approve</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
+                        <table className="table table-bordered table-striped" id="printArea">
+                            <thead>
+                                <tr>
+                                    <th >ID</th>
+                                    <th align="right">Name</th>
+                                    <th align="right">Roll Number</th>
+                                    <th align="right">SGPA</th>
+                                    <th align="right">10th Percentage</th>
+                                    <th align="right">12th Percentage</th>
+                                    <th align="right">Approve</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 {this.state.temp.map((s,index) => (
-                                    <TableRow key={s.roll}>
-                                        <TableCell component="th" scope="row">
+                                    <tr key={s.roll}>
+                                        <td component="th" scope="row">
                                             {s.collegeId}
-                                        </TableCell>
-                                        <TableCell align="right">{s.student.firstName}</TableCell>
-                                        <TableCell align="right">{s.roll_no}</TableCell>
-                                        <TableCell align="right">{s.sgpaTEFS}</TableCell>
-                                        <TableCell align="right">{s.percentageTenth}</TableCell>
-                                        <TableCell align="right">{s.percentageTwelfth}</TableCell>
-                                        <TableCell align="right"><FormControlLabel
+                                        </td>
+                                        <td align="right">{s.student.firstName}</td>
+                                        <td align="right">{s.roll_no}</td>
+                                        <td align="right">{s.sgpaTEFS}</td>
+                                        <td align="right">{s.percentageTenth}</td>
+                                        <td align="right">{s.percentageTwelfth}</td>
+                                        <td align="right"><FormControlLabel
                                             control={
                                                 <Checkbox
                                                     style={{ marginLeft: "5vw" }}
@@ -277,12 +297,17 @@ class Filter extends React.Component {
                                                 />
                                             }
                                             label="Accept"
-                                        /></TableCell>
-                                    </TableRow>
+                                        /></td>
+                                    </tr>
                                 ))}
-                            </TableBody>
-                        </Table>
+                            </tbody>
+                        </table>
                     </Paper>
+                    {/* <Pagination
+                        postsPerPage={this.state.postsPerPage}
+                        totalPosts={this.state.temp.length}
+                        paginate={this.paginate}
+                        paginatePrev={this.paginatePrev} /> */}
                     <Button
                         variant="contained"
                         color="primary"
