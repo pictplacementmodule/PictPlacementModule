@@ -24,7 +24,8 @@ class Student extends Component {
             <div>
                 <ProtectedRoute path="/student/dashboard" component={() =>
                     <Dashboard drawerList={this.drawerList}>
-                        <Route exact path='/student/dashboard/profile' component={Profile} />
+                    <Route exact path='/student/dashboard/profile' component={Profile} />
+                        <Route exact path='/student/dashboard/' component={Profile} />
                         <Route exact path='/student/dashboard/current-companies' component={Current} />
                         <Route exact path='/student/dashboard/companies-visited' component={Visited} />
                     </Dashboard>
