@@ -15,7 +15,7 @@ import MailIcon from "@material-ui/icons/Mail";
 import Button from "@material-ui/core/Button";
 import { withRouter } from "react-router-dom";
 import { Redirect } from "react-router-dom";
-
+import ReactTooltip from "react-tooltip";
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -54,7 +54,6 @@ function ClippedDrawer(props) {
     props.history.push("/");
   };
   const drawerListNames = Object.keys(props.drawerList);
-
   const [selectedList, setSelected] = React.useState([]);
 
   useEffect(() => {
@@ -85,6 +84,7 @@ function ClippedDrawer(props) {
           <Typography variant="h6" noWrap>
             PICT PLACEMENT
           </Typography>
+
           <Typography variant="h6" style={{ marginLeft: "auto" }}>
             <marquee>
               Welcome to Pict Placement Module - {localStorage.getItem("token")}
@@ -109,8 +109,9 @@ function ClippedDrawer(props) {
         <div className={classes.toolbar} />
         <List>
           {drawerListNames.map((text, index) => (
-            <div key={text}>
+            <div data-tip data-for={text}   key={text}>
               <ListItem
+               
                 button
                 selected={selectedList[index]}
                 onClick={() => {
@@ -119,8 +120,12 @@ function ClippedDrawer(props) {
               >
                 <ListItemIcon>{props.drawerList[text][1]}</ListItemIcon>
                 <ListItemText primary={text} />
+                
               </ListItem>
               <Divider />
+              <ReactTooltip  id={text} place="right" type="info" effect='solid'>
+                  <span>{props.drawerList[text][2]}</span>
+                </ReactTooltip>
             </div>
           ))}
         </List>

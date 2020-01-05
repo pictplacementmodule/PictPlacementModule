@@ -21,8 +21,6 @@ import { ButtonGroup } from "@material-ui/core";
 import FormGroup from '@material-ui/core/FormGroup';
 import ReactToPrint from 'react-to-print';
 import Switch from '@material-ui/core/Switch';
-import "bootstrap/dist/css/bootstrap.css";
-import Pagination from '../../components/Pagination';
 
 const styles = theme => ({
     palette: {
@@ -49,7 +47,8 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing(1),
-        margin: "auto"
+        margin: "auto",
+        backgroundColor: "rgb(70,70,120)",
     },
     group: {
         margin: theme.spacing(1, 0)
@@ -58,7 +57,7 @@ const styles = theme => ({
 
 
 class Filter extends React.Component {
-  
+
     state = {
         students: [],
         temp: [],
@@ -68,27 +67,37 @@ class Filter extends React.Component {
         active_backlogs: true,
         passive_backlogs: true,
         internship: 0,
-        x:[],
-        postsPerPage: 3,
-        currentPage: 1,
+        x: [],
+        selectAll: false,
     }
-    
-
-
 
     componentDidMount() {
-        axios.post('/filter', null, { params: { comp_id: localStorage.getItem('token') } })
+        axios.post('/industry/findById', null, { params: { id: localStorage.getItem('token') } })
             .then((response) => {
-                console.log(response.data);
-                this.setState({
-                    students: response.data,
-                    temp: response.data,
-                });
+                if (response.data != '') {
+                    this.setState({
+                        ...this.state,
+                        sgpa: response.data.criteria,
+                        active_backlogs: response.data.active_backlogs,
+                        passive_backlogs: response.data.passive_backlogs,
+                    })
+                }
             })
             .catch((error) => {
                 console.log(error);
             })
-        
+        axios.post('/filter', null, { params: { comp_id: localStorage.getItem('token') } })
+            .then((response) => {
+                this.setState({
+                    students: response.data,
+                    temp: response.data,
+                });
+                this.filter();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+
     }
 
     handleChange = (name) => (event) => {
@@ -96,6 +105,24 @@ class Filter extends React.Component {
             ...this.state,
             [name]: event.target.value,
         })
+    }
+
+    selectAllHandler = (event) => {
+        this.setState({
+            ...this.state,
+            selectAll: event.target.checked,
+        })
+        let l = this.state.students;
+        console.log(l)
+        // for(let i=0;i<l.length;i++){
+        //     l[status] = event.target.checked;
+        // }
+        // this.setState({
+        //     ...this.state,
+        //     students: [
+        //         ...l
+        //     ]
+        // })
     }
 
     toggleChecked = (name) => (event) => {
@@ -106,8 +133,7 @@ class Filter extends React.Component {
         })
     }
 
-    clickHandler = () => {
-        console.log(this.state);
+    filter = () => {
         let temp2 = [...this.state.students]
         temp2 = temp2.filter((student) => {
             return (
@@ -117,63 +143,56 @@ class Filter extends React.Component {
                 // && student.internship>=this.state.internship
             )
         })
-        if (!this.state.active_backlogs) {
-            temp2 = temp2.filter((student) => { return student.activeBacklogs === false })
-        }
-        if (!this.state.passive_backlogs) {
-            temp2 = temp2.filter((student) => { return student.passiveBacklogs === false })
-        }
-        console.log(temp2);
+        // if (!this.state.active_backlogs) {
+        //     temp2 = temp2.filter((student) => { return student.activeBacklogs === false })
+        // }
+        // if (!this.state.passive_backlogs) {
+        //     temp2 = temp2.filter((student) => { return student.passiveBacklogs === false })
+        // }
         this.setState({
             ...this.state,
             temp: temp2,
         });
     }
+
+    clickHandler = () => {
+        this.filter();
+    }
     clickHandlerForAccept = () => {
-        var i=0;  
-        var a = []  
-        for(i=0;i<this.state.x.length;i++){
-            if(this.state.x[i].status===true)
-            a.push(this.state.x[i].roll.toString());
+        var i = 0;
+        var a = []
+        for (i = 0; i < this.state.x.length; i++) {
+            if (this.state.x[i].status === true)
+                a.push(this.state.x[i].roll.toString());
         }
-        let comp_id=localStorage.getItem("token");
+        let comp_id = localStorage.getItem("token");
         a.push(comp_id)
-        axios.post("/selectByCompany", a).catch((error) => {
-            console.log(error);
-        });;
-        window.location.reload(true);
+        axios.post("/selectByCompany", a)
+            .then((response) => {
+                window.location.reload(true);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
-    
-    // pageStand = (pageNumber) => {
-    //     const indexOfLastPost = pageNumber * this.state.postsPerPage;
-    //     const indexOfFirstPost = indexOfLastPost - this.state.postsPerPage;
-    //     const currentPosts = this.state.temp.slice(indexOfFirstPost, indexOfLastPost);
-    //     this.setState({
-    //       ...this.state,
-    //       temp: [...currentPosts],
-    //     })
-    //   }
-    // paginate = (pageNumber) => {
-    //     this.setState({
-    //       ...this.state,
-    //       currentPage: pageNumber,
-    //     })
-    //     this.pageStand(pageNumber);
-    //   }
+
 
     handleChangeIndex = index => event => {
         let s = this.state.students[index]
-        if (event.target.checked) {
+        if(!event.target.checked){
+            this.state.x.splice(this.state.x.findIndex((k) => k.roll===s.student.rollno));
+        }
+        else{
             let v = {
                 roll: s.student.rollno,
                 name: s.student.firstName,
                 sgpaTEFS: s.sgpaTEFS,
                 skills: s.skills,
-                status: true
+                status: event.target.checked,
             }
             this.state.x.push(v);
-            console.log(this.state.x);
         }
+        console.log(this.state.x);
     };
 
     render() {
@@ -264,30 +283,39 @@ class Filter extends React.Component {
                 <br></br>
                 <div>
                     <Paper className={classes.root}>
-                        <table className="table table-bordered table-striped" id="printArea">
-                            <thead>
-                                <tr>
-                                    <th >ID</th>
-                                    <th align="right">Name</th>
-                                    <th align="right">Roll Number</th>
-                                    <th align="right">SGPA</th>
-                                    <th align="right">10th Percentage</th>
-                                    <th align="right">12th Percentage</th>
-                                    <th align="right">Approve</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {this.state.temp.map((s,index) => (
-                                    <tr key={s.roll}>
-                                        <td component="th" scope="row">
+                        <Table className={classes.table} id="printArea">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell >ID</TableCell>
+                                    <TableCell align="right">Name</TableCell>
+                                    <TableCell align="right">Roll Number</TableCell>
+                                    <TableCell align="right">SGPA</TableCell>
+                                    <TableCell align="right">10th Percentage</TableCell>
+                                    <TableCell align="right">12th Percentage</TableCell>
+                                    <TableCell align="right"><FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                style={{ marginLeft: "5vw" }}
+                                                value={this.state.selectAll}
+                                                onChange={this.selectAllHandler}
+                                            />
+                                        }
+                                        label="Approve"
+                                    /></TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {this.state.temp.map((s, index) => (
+                                    <TableRow key={s.roll}>
+                                        <TableCell component="th" scope="row">
                                             {s.collegeId}
-                                        </td>
-                                        <td align="right">{s.student.firstName}</td>
-                                        <td align="right">{s.roll_no}</td>
-                                        <td align="right">{s.sgpaTEFS}</td>
-                                        <td align="right">{s.percentageTenth}</td>
-                                        <td align="right">{s.percentageTwelfth}</td>
-                                        <td align="right"><FormControlLabel
+                                        </TableCell>
+                                        <TableCell align="right">{s.student.firstName}</TableCell>
+                                        <TableCell align="right">{s.roll_no}</TableCell>
+                                        <TableCell align="right">{s.sgpaTEFS}</TableCell>
+                                        <TableCell align="right">{s.percentageTenth}</TableCell>
+                                        <TableCell align="right">{s.percentageTwelfth}</TableCell>
+                                        <TableCell align="right"><FormControlLabel
                                             control={
                                                 <Checkbox
                                                     style={{ marginLeft: "5vw" }}
@@ -297,17 +325,12 @@ class Filter extends React.Component {
                                                 />
                                             }
                                             label="Accept"
-                                        /></td>
-                                    </tr>
+                                        /></TableCell>
+                                    </TableRow>
                                 ))}
-                            </tbody>
-                        </table>
+                            </TableBody>
+                        </Table>
                     </Paper>
-                    {/* <Pagination
-                        postsPerPage={this.state.postsPerPage}
-                        totalPosts={this.state.temp.length}
-                        paginate={this.paginate}
-                        paginatePrev={this.paginatePrev} /> */}
                     <Button
                         variant="contained"
                         color="primary"

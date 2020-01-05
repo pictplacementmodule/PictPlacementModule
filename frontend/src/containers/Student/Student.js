@@ -14,9 +14,9 @@ import Current from './Company/CurrentCompanies'
 class Student extends Component {
 
     drawerList = {
-        'My Profile':['profile', <DashboardIcon />],
-        'Companies Visiting':['current-companies', <Notifications />],
-        'Companies Visited':['companies-visited',<DoneAll />]    
+        'My Profile':['profile', <DashboardIcon />,'See and edit my profile'],
+        'Companies Visiting':['current-companies', <Notifications />,'See upcoming companies'],
+        'Companies Visited':['companies-visited',<DoneAll />,'see companies already visited']    
     }
 
     render() {
@@ -24,7 +24,8 @@ class Student extends Component {
             <div>
                 <ProtectedRoute path="/student/dashboard" component={() =>
                     <Dashboard drawerList={this.drawerList}>
-                        <Route exact path='/student/dashboard/profile' component={Profile} />
+                    <Route exact path='/student/dashboard/profile' component={Profile} />
+                        <Route exact path='/student/dashboard/' component={Profile} />
                         <Route exact path='/student/dashboard/current-companies' component={Current} />
                         <Route exact path='/student/dashboard/companies-visited' component={Visited} />
                     </Dashboard>
