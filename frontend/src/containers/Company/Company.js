@@ -1,6 +1,6 @@
 
 import React, { Component } from "react";
-import { Route, withRouter } from "react-router-dom";
+import { Route, withRouter, Redirect } from "react-router-dom";
 import Login from "../Login/Login";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import Dashboard from "../../components/Dashboard/Dashboard";
@@ -49,6 +49,7 @@ class Company extends Component {
           </Dashboard>
           
         } />
+        <Redirect from="/company/dashboard" exact to="/company/dashboard/profile"></Redirect>
       </div>
     );
   }

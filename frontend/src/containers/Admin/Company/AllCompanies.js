@@ -67,9 +67,13 @@ const styles = theme => ({
     minWidth: 650
   },
   button: {
-    // margin: theme.spacing(1),
     margin: "auto",
     backgroundColor:"rgb(70,70,120)",
+    outline:"none"
+  },
+  button2: {
+    margin: "auto",
+    backgroundColor:"#388E3C",
     outline:"none"
   },
   tableText: {},
@@ -445,7 +449,7 @@ class AllCompanies extends Component {
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                       <KeyboardDatePicker
                         label="Final Date"
-                        value={company.final_date}
+                        value={company.final_date==null?company.start_date:company.final_date}
                         onChange={date =>
                           this.dateChangeHandlerPersonal(date, index)
                         }
@@ -458,7 +462,7 @@ class AllCompanies extends Component {
                   </td>
                   <td>
                     <Button
-                      className={classes.button}
+                      className={company.final_date==null?classes.button:classes.button2}
                       variant="contained"
                       color="primary"
                       onClick={() => this.submitHandler3(company)}
