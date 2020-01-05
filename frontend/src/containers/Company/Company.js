@@ -16,35 +16,27 @@ import Placed from './Eligible/Placed';
 import ReactTooltip from "react-tooltip"
 class Company extends Component {
   drawerList = {
-    'Profile': ['profile', <DashboardIcon />,'See and edit Profile'],
-    'Filter': ['eligible-students2', <FilterListIcon />,'Sort students by applying filters'],
-    'JobDetails': ['job-details', <DoneOutlineIcon />,'Add job Description'],
-    'Short Listed': ["short-listed", <DashboardIcon />,'Shortlist from all eligible students'],
-    'Pending Selected': ["pending-selected", <DashboardIcon />,'Selected students - Pending confirmation from PICT'],
-    'Placed': ["placed", <DashboardIcon />,'See students you have placed']
-
+    'Profile': ['profile', <DashboardIcon />, 'See and edit Profile'],
+    'Filter': ['eligible-students2', <FilterListIcon />, 'Sort students by applying filters'],
+    'JobDetails': ['job-details', <DoneOutlineIcon />, 'Add job Description'],
+    'Short Listed': ["short-listed", <DashboardIcon />, 'Shortlist from all eligible students'],
+    'Pending Selected': ["pending-selected", <DashboardIcon />, 'Selected students - Pending confirmation from PICT'],
+    'Placed': ["placed", <DashboardIcon />, 'See students you have placed']
   }
-
 
   render() {
     return (
       <div>
         <ProtectedRoute path="/company/dashboard" component={() =>
           <Dashboard drawerList={this.drawerList}>
+            <Route exact path="/company/dashboard" component={Profile} />
             <Route exact path="/company/dashboard/profile" component={Profile} />
-           
             <Route exact path="/company/dashboard/eligible-students2" component={Filter} />
-            <Route
-              exact
-              path="/company/dashboard/job-details"
-              component={Job_Details}
-            />
+            <Route exact path="/company/dashboard/job-details" component={Job_Details} />
             <Route exact path="/company/dashboard/short-listed" component={ShortListed} />
             <Route exact path="/company/dashboard/pending-selected" component={Pending_Selected} />
             <Route exact path="/company/dashboard/placed" component={Placed} />
-
           </Dashboard>
-          
         } />
       </div>
     );

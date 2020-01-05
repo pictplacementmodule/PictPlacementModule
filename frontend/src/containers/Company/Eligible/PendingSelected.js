@@ -48,7 +48,10 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing(1),
-        margin: "auto"
+        margin: "auto",
+        marginLeft: "80%",
+        marginTop: "2%",
+        backgroundColor: "rgb(70,70,120)",
     },
     group: {
         margin: theme.spacing(1, 0)
@@ -97,7 +100,15 @@ class BranchReport extends React.Component {
         return (
             <React.Fragment>
                 <div>
-                    <Paper className={classes.root}>
+                    <ReactToPrint
+                        trigger={() => <Button
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}>
+                            Print
+                            </Button>}
+                        content={() => this.componentRef} />
+                    <Paper ref={el => (this.componentRef = el)} className={classes.root}>
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <th scope="col">ID</th>

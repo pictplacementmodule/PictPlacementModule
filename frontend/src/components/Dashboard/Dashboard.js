@@ -1,4 +1,4 @@
-import React,{ useEffect } from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
@@ -16,6 +16,10 @@ import Button from "@material-ui/core/Button";
 import { withRouter } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
+import Avatar from '@material-ui/core/Avatar';
+import Chip from '@material-ui/core/Chip';
+import { Grid } from "@material-ui/core";
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -24,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    backgroundColor:"rgb(70,70,120)",
+    backgroundColor: "rgb(70,70,120)",
   },
   drawer: {
     width: drawerWidth,
@@ -51,6 +55,7 @@ function ClippedDrawer(props) {
   const logoutHandler = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("active");
+    localStorage.removeItem("type");
     props.history.push("/");
   };
   const drawerListNames = Object.keys(props.drawerList);
@@ -68,7 +73,7 @@ function ClippedDrawer(props) {
   }, [])
 
   const buttonHandler = (text, index) => {
-    localStorage.setItem("active",index);
+    localStorage.setItem("active", index);
     props.history.push(props.match.path + "/" + props.drawerList[text][0]);
   };
 
@@ -79,24 +84,34 @@ function ClippedDrawer(props) {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <div className="col-lg-1">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Pict_logo.png" height="60" width="50"></img>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Pict_logo.png" height="60" width="50"></img>
           </div>
-          <Typography variant="h6" noWrap>
-            PICT PLACEMENT
-          </Typography>
-
-          <Typography variant="h6" style={{ marginLeft: "auto" }}>
-            <marquee>
-              Welcome to Pict Placement Module - {localStorage.getItem("token")}
-            </marquee>
-          </Typography>
-          <Button
-            onClick={() => logoutHandler(props)}
-            className={classes.logout}
-            color="inherit"
-          >
-            Logout
+          <Grid container>
+            <Grid item xs={2}>
+              <Typography variant="h6" noWrap style={{marginTop:"4px"}}>
+                PICT PLACEMENT
+              </Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography variant="h6" style={{marginRight:"20px"}}>
+                <marquee scrolldelay="8">
+                  Welcome to Pict Placement Module - {localStorage.getItem("token")}
+                </marquee>
+              </Typography>
+            </Grid>
+            <Grid item xs={1}>
+              <Chip style={{marginTop:"4px",marginLeft:"15px"}} label="Basic" label={localStorage.getItem("type")} />
+            </Grid>
+            <Grid item xs={1}>
+              <Button
+                onClick={() => logoutHandler(props)}
+                className={classes.logout}
+                color="inherit"
+              >
+                Logout
           </Button>
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -109,9 +124,9 @@ function ClippedDrawer(props) {
         <div className={classes.toolbar} />
         <List>
           {drawerListNames.map((text, index) => (
-            <div data-tip data-for={text}   key={text}>
+            <div data-tip data-for={text} key={text}>
               <ListItem
-               
+
                 button
                 selected={selectedList[index]}
                 onClick={() => {
@@ -120,12 +135,12 @@ function ClippedDrawer(props) {
               >
                 <ListItemIcon>{props.drawerList[text][1]}</ListItemIcon>
                 <ListItemText primary={text} />
-                
+
               </ListItem>
               <Divider />
-              <ReactTooltip  id={text} place="right" type="info" effect='solid'>
-                  <span>{props.drawerList[text][2]}</span>
-                </ReactTooltip>
+              <ReactTooltip id={text} place="right" type="info" effect='solid'>
+                <span>{props.drawerList[text][2]}</span>
+              </ReactTooltip>
             </div>
           ))}
         </List>

@@ -524,7 +524,7 @@ function Profile(props) {
                                     onChange={handleChange('no_of_students')}
                                     value={state.no_of_students}
                                     error={formErrors.no_of_students.length > 0}
-                                    disabled={disabled}
+                                    inputProps={{readOnly:disabled}}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4} >

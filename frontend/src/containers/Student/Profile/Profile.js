@@ -14,6 +14,11 @@ import { connect } from 'react-redux'
 import * as actionTypes from '../../../actions/Student'
 import axios from '../../../axios'
 
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const styles = (theme => ({
   appBar: {
@@ -64,13 +69,17 @@ class Profile extends Component {
       firstName: '',
       middleName: '',
       lastName: '',
-       mobileNumber1: '',
+      mobileNumber1: '',
       mobileNumber2: '',
       email: '',
       alternateEmail: '',
       gender: '',
       currentAddress: '',
       permanentAddress: '',
+      per: {},
+      aca: {},
+      open: false,
+      agree: false,
     }
   }
 
@@ -84,6 +93,38 @@ class Profile extends Component {
         return <Review />;
       default:
         throw new Error('Unknown step');
+    }
+  }
+
+  handleClickOpen = () => {
+    this.setState({
+      ...this.state,
+      open: true,
+    })
+  }
+
+  handleClickClose = (agreed) => {
+    this.setState({
+      ...this.state,
+      open: false,
+    })
+    console.log(agreed);
+    if(agreed){
+    axios.post('/addPersonaldetails', this.state.per)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    axios.post('/addacademicdetails', this.state.aca)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      this.setState({ activeStep: this.state.activeStep+1 });
     }
   }
 
@@ -102,7 +143,7 @@ class Profile extends Component {
         }
         keys.map((key) => {
           if (p[key] === '') {
-            e[key] =  'This cannot be empty'
+            e[key] = 'This cannot be empty'
           }
           else {
             e[key] = ''
@@ -126,9 +167,15 @@ class Profile extends Component {
         else {
           newActiveStep = this.state.activeStep;
         }
-       newActiveStep = this.state.activeStep + 1;
+        newActiveStep = this.state.activeStep + 1;
         console.log(p);
         console.log("before");
+        this.setState({
+          ...this.state,
+          per: {
+            ...p,
+          }
+        })
         // axios.post('/addPersonaldetails',p)
         // .then((response) => {
         //   console.log(response);
@@ -213,18 +260,18 @@ class Profile extends Component {
         //   newActiveStep = this.state.activeStep;
         // }
         // console.log(academic);
+        this.setState({
+          ...this.state,
+          aca: {
+            ...academic,
+          }
+        })
         newActiveStep = this.state.activeStep + 1;
         console.log(academic);
-        // axios.post('/addacademicdetails',academic)
-        //   .then((response) => {
-        //     console.log(response);
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
         break;
       case 2:
-        newActiveStep = this.state.activeStep + 1;
+        this.handleClickOpen();
+        console.log(this.state.agree);
         break;
     }
     this.setState({ activeStep: newActiveStep });
@@ -244,6 +291,27 @@ class Profile extends Component {
         <CssBaseline />
         <main className={classes.layout}>
           <Paper className={classes.paper}>
+            <Dialog
+              open={this.state.open}
+              onClose={this.handleClickClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">{"Are you sure you want to save the profile?"}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  You will be held responsible in case of any misinformation.
+          </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={() => this.handleClickClose(false)} color="primary">
+                  Disagree
+                </Button>
+                <Button onClick={() =>this.handleClickClose(true)} color="primary" autoFocus>
+                  Agree
+                </Button>
+              </DialogActions>
+            </Dialog>
             <Typography component="h1" variant="h4" align="center">
               Student Profile
             </Typography>
