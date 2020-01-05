@@ -23,7 +23,7 @@ import Select from "@material-ui/core/Select";
 import Checkbox from "@material-ui/core/Checkbox";
 import Chip from "@material-ui/core/Chip";
 import Switch from "@material-ui/core/Switch";
-
+import ReactTooltip from "react-tooltip"
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
@@ -76,7 +76,8 @@ const useStyles = makeStyles(theme => ({
     flexWrap: "wrap"
   },
   button: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
+    backgroundColor:"rgb(70,70,120)",
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -455,12 +456,16 @@ function Profile(props) {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  data-tip data-for='companyName'
                   label="Company Name"
                   fullWidth
                   onChange={handleChange("name")}
                   value={state.name}
                   error={formErrors.name.length > 0 || emptyError.name}
                 />
+                      <ReactTooltip id='companyName' type='info' effect='solid'>
+  <span>Enter Company name Here</span>
+</ReactTooltip>
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
@@ -709,7 +714,7 @@ function Profile(props) {
               </Grid>
 
               <Grid item xs={12} align="right" onClick={submitHandler}>
-                <Button size="large" variant="contained" color="primary">
+                <Button className={classes.button} size="large" variant="contained" color="primary">
                   Submit
                 </Button>
               </Grid>

@@ -46,7 +46,7 @@ class Current extends Component {
         const { classes } = this.props;
         return (
             <Paper className={classes.root}>
-                <table className="table table-bordered">
+                <table className="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -64,7 +64,7 @@ class Current extends Component {
                                 </td>
                                 <td>{company.criteria}</td>
                                 <td>{company.package_lpa}</td>
-                                <td>{company.final_date}</td>
+                                <td>{company.final_date===null?company.start_date:company.final_date}</td>
                                 <td>{company.skills.join(", ")}</td>
                             </tr>
                         ))}

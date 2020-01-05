@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import axios from '../../axios'
 import { fontSize } from '@material-ui/system';
 import Button from "@material-ui/core/Button";
-
+import "bootstrap/dist/css/bootstrap.css";
 
 const styles = (theme => ({
 
@@ -31,7 +31,7 @@ const styles = (theme => ({
         margin: "auto",
         left:"47%"
       },
-    tableRow: {
+    tr: {
         opacity: '1',
         transition: 'opacity 300ms ease',
         cursor: 'pointer',
@@ -114,24 +114,24 @@ class SkillsReport extends React.Component {
             Print
           </Button> */}
             <Paper className={classes.root}>
-                <Table className={classes.table}>
-                    <TableHead>
-                        <TableRow >
-                            <TableCell className={classes.tableRow}>Company Name</TableCell>
-                            <TableCell align="right">Criteria</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
+                <table className="table table-bordered table-striped">
+                    <thead>
+                        <tr >
+                            <th className={classes.tr}>Company Name</th>
+                            <th align="right">Criteria</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         {this.state.companies.map((company) => (
-                            <TableRow key={company.id}>
-                                <TableCell component="th" scope="row" className={classes.tableRow} onClick={()=>this.companyHandler(company)} >
+                            <tr key={company.id}>
+                                <td component="th" scope="row" className={classes.tr} onClick={()=>this.companyHandler(company)} >
                                     {company.name}
-                                </TableCell>
-                                <TableCell align="right">{company.criteria}</TableCell>
-                            </TableRow>
+                                </td>
+                                <td align="right">{company.criteria}</td>
+                            </tr>
                         ))}
-                    </TableBody>
-                </Table>
+                    </tbody>
+                </table>
             </Paper>
             </div>
         );

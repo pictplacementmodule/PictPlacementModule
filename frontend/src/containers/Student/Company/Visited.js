@@ -205,7 +205,7 @@ class Visited extends React.PureComponent {
     return (
       <Paper className={classes.root}>
         <Grid>
-          <table className="table table-bordered">
+          <table className="table table-bordered table-striped">
             <thead>
               <tr>
                 <th align="centre">Sno</th>

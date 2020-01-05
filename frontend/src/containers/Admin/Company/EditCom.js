@@ -72,6 +72,7 @@ const useStyles = makeStyles(theme => ({
     },
     button: {
         margin: theme.spacing(1),
+        backgroundColor:"rgb(70,70,120)",
     },
     textField: {
         marginLeft: theme.spacing(1),
@@ -351,7 +352,7 @@ export default function AddVisited() {
                         </Grid>
 
                         <Grid item xs={12} align="right">
-                            <Button size="large" variant="contained" color="primary" onClick={submitHandler}>Submit</Button>
+                            <Button size="large" variant="contained" color="primary" className={classes.button} onClick={submitHandler}>Submit</Button>
                         </Grid>
                     </Grid>
                 </form>

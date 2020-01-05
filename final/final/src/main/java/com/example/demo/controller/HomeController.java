@@ -150,7 +150,7 @@ public class HomeController {
 	@RequestMapping("/sortbyskills")
 	public List<Academicdetails> show(@RequestParam int id) {
 
-		return userservice.sortbyskills(id);
+		return userservice.eligible(id);
 	}
 
 	@RequestMapping("/countofplaced")

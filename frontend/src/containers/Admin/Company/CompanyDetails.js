@@ -137,11 +137,11 @@ class CompanyDetails extends React.Component {
                         </tr>
                         <tr>
                             <th scope="row">Active Backlogs</th>
-                            <td> {String(this.state.company.active_backlogs)}</td>
+                            <td> {this.state.company.active_backlogs?"Allowed":"Not Allowed"}</td>
                         </tr>
                         <tr>
                             <th scope="row">Passive Backlogs</th>
-                            <td>{String(this.state.company.passive_backlogs)}</td>
+                            <td>{this.state.company.passive_backlogs?"Allowed":"Not Allowed"}</td>
                         </tr>
                         <tr>
                             <th scope="row">Branches Preffered</th>
