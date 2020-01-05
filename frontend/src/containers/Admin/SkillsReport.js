@@ -50,30 +50,6 @@ class SkillsReport extends React.Component {
                 this.setState({
                     companies: response.data,
                 })
-                for(let i=0;i<response.data.length;i++){
-                //    let s = this.state.companies[i].skills;
-                //    let oldSkills = this.state.skills;
-                //    let newSkill = '';
-                //    console.log(s);
-                //    console.log(oldSkills);
-                //    console.log(newSkill);
-                //    for(let i=0;i<s.length;i++){
-                //        newSkill = newSkill + " ,"+s[i];
-                //    }
-                //    console.log(newSkill);
-                //    console.log(this.state.skills)
-                //    this.setState({
-                //        ...this.state,
-                //        skills: this.state.skills.push(newSkill)
-                //    })
-                //    let sss = this.state.skills.push(newSkill);
-                //    console.log(sss)
-                //    this.setState({
-                //        ...this.state,
-                //        skills: sss,
-                //    })
-                //    console.log(this.state.skills)
-                }
                 
             })
             .catch((error) => {
@@ -124,8 +100,8 @@ class SkillsReport extends React.Component {
                     <tbody>
                         {this.state.companies.map((company) => (
                             <tr key={company.id}>
-                                <td component="th" scope="row" className={classes.tr} onClick={()=>this.companyHandler(company)} >
-                                    {company.name}
+                                <td style={{ color: "#3f51b5",cursor:"pointer" }} component="th" scope="row" className={classes.tr} onClick={()=>this.companyHandler(company)} >
+                                    <u>{company.name}</u>
                                 </td>
                                 <td align="right">{company.criteria}</td>
                             </tr>

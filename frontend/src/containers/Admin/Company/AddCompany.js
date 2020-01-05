@@ -564,7 +564,7 @@ function Profile(props) {
                     marginLeft: "50px",
                     marginTop: "20px"
                   }}
-                  label="Passive Backlogs"
+                  label="Accept Passive Backlogs"
                   fullWidth
                 />
               </Grid>
@@ -578,7 +578,7 @@ function Profile(props) {
                     />
                   }
                   style={{ boxSizing: "border-box", marginTop: "20px" }}
-                  label="Active Backlogs"
+                  label="Accept Active Backlogs"
                   fullWidth
                 />
               </Grid>

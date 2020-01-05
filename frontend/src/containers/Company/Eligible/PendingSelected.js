@@ -57,7 +57,7 @@ const styles = theme => ({
 
 
 class BranchReport extends React.Component {
-  
+
     state = {
         students: [],
         temp: [],
@@ -67,7 +67,7 @@ class BranchReport extends React.Component {
         active_backlogs: true,
         passive_backlogs: true,
         internship: 0,
-        x:[]
+        x: []
     }
     componentDidMount() {
         axios.post('/PendingSelectedByCompany', null, { params: { comp_id: localStorage.getItem('token') } })
@@ -81,7 +81,7 @@ class BranchReport extends React.Component {
             .catch((error) => {
                 console.log(error);
             })
-        
+
     }
 
     handleChange = (name) => (event) => {
@@ -98,35 +98,30 @@ class BranchReport extends React.Component {
             <React.Fragment>
                 <div>
                     <Paper className={classes.root}>
-                        <Table className={classes.table} id="printArea">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell >ID</TableCell>
-                                    <TableCell align="right">Name</TableCell>
-                                    <TableCell align="right">Roll Number</TableCell>
-                                    <TableCell align="right">SGPA</TableCell>
-                                    <TableCell align="right">10th Percentage</TableCell>
-                                    <TableCell align="right">12th Percentage</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Roll Number</th>
+                                <th scope="col">SGPA</th>
+                                <th scope="col">10th Percentage</th>
+                                <th scope="col">12th Percentage</th>
+                            </thead>
+                            <tbody>
                                 {this.state.temp.map(s => (
-                                    <TableRow key={s.roll}>
-                                        <TableCell component="th" scope="row">
-                                            {s.collegeId}
-                                        </TableCell>
-                                        <TableCell align="right">{s.student.firstName}</TableCell>
-                                        <TableCell align="right">{s.roll_no}</TableCell>
-                                        <TableCell align="right">{s.sgpaTEFS}</TableCell>
-                                        <TableCell align="right">{s.percentageTenth}</TableCell>
-                                        <TableCell align="right">{s.percentageTwelfth}</TableCell>
-                                        
-                                    </TableRow>
+                                    <tr>
+                                        <td scope="row">{s.collegeId}</td>
+                                        <td>{s.student.firstName}</td>
+                                        <td>{s.roll_no}</td>
+                                        <td>{s.sgpaTEFS}</td>
+                                        <td>{s.percentageTenth}</td>
+                                        <td>{s.percentageTwelfth}</td>
+                                    </tr>
                                 ))}
-                            </TableBody>
-                        </Table>
+                            </tbody>
+                        </table>
                     </Paper>
-                   
+
                 </div>
             </React.Fragment>
         );

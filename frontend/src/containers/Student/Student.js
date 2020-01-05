@@ -30,7 +30,6 @@ class Student extends Component {
                         <Route exact path='/student/dashboard/companies-visited' component={Visited} />
                     </Dashboard>
                 } />
-                <Redirect from="/student/dashboard" exact to="/student/dashboard/profile"></Redirect>
             </div>
         );
     }

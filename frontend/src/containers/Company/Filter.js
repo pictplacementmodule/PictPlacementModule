@@ -112,17 +112,25 @@ class Filter extends React.Component {
             ...this.state,
             selectAll: event.target.checked,
         })
-        let l = this.state.students;
-        console.log(l)
-        // for(let i=0;i<l.length;i++){
-        //     l[status] = event.target.checked;
-        // }
-        // this.setState({
-        //     ...this.state,
-        //     students: [
-        //         ...l
-        //     ]
-        // })
+        if (event.target.checked) {
+            for (let i = 0; i < this.state.temp.length; i++) {
+                let s = this.state.temp[i]
+                let v = {
+                    roll: s.student.rollno,
+                    name: s.student.firstName,
+                    sgpaTEFS: s.sgpaTEFS,
+                    skills: s.skills,
+                    status: true,
+                }
+                this.state.x.push(v);
+            }
+        }
+        else {
+            this.setState({
+                ...this.state,
+                x: [],
+            })
+        }
     }
 
     toggleChecked = (name) => (event) => {
@@ -165,6 +173,7 @@ class Filter extends React.Component {
             if (this.state.x[i].status === true)
                 a.push(this.state.x[i].roll.toString());
         }
+        console.log(a)
         let comp_id = localStorage.getItem("token");
         a.push(comp_id)
         axios.post("/selectByCompany", a)
@@ -178,11 +187,11 @@ class Filter extends React.Component {
 
 
     handleChangeIndex = index => event => {
-        let s = this.state.students[index]
-        if(!event.target.checked){
-            this.state.x.splice(this.state.x.findIndex((k) => k.roll===s.student.rollno));
+        let s = this.state.temp[index]
+        if (!event.target.checked) {
+            this.state.x.splice(this.state.x.findIndex((k) => k.roll === s.student.rollno));
         }
-        else{
+        else {
             let v = {
                 roll: s.student.rollno,
                 name: s.student.firstName,
@@ -283,53 +292,46 @@ class Filter extends React.Component {
                 <br></br>
                 <div>
                     <Paper className={classes.root}>
-                        <Table className={classes.table} id="printArea">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell >ID</TableCell>
-                                    <TableCell align="right">Name</TableCell>
-                                    <TableCell align="right">Roll Number</TableCell>
-                                    <TableCell align="right">SGPA</TableCell>
-                                    <TableCell align="right">10th Percentage</TableCell>
-                                    <TableCell align="right">12th Percentage</TableCell>
-                                    <TableCell align="right"><FormControlLabel
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Roll Number</th>
+                                <th scope="col">SGPA</th>
+                                <th scope="col">10th Percentage</th>
+                                <th scope="col">12th Percentage</th>
+                                <th>
+                                    {/* <FormControlLabel
                                         control={
                                             <Checkbox
-                                                style={{ marginLeft: "5vw" }}
                                                 value={this.state.selectAll}
                                                 onChange={this.selectAllHandler}
                                             />
-                                        }
-                                        label="Approve"
-                                    /></TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
+                                        }/> */}
+                                    Approve</th>
+                            </thead>
+                            <tbody>
                                 {this.state.temp.map((s, index) => (
-                                    <TableRow key={s.roll}>
-                                        <TableCell component="th" scope="row">
-                                            {s.collegeId}
-                                        </TableCell>
-                                        <TableCell align="right">{s.student.firstName}</TableCell>
-                                        <TableCell align="right">{s.roll_no}</TableCell>
-                                        <TableCell align="right">{s.sgpaTEFS}</TableCell>
-                                        <TableCell align="right">{s.percentageTenth}</TableCell>
-                                        <TableCell align="right">{s.percentageTwelfth}</TableCell>
-                                        <TableCell align="right"><FormControlLabel
+                                    <tr>
+                                        <td scope="row">{s.collegeId}</td>
+                                        <td>{s.student.firstName}</td>
+                                        <td>{s.roll_no}</td>
+                                        <td>{s.sgpaTEFS}</td>
+                                        <td>{s.percentageTenth}</td>
+                                        <td>{s.percentageTwelfth}</td>
+                                        <td><FormControlLabel
                                             control={
                                                 <Checkbox
-                                                    style={{ marginLeft: "5vw" }}
-
                                                     onChange={this.handleChangeIndex(index)}
                                                     value={s.status}
                                                 />
                                             }
                                             label="Accept"
-                                        /></TableCell>
-                                    </TableRow>
+                                        /></td>
+                                    </tr>
                                 ))}
-                            </TableBody>
-                        </Table>
+                            </tbody>
+                        </table>
                     </Paper>
                     <Button
                         variant="contained"
@@ -339,7 +341,7 @@ class Filter extends React.Component {
                         onClick={this.clickHandlerForAccept}
                     >
                         Allot
-        </Button>
+                    </Button>
                 </div>
             </React.Fragment>
         );

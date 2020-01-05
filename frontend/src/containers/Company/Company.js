@@ -31,10 +31,7 @@ class Company extends Component {
       <div>
         <ProtectedRoute path="/company/dashboard" component={() =>
           <Dashboard drawerList={this.drawerList}>
-             <ReactTooltip id='happyFace' type='error'>
-  <span>Show happy face</span>
-</ReactTooltip>
-            <Route data-tip='hjkghjg' data-for='happyFace' exact path="/company/dashboard/profile" component={Profile} />
+            <Route exact path="/company/dashboard/profile" component={Profile} />
            
             <Route exact path="/company/dashboard/eligible-students2" component={Filter} />
             <Route
@@ -49,7 +46,6 @@ class Company extends Component {
           </Dashboard>
           
         } />
-        <Redirect from="/company/dashboard" exact to="/company/dashboard/profile"></Redirect>
       </div>
     );
   }

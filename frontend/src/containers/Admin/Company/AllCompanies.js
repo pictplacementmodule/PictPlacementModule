@@ -436,7 +436,7 @@ class AllCompanies extends Component {
               {this.state.companies.map((company, index) => (
                 <tr key={company.id} className={classes.tr}>
                   <td
-                    style={{ color: "#3f51b5" }}
+                    style={{ color: "#3f51b5",cursor:"pointer" }}
                     component="th"
                     scope="row"
                     onClick={() => this.companyHandler(company)}

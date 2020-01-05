@@ -434,7 +434,7 @@ function Profile(props) {
                                     onChange={handleChange('name')}
                                     value={state.name}
                                     error={formErrors.name.length > 0 || emptyError.name}
-                                    disabled={disabled}
+                                    inputProps={{readOnly:disabled}}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -444,7 +444,7 @@ function Profile(props) {
                                     onChange={handleChange('cpname')}
                                     value={state.cpname}
                                     error={formErrors.cpname.length > 0 || emptyError.cpName}
-                                    disabled={disabled}
+                                    inputProps={{readOnly:disabled}}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -454,7 +454,7 @@ function Profile(props) {
                                     onChange={handleChange('cpemail1')}
                                     value={state.cpemail1}
                                     error={formErrors.cpemail1.length > 0 || emptyError.cpEmail1}
-                                    disabled={disabled}
+                                    inputProps={{readOnly:disabled}}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -464,7 +464,7 @@ function Profile(props) {
                                     onChange={handleChange('cpemail2')}
                                     value={state.cpemail2}
                                     error={formErrors.cpemail2.length > 0}
-                                    disabled={disabled}
+                                    inputProps={{readOnly:disabled}}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -474,7 +474,7 @@ function Profile(props) {
                                     onChange={handleChange('contactno1')}
                                     value={state.contactno1}
                                     error={formErrors.contactno1.length > 0 || emptyError.contactNo1}
-                                    disabled={disabled}
+                                    inputProps={{readOnly:disabled}}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -484,7 +484,7 @@ function Profile(props) {
                                     onChange={handleChange('contactno2')}
                                     value={state.contactno2}
                                     error={formErrors.contactno2.length > 0}
-                                    disabled={disabled}
+                                    inputProps={{readOnly:disabled}}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -494,7 +494,7 @@ function Profile(props) {
                                     onChange={handleChange('contactno3')}
                                     value={state.contactno3}
                                     error={formErrors.contactno3.length > 0}
-                                    disabled={disabled}
+                                    inputProps={{readOnly:disabled}}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -504,7 +504,7 @@ function Profile(props) {
                                     onChange={handleChange('criteria')}
                                     value={state.criteria}
                                     error={formErrors.criteria.length > 0}
-                                    disabled={disabled}
+                                    inputProps={{readOnly:disabled}}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -514,7 +514,7 @@ function Profile(props) {
                                     onChange={handleChange('package_lpa')}
                                     value={state.package_lpa}
                                     error={formErrors.package_lpa.length > 0 || emptyError.package_lpa}
-                                    disabled={disabled}
+                                    inputProps={{readOnly:disabled}}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -624,7 +624,7 @@ function Profile(props) {
                                         )}
                                         MenuProps={MenuProps}
                                         fullWidth
-                                        disabled={disabled}
+                                        inputProps={{readOnly:disabled}}
                                     >
                                         {skills.map(s => (
                                             <MenuItem key={s} value={s}>
@@ -652,7 +652,7 @@ function Profile(props) {
                                         )}
                                         MenuProps={MenuProps}
                                         fullWidth
-                                        disabled={disabled}
+                                        inputProps={{readOnly:disabled}}
                                     >
                                         {cities.map(c => (
                                             <MenuItem key={c} value={c}>
