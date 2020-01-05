@@ -47,4 +47,8 @@ public interface Academicrepository extends JpaRepository<Academicdetails, Integ
 	
 	@Query(value = "SELECT * FROM academic_details as ad WHERE ad.college_id  IN ?1  AND ad.placed = true AND ad.college_id IN (SELECT ps.id FROM placedstudents as ps WHERE ps.pl_status=2 AND ps.comp_id=?2)", nativeQuery = true)
 	public List<Academicdetails> findFinalPlacedByComp(List<Integer> id, int cid);
+	
+	
+	@Query(value = "SELECT * FROM academic_details as ad WHERE ad.college_id IN ?1", nativeQuery = true)
+	public List<Academicdetails> eligible(List<Integer> id);
 }

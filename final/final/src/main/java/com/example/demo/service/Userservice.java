@@ -55,6 +55,17 @@ public class Userservice {
 
 	}
 
+	public List<Academicdetails> eligible(int id) {
+		List<Integer> x=placedrepo.eligible(id);
+		System.out.println(id);
+		System.out.println(x);
+		System.out.println(acarepo.eligible(x));
+
+		return acarepo.eligible(x);
+		//return userservice.sortbyskills(id);
+	}
+	
+	
 	public List<Studentdetails> findallpersonaldetails() {
 		return personalrepo.findAll();
 	}
