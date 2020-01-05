@@ -30,15 +30,16 @@ public class Userservice {
 	@Autowired
 	private userrepository userrepo;// repository for admin
 	@Autowired
-	
+
 	private Personalrepository personalrepo;// repository for personaldetails
-	
+
 	@Autowired
 
 	private Academicrepository acarepo;// repository for academic details
 
 	@Autowired
-    private JavaMailSender javaMailSender;
+	private JavaMailSender javaMailSender;
+
 	public users findById(int id) {
 		System.out.println("n");
 		return userrepo.findById(id).orElse(null);
@@ -159,41 +160,37 @@ public class Userservice {
 		List<AdminPlaced> x = customerDao.adminplaced();
 		return x;
 	}
-	
+
 	public List<EligibleStudents> eligible(String a) {
-		List<EligibleStudents> x = customerDao.eligibility( a);
+		List<EligibleStudents> x = customerDao.eligibility(a);
 		return x;
 	}
-	public void finalplaced(List<Integer> p)//to change value of placed field from 0 to 1
+
+	public void finalplaced(List<Integer> p)// to change value of placed field from 0 to 1
 	{
 		acarepo.finalplaced(p);
 	}
-	public void mail(ArrayList<Integer> x)
-	{
-		
-	List<String> m=personalrepo.getmails(x);
-	for(int i=0;i<m.size();i++)
-	{
-		System.out.println("Sending Email...");
 
-		
-		try {
-		        SimpleMailMessage msg = new SimpleMailMessage();
-		        msg.setTo(m.get(i));
+	public void mail(ArrayList<Integer> x) {
 
-		        msg.setSubject("Testing from Spring Boot");
-		        msg.setText("CONGRATS YOU ARE PLACED !!");
+		List<String> m = personalrepo.getmails(x);
+		for (int i = 0; i < m.size(); i++) {
+			System.out.println("Sending Email...");
 
-		        javaMailSender.send(msg);
+			try {
+				SimpleMailMessage msg = new SimpleMailMessage();
+				msg.setTo(m.get(i));
+
+				msg.setSubject("Testing from Spring Boot");
+				msg.setText("CONGRATS YOU ARE PLACED !!");
+
+				javaMailSender.send(msg);
+			} catch (Throwable e) {
+				System.out.println(e);
+
+			}
+
+			System.out.println("Done");
 		}
-		catch(Throwable e)
-		{
-			System.out.println(e);
-
-		}
-
-
-		System.out.println("Done");
-	}
 	}
 }

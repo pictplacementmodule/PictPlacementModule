@@ -48,6 +48,8 @@ const styles = theme => ({
     button: {
         margin: theme.spacing(1),
         margin: "auto",
+        marginLeft: "47%",
+        marginTop: "2%",
         backgroundColor: "rgb(70,70,120)",
     },
     group: {
@@ -100,11 +102,44 @@ class Filter extends React.Component {
 
     }
 
+
+
+
+    filter = () => {
+        let temp2 = [...this.state.students]
+        temp2 = temp2.filter((student) => {
+            return (
+                student.sgpaTEFS >= this.state.sgpa
+                && student.percentageTenth >= this.state.tenth
+                && student.percentageTwelfth >= this.state.twelfth
+                // && student.internship>=this.state.internship
+            )
+        })
+        // if (!this.state.active_backlogs) {
+        //     temp2 = temp2.filter((student) => { return student.activeBacklogs === false })
+        // }
+        // if (!this.state.passive_backlogs) {
+        //     temp2 = temp2.filter((student) => { return student.passiveBacklogs === false })
+        // }
+        this.setState({
+            ...this.state,
+            temp: temp2,
+        });
+    }
+
+
+
+
     handleChange = (name) => (event) => {
+
         this.setState({
             ...this.state,
             [name]: event.target.value,
         })
+        setTimeout(() => {
+            this.filter();
+        }, 20);
+
     }
 
     selectAllHandler = (event) => {
@@ -141,27 +176,7 @@ class Filter extends React.Component {
         })
     }
 
-    filter = () => {
-        let temp2 = [...this.state.students]
-        temp2 = temp2.filter((student) => {
-            return (
-                student.sgpaTEFS >= this.state.sgpa
-                && student.percentageTenth >= this.state.tenth
-                && student.percentageTwelfth >= this.state.twelfth
-                // && student.internship>=this.state.internship
-            )
-        })
-        // if (!this.state.active_backlogs) {
-        //     temp2 = temp2.filter((student) => { return student.activeBacklogs === false })
-        // }
-        // if (!this.state.passive_backlogs) {
-        //     temp2 = temp2.filter((student) => { return student.passiveBacklogs === false })
-        // }
-        this.setState({
-            ...this.state,
-            temp: temp2,
-        });
-    }
+
 
     clickHandler = () => {
         this.filter();
@@ -184,6 +199,9 @@ class Filter extends React.Component {
                 console.log(error);
             });
     };
+
+
+
 
 
     handleChangeIndex = index => event => {
@@ -273,23 +291,44 @@ class Filter extends React.Component {
                                 />
                             </Grid>
                         </Grid>
-                        <Grid container spacing={1} justify="flex-end">
-                            <Grid item xs={2}>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    id="Submitbtn"
-                                    className={classes.button}
-                                    onClick={this.clickHandler}
-                                >
-                                    Submit
-                             </Button>
-                            </Grid>
-                        </Grid>
                     </FormControl>
                 </Paper>
+                <ReactToPrint
+                    trigger={() => <Button
+                        variant="contained"
+                        color="primary"
+                        id="printbtn"
+                        className={classes.button}>
+                        Print
+                </Button>}
+                    content={() => this.componentRef}
+                />
                 <br></br>
                 <br></br>
+                <div style={{display:"none"}}>
+                    <table ref={el => (this.componentRef = el)} style={{margin:"auto"}} class="table table-bordered">
+                        <thead>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Roll Number</th>
+                            <th scope="col">SGPA</th>
+                            <th scope="col">10th Percentage</th>
+                            <th scope="col">12th Percentage</th>
+                        </thead>
+                        <tbody>
+                            {this.state.temp.map((s, index) => (
+                                <tr>
+                                    <td scope="row">{s.collegeId}</td>
+                                    <td>{s.student.firstName}</td>
+                                    <td>{s.roll_no}</td>
+                                    <td>{s.sgpaTEFS}</td>
+                                    <td>{s.percentageTenth}</td>
+                                    <td>{s.percentageTwelfth}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
                 <div>
                     <Paper className={classes.root}>
                         <table class="table table-bordered table-striped">
@@ -340,8 +379,8 @@ class Filter extends React.Component {
                         className={classes.button}
                         onClick={this.clickHandlerForAccept}
                     >
-                        Allot
-                    </Button>
+                        Short List
+        </Button>
                 </div>
             </React.Fragment>
         );

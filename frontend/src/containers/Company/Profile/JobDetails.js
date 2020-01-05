@@ -191,10 +191,16 @@ function JobProfile(props) {
     console.log(props);
     if (state.jobDesc !== "" && state.jobDesignation !== "") {
       console.log(state);
+      let a = {
+        industry : fetched,
+        jobDesc : state.jobDesc,
+        jobDesignation : state.jobDesignation,
+      }
+      console.log(a);
       axios
-        .post("/industry/acceptJobDetails", state)
+        .post("/industry/acceptJobDetails",  a )
         .then(response => {
-          console.log(response);
+          console.log(response);  
         })
         .catch(error => {
           console.log(error);
@@ -251,6 +257,7 @@ function JobProfile(props) {
                   style={{ width: "80%" }}
                   size="large"
                   label="Job Description"
+                  
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -261,6 +268,7 @@ function JobProfile(props) {
                   rows="4"
                   value={state.jobDesc}
                   onChange={handleChange("jobDesc")}
+                  variant="outlined"
                 />
               </Grid>
             </Grid>

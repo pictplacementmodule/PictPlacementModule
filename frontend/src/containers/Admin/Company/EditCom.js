@@ -352,7 +352,7 @@ export default function AddVisited() {
                         </Grid>
 
                         <Grid item xs={12} align="right">
-                            <Button size="large" variant="contained" color="primary" className={classes.button} onClick={submitHandler}>Submit</Button>
+                            <Button size="large" variant="contained" color="primary" className={classes.button} onClick={submitHandler}>find company</Button>
                         </Grid>
                     </Grid>
                 </form>

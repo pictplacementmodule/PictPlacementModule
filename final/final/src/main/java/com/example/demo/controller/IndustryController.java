@@ -26,10 +26,10 @@ import com.example.demo.service.Userservice;
 import com.example.demo.service.industryservice;
 
 @RestController
-@CrossOrigin(origins = "*",allowedHeaders="*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/industry")
 public class IndustryController {
-	
+
 	@Autowired
 	private Jobdescrepo jobdescrepo;
 	@Autowired
@@ -40,113 +40,98 @@ public class IndustryController {
 	private industryservice industryserv;
 	@Autowired
 	private placedstudentsrepo placedrepo;
-	
+
 	@PostMapping("/add")
-	public industry addIndystry(@RequestBody industry industry)
-	{
+	public industry addIndystry(@RequestBody industry industry) {
 		System.out.println(industry.getStart_date());
-		if(!industryrepo.addIndustry(industry.getStart_date())) {
+		if (!industryrepo.addIndustry(industry.getStart_date())) {
 			industryrepo.save(industry);
-			
+
 			return industryrepo.findById(industry.getId()).get();
 		}
 		System.out.print("choose different date\n");
 		return null;
 	}
-	
-	
+
 	@GetMapping("/findall")
-	public List<industry> findindustry()
-	{
+	public List<industry> findindustry() {
 		System.out.println(industryrepo.findAll2());
 		return industryrepo.findAll2();
 	}
-	@PostMapping("/acceptJobDetails")//for adding job details
-	public void acceptjobdetails(@RequestBody jobdescription a)
-	{
-		//System.out.println(a.getIndustry().getId());
-		
+
+	@PostMapping("/acceptJobDetails") // for adding job details
+	public void acceptjobdetails(@RequestBody jobdescription a) {
 		System.out.println("job details addded");
-		 jobdescrepo.addind(a.getIndustry().getId(),a.getJobDesc(),a.getJobDesignation());
+		jobdescrepo.addind(a.getIndustry().getId(), a.getJobDesc(), a.getJobDesignation());
+//		System.out.println(a.toString());
+//		System.out.println(a.getIndustry() + " " + a.getJobDesc() + " " + a.getJobDesignation());
+//		jobdescrepo.save(a);
 	}
-	
+
 	@GetMapping("/getDateList")
-	public List<Date> getDateList()
-	{
+	public List<Date> getDateList() {
 		ArrayList<Date> datelist = new ArrayList<Date>();
 		datelist.addAll(industryrepo.addFinalDates());
 		return datelist;
 	}
-	
+
 	@PostMapping("/findStudents")
-	public List<Studentdetails> findStudents(@RequestBody industry industry)
-	{
+	public List<Studentdetails> findStudents(@RequestBody industry industry) {
 		return industryserv.findStudents(industry.getSkills());
 	}
-	
+
 	@PostMapping("/findByDate")
-	public List<industry> findIndustryByDate(@RequestBody industry industry)
-	{
-		System.out.println(industry.getStart_date()+" "+industry.getFinal_date());
-		System.out.println(industryrepo.findIndustryByDate(industry.getStart_date(),industry.getFinal_date()));
-		return industryrepo.findIndustryByDate(industry.getStart_date(),industry.getFinal_date());
+	public List<industry> findIndustryByDate(@RequestBody industry industry) {
+		System.out.println(industry.getStart_date() + " " + industry.getFinal_date());
+		System.out.println(industryrepo.findIndustryByDate(industry.getStart_date(), industry.getFinal_date()));
+		return industryrepo.findIndustryByDate(industry.getStart_date(), industry.getFinal_date());
 	}
-	
-	
+
 	@PostMapping("/findById")
-	public industry findIndustryById(@RequestParam("id") int id)
-	{
+	public industry findIndustryById(@RequestParam("id") int id) {
 		try {
 			return industryrepo.findById(id).get();
-
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
 	}
-	
-	 @PostMapping("/sortbypackage")
-	 public List<industry> ByPackage()
-	 {
-		 return industryrepo.ByPackage();
-	 }
-	 
-	 @PostMapping("/pushPlacedByCompany")
-	 public void pushPlaced(@RequestBody List<placedstudents> p) {
-		 placedrepo.saveAll(p);
-		 
-	 }
-	 
 
-	 @PostMapping("/finalPlaced")//for placing the students and changing placed field to 1
-	 public void finalPlaced(@RequestBody List<placedstudents> p) {
-		 placedrepo.saveAll(p);
-		 System.out.print("hvhjbhj");
+	@PostMapping("/sortbypackage")
+	public List<industry> ByPackage() {
+		return industryrepo.ByPackage();
+	}
 
-		 ArrayList<Integer> x=new ArrayList<Integer>();
+	@PostMapping("/pushPlacedByCompany")
+	public void pushPlaced(@RequestBody List<placedstudents> p) {
+		placedrepo.saveAll(p);
 
-		 for(int i=0;i<p.size();i++)
-		 {
-			 	 x.add(p.get(i).getId());
-		 }
-		 System.out.print(x);
-		 
-		 userservice.finalplaced(x);
-		 userservice.mail(x);
-	 }
-	 
-	 @GetMapping("/getAllSkills")
-		public List<String> getAllSkills()
-		{
-			
-			return industryrepo.finaAllSkills();
+	}
+
+	@PostMapping("/finalPlaced") // for placing the students and changing placed field to 1
+	public void finalPlaced(@RequestBody List<placedstudents> p) {
+		placedrepo.saveAll(p);
+		System.out.print("hvhjbhj");
+
+		ArrayList<Integer> x = new ArrayList<Integer>();
+
+		for (int i = 0; i < p.size(); i++) {
+			x.add(p.get(i).getId());
 		}
+		System.out.print(x);
 
-	 
-	 @GetMapping("/getAllLocations")
-		public List<String> getAllLocations()
-		{
-			
-			return industryrepo.finaAllLocations();
-		}
+		userservice.finalplaced(x);
+		userservice.mail(x);
+	}
+
+	@GetMapping("/getAllSkills")
+	public List<String> getAllSkills() {
+
+		return industryrepo.finaAllSkills();
+	}
+
+	@GetMapping("/getAllLocations")
+	public List<String> getAllLocations() {
+
+		return industryrepo.finaAllLocations();
+	}
 }

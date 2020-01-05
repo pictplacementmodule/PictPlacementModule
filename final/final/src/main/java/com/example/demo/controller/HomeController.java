@@ -173,7 +173,6 @@ public class HomeController {
 	public void ChangeStatusOfPlaced(@RequestBody List<Integer> a) {
 		placedstudents p;
 		Academicdetails ad;
-		
 		for (int i = 0; i < a.size(); i++) {
 			p = placedrepo.findById(a.get(i)).get();
 			p.setPL_status(2);
@@ -182,7 +181,7 @@ public class HomeController {
 			ad.setPlaced(true);
 			placedrepo.save(p);
 		}
-		//placedrepo.deleteStuPlaced(a);
+		
 		//userservice.mail(a);
 
 	}

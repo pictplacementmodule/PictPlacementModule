@@ -32,7 +32,7 @@ public class CustomerDaoImpl extends JdbcDaoSupport implements CustomerDao {
 
 	@Override
 	public List<countofplaced> countofstudents() {
-		String sql = "Select count(id),idname from placedstudents group by idname";
+		String sql = "Select count(id),idname from placedstudents WHERE pl_status = 2 group by idname ";
 		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
 
 		List<countofplaced> result = new ArrayList<countofplaced>();
@@ -59,7 +59,7 @@ public class CustomerDaoImpl extends JdbcDaoSupport implements CustomerDao {
 
 			for (Map<String, Object> row : rows) {
 				AdminPlaced cus = new AdminPlaced();
-				cus.setCount((int)row.get("pcount"));
+				cus.setCount((int) row.get("pcount"));
 				cus.setRoll(((int) row.get("pid")));
 				cus.setStu_name((String) row.get("sfn"));
 				cus.setComp_name((String) row.get("cname"));
