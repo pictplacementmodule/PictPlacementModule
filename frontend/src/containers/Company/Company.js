@@ -17,12 +17,11 @@ import Placed from './Eligible/Placed';
 class Company extends Component {
   drawerList = {
     'Profile': ['profile', <DashboardIcon />],
-    'Filter': ['eligible-students2', <FilterListIcon />],
     'JobDetails': ['job-details', <DoneOutlineIcon />],
+    'Filter': ['eligible-students2', <FilterListIcon />],
     'Short Listed': ["short-listed", <DashboardIcon />],
     'Pending Selected': ["pending-selected", <DashboardIcon />],
     'Placed': ["placed", <DashboardIcon />]
-
   }
 
   render() {
@@ -34,7 +33,7 @@ class Company extends Component {
             <Route exact path="/company/dashboard/eligible-students2" component={Filter} />
             <Route
               exact
-              path="/company/dashboard/job_details"
+              path="/company/dashboard/job-details"
               component={Job_Details}
             />
             <Route exact path="/company/dashboard/short-listed" component={ShortListed} />
