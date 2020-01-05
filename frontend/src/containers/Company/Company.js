@@ -34,7 +34,7 @@ class Company extends Component {
             <Route exact path="/company/dashboard/eligible-students2" component={Filter} />
             <Route
               exact
-              path="/company/dashboard/job_details"
+              path="/company/dashboard/job-details"
               component={Job_Details}
             />
             <Route exact path="/company/dashboard/short-listed" component={ShortListed} />

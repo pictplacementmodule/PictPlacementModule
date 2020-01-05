@@ -73,7 +73,7 @@ class CountReport extends Component {
       .then(response => {
         console.log(response.data);
         this.setState({ companies: response.data });
-        this.pageStand(this.state.currentPage);
+        //this.pageStand(this.state.currentPage);
       })
       .catch(error => {
         console.log(error);
@@ -98,7 +98,8 @@ class CountReport extends Component {
           )}
           content={() => this.componentRef}
         />
-        <div style={{ display: "none" }}>
+
+        {/* <div>
           <Paper ref={el => (this.componentRef = el)} className={classes.root}>
             <table className="table table-bordered table-striped">
               <thead>
@@ -109,7 +110,7 @@ class CountReport extends Component {
               </thead>
               <tbody>
                 {this.state.companies.map(company => (
-                  <tr key={company.id}>
+                  <tr key={company.name}>
                     <td component="th" scope="row">
                       {company.name}
                     </td>
@@ -119,9 +120,9 @@ class CountReport extends Component {
               </tbody>
             </table>
           </Paper>
-        </div>
+        </div> */}
         <Paper className={classes.root}>
-          <table className="table table-bordered">
+          <table className="table table-bordered  table-striped">
             <thead>
               <tr>
                 <th>Company Name</th>
@@ -129,7 +130,7 @@ class CountReport extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.show.map(company => (
+              {this.state.companies.map(company => (
                 <tr key={company.id}>
                   <td component="th" scope="row">
                     {company.name}
@@ -141,10 +142,10 @@ class CountReport extends Component {
           </table>
         </Paper>
         <Pagination
-              postsPerPage={this.state.postsPerPage}
-              totalPosts={this.state.companies.length}
-              paginate={this.paginate}
-              paginatePrev={this.paginatePrev} />
+          postsPerPage={this.state.postsPerPage}
+          totalPosts={this.state.companies.length}
+          paginate={this.paginate}
+          paginatePrev={this.paginatePrev} />
       </div>
     );
   }

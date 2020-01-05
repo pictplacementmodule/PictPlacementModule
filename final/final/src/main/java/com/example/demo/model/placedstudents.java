@@ -44,6 +44,7 @@ public class placedstudents {
 	}
 
 	@Id
+	@Column(columnDefinition = "serial")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int count;
 

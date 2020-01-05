@@ -61,16 +61,17 @@ class StudentReport extends Component {
     constructor(props) {
         super(props);
 
-        axios.post("/industry/findById", null, { params: { id: this.props.match.params.id } })
-            .then((response) => {
-                this.setState({
-                    ...this.state,
-                    company: response.data,
-                })
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+        // axios.post("/industry/findById", null, { params: { id: this.props.match.params.id } })
+        //     .then((response) => {
+        //         this.setState({
+        //             ...this.state,
+        //             company: response.data,
+        //         })
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     })
+        //     console.log(this.state.company);
 
         axios.post("/sortbyskills", null, { params: { id: this.props.match.params.id } })
             .then(response => {
