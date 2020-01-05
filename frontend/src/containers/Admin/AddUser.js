@@ -157,7 +157,7 @@ export default function AddUser() {
         const pass = {
             skills: skill.toUpperCase(),
         }
-        axios.post("addskills/",pass)
+        axios.post("addskills/", pass)
             .then((response) => {
                 console.log(response.data);
                 setOpen(true);
@@ -170,7 +170,7 @@ export default function AddUser() {
         const pass = {
             location: city.toUpperCase(),
         }
-        axios.post("addlocation/",pass)
+        axios.post("addlocation/", pass)
             .then((response) => {
                 console.log(response.data);
                 setOpen(true);
@@ -235,7 +235,7 @@ export default function AddUser() {
                         </TextField>
                     </Grid>
                     <Grid item xs={12} style={{ marginTop: "3vh" }}>
-                        <Button onClick={submitHandler} size="large" variant="contained" color="primary">Submit</Button>
+                        <Button style={{backgroundColor: "rgb(70,70,120)",}} onClick={submitHandler} size="large" variant="contained" color="primary">Submit</Button>
                     </Grid>
                 </Grid>
             </Paper>
@@ -254,12 +254,15 @@ export default function AddUser() {
                         />
                     </Grid>
                     <Grid item xs={12} sm={4}>
-                        <Button 
-                            style={{marginTop:"10px",marginLeft:"50%"}}
-                            onClick={submitSkill} 
-                            variant="contained" 
+                        <Button
+                            style={{
+                                marginTop: "10px", marginLeft: "50%",
+                                backgroundColor: "rgb(70,70,120)",
+                            }}
+                            onClick={submitSkill}
+                            variant="contained"
                             color="primary">
-                                Add
+                            Add
                         </Button>
                     </Grid>
                 </Grid>
@@ -276,12 +279,15 @@ export default function AddUser() {
                         />
                     </Grid>
                     <Grid item xs={12} sm={4}>
-                        <Button 
-                            style={{marginTop:"10px",marginLeft:"50%"}}
-                            onClick={submitCity} 
-                            variant="contained" 
+                        <Button
+                            style={{
+                                marginTop: "10px", marginLeft: "50%",
+                                backgroundColor: "rgb(70,70,120)",
+                            }}
+                            onClick={submitCity}
+                            variant="contained"
                             color="primary">
-                                Add
+                            Add
                         </Button>
                     </Grid>
                 </Grid>

@@ -22,6 +22,7 @@ class Company extends Component {
     'Short Listed': ["short-listed", <DashboardIcon />,'Shortlist from all eligible students'],
     'Pending Selected': ["pending-selected", <DashboardIcon />,'Selected students - Pending confirmation from PICT'],
     'Placed': ["placed", <DashboardIcon />,'See students you have placed']
+
   }
 
 
@@ -38,7 +39,7 @@ class Company extends Component {
             <Route exact path="/company/dashboard/eligible-students2" component={Filter} />
             <Route
               exact
-              path="/company/dashboard/job_details"
+              path="/company/dashboard/job-details"
               component={Job_Details}
             />
             <Route exact path="/company/dashboard/short-listed" component={ShortListed} />

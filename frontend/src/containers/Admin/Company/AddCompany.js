@@ -76,7 +76,8 @@ const useStyles = makeStyles(theme => ({
     flexWrap: "wrap"
   },
   button: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
+    backgroundColor:"rgb(70,70,120)",
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -713,7 +714,7 @@ function Profile(props) {
               </Grid>
 
               <Grid item xs={12} align="right" onClick={submitHandler}>
-                <Button size="large" variant="contained" color="primary">
+                <Button className={classes.button} size="large" variant="contained" color="primary">
                   Submit
                 </Button>
               </Grid>
