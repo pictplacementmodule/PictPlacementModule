@@ -14,9 +14,9 @@ import Current from './Company/CurrentCompanies'
 class Student extends Component {
 
     drawerList = {
-        'My Profile':['profile', <DashboardIcon />],
-        'Companies Visiting':['current-companies', <Notifications />],
-        'Companies Visited':['companies-visited',<DoneAll />]    
+        'My Profile':['profile', <DashboardIcon />,'See and edit my profile'],
+        'Companies Visiting':['current-companies', <Notifications />,'See upcoming companies'],
+        'Companies Visited':['companies-visited',<DoneAll />,'see companies already visited']    
     }
 
     render() {

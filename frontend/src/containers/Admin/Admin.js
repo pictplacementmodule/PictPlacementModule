@@ -28,15 +28,15 @@ import AddCompany from "./Company/AddCompany";
 
 class Admin extends Component {
   drawerList = {
-    Home: ["", <Home />],
-    "Add company": ["add-company", <Add />],
+    Home: ["", <Home />,'See companies visiting within specific period'],
+    "Add company": ["add-company", <Add />,'Add a new Company from here'],
     // 'Add Student': ['student-profile', <StudentIcon />],
-    "Add User": ["add-user", <AddUserIcon />],
-    "Edit company": ["edit-company", <EditIcon />],
-    "Branch Report": ["branch-report", <Receipt />],
-    "Placement Report": ["placement-report", <Receipt />],
-    "Eligibility Report": ["skills-report", <Receipt />],
-    "Pending Request": ["pending-request", <Receipt />]
+    "Add User": ["add-user", <AddUserIcon />,'Create system user (generic)' ],
+    "Edit company": ["edit-company", <EditIcon />,'Edit details of a specific company'], 
+    "Branch Report": ["branch-report", <Receipt />,'Get branchwise details of students'],
+    "Placement Report": ["placement-report", <Receipt />,'number of placed students (company wise)'],
+    "Eligibility Report": ["skills-report", <Receipt />,'company wise report of placed student'],
+    "Pending Request": ["pending-request", <Receipt />,'Students placed by companies. Waiting for confirmation']
   };
 
   render() {
