@@ -71,6 +71,13 @@ const styles = theme => ({
     backgroundColor:"rgb(70,70,120)",
     outline:"none"
   },
+  printButton: {
+    margin: theme.spacing(1),
+    margin: "auto",
+    marginLeft: "47%",
+    marginBottom: "2%",
+    backgroundColor: "rgb(70,70,120)",
+},
   button2: {
     margin: "auto",
     backgroundColor:"#388E3C",
@@ -370,7 +377,7 @@ class AllCompanies extends Component {
           variant="contained"
           color="primary"
           id="printbtn"
-          className={classes.button}
+          className={classes.printButton}
         >
           Print
         </Button>

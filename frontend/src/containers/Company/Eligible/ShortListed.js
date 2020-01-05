@@ -49,7 +49,9 @@ const styles = theme => ({
     button: {
         margin: theme.spacing(1),
         margin: "auto",
-        backgroundColor:"rgb(70,70,120)",
+        marginLeft: "47%",
+        marginTop: "2%",
+        backgroundColor: "rgb(70,70,120)",
     },
     group: {
         margin: theme.spacing(1, 0)

@@ -49,7 +49,6 @@ class Company extends Component {
           </Dashboard>
           
         } />
-        <Redirect from="/company/dashboard" exact to="/company/dashboard/profile"></Redirect>
       </div>
     );
   }

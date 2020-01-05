@@ -225,9 +225,11 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing(1),
-    marginTop:theme.spacing(5),
-    marginLeft:theme.spacing(115)
-  },
+    margin: "auto",
+    marginLeft: "47%",
+    marginTop: "2%",
+    backgroundColor: "rgb(70,70,120)",
+},
   group: {
     margin: theme.spacing(1, 0)
   }

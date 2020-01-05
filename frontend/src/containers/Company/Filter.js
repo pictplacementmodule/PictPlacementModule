@@ -48,6 +48,8 @@ const styles = theme => ({
     button: {
         margin: theme.spacing(1),
         margin: "auto",
+        marginLeft: "47%",
+        marginTop: "2%",
         backgroundColor: "rgb(70,70,120)",
     },
     group: {
@@ -100,11 +102,44 @@ class Filter extends React.Component {
 
     }
 
+
+
+
+    filter = () => {
+        let temp2 = [...this.state.students]
+        temp2 = temp2.filter((student) => {
+            return (
+                student.sgpaTEFS >= this.state.sgpa
+                && student.percentageTenth >= this.state.tenth
+                && student.percentageTwelfth >= this.state.twelfth
+                // && student.internship>=this.state.internship
+            )
+        })
+        // if (!this.state.active_backlogs) {
+        //     temp2 = temp2.filter((student) => { return student.activeBacklogs === false })
+        // }
+        // if (!this.state.passive_backlogs) {
+        //     temp2 = temp2.filter((student) => { return student.passiveBacklogs === false })
+        // }
+        this.setState({
+            ...this.state,
+            temp: temp2,
+        });
+    }
+
+
+
+
     handleChange = (name) => (event) => {
+        
         this.setState({
             ...this.state,
             [name]: event.target.value,
         })
+        setTimeout(() => {
+            this.filter();
+          }, 20);
+        
     }
 
     selectAllHandler = (event) => {
@@ -133,27 +168,7 @@ class Filter extends React.Component {
         })
     }
 
-    filter = () => {
-        let temp2 = [...this.state.students]
-        temp2 = temp2.filter((student) => {
-            return (
-                student.sgpaTEFS >= this.state.sgpa
-                && student.percentageTenth >= this.state.tenth
-                && student.percentageTwelfth >= this.state.twelfth
-                // && student.internship>=this.state.internship
-            )
-        })
-        // if (!this.state.active_backlogs) {
-        //     temp2 = temp2.filter((student) => { return student.activeBacklogs === false })
-        // }
-        // if (!this.state.passive_backlogs) {
-        //     temp2 = temp2.filter((student) => { return student.passiveBacklogs === false })
-        // }
-        this.setState({
-            ...this.state,
-            temp: temp2,
-        });
-    }
+    
 
     clickHandler = () => {
         this.filter();
@@ -175,6 +190,9 @@ class Filter extends React.Component {
                 console.log(error);
             });
     };
+
+
+  
 
 
     handleChangeIndex = index => event => {
@@ -200,7 +218,7 @@ class Filter extends React.Component {
         const { classes } = this.props;
         return (
             <React.Fragment>
-
+                
                 <Paper className={classes.root}>
                     <FormControl component="fieldset" className={classes.formControl}>
                         <FormLabel component="legend" className={classes.text}>
@@ -266,7 +284,7 @@ class Filter extends React.Component {
                         </Grid>
                         <Grid container spacing={1} justify="flex-end">
                             <Grid item xs={2}>
-                                <Button
+                                {/* <Button
                                     variant="contained"
                                     color="primary"
                                     id="Submitbtn"
@@ -274,15 +292,26 @@ class Filter extends React.Component {
                                     onClick={this.clickHandler}
                                 >
                                     Submit
-                             </Button>
+                             </Button> */}
                             </Grid>
+                        
                         </Grid>
                     </FormControl>
                 </Paper>
+                <ReactToPrint
+                    trigger={() => <Button
+                        variant="contained"
+                        color="primary"
+                        id="printbtn"
+                        className={classes.button}>
+                        Print
+                </Button>}
+                    content={() => this.componentRef}
+                />
                 <br></br>
                 <br></br>
                 <div>
-                    <Paper className={classes.root}>
+                    <Paper ref={el => (this.componentRef = el)} className={classes.root}>
                         <Table className={classes.table} id="printArea">
                             <TableHead>
                                 <TableRow>
@@ -310,7 +339,7 @@ class Filter extends React.Component {
                                         <TableCell component="th" scope="row">
                                             {s.collegeId}
                                         </TableCell>
-                                        <TableCell align="right">{s.student.firstName}</TableCell>
+                                        <TableCell align="right">{s.student.firstName + " " + s.student.lastName}</TableCell>
                                         <TableCell align="right">{s.roll_no}</TableCell>
                                         <TableCell align="right">{s.sgpaTEFS}</TableCell>
                                         <TableCell align="right">{s.percentageTenth}</TableCell>
@@ -338,7 +367,7 @@ class Filter extends React.Component {
                         className={classes.button}
                         onClick={this.clickHandlerForAccept}
                     >
-                        Allot
+                        Short List
         </Button>
                 </div>
             </React.Fragment>
