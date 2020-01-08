@@ -76,6 +76,8 @@ class BranchReport extends Component {
       ...this.state,
       [name]: event.target.checked
     });
+    setTimeout(()=>{ this.clickHandler() }, 30);
+    
   };
 
   pageStand = (pageNumber) => {
@@ -160,15 +162,7 @@ class BranchReport extends Component {
               />
             </FormGroup>
             <ButtonGroup>
-              <Button
-                variant="contained"
-                color="primary"
-                id="Submitbtn"
-                className={classes.button}
-                onClick={this.clickHandler}
-              >
-                Submit
-            </Button>
+            
               <ReactToPrint
                 trigger={() => <Button
                   variant="contained"

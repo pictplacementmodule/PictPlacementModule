@@ -387,7 +387,7 @@ class AllCompanies extends Component {
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <KeyboardDatePicker
                   margin="normal"
-                  label="Start Date"
+                  label="From: "
                   value={this.state.startDate}
                   onChange={date => this.dateChangeHandler(date, "startDate")}
                   KeyboardButtonProps={{
@@ -400,7 +400,7 @@ class AllCompanies extends Component {
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <KeyboardDatePicker
                   margin="normal"
-                  label="End Date"
+                  label="To: "
                   value={this.state.finalDate}
                   onChange={date => this.dateChangeHandler(date, "finalDate")}
                   KeyboardButtonProps={{

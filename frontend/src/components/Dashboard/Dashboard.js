@@ -92,16 +92,17 @@ function ClippedDrawer(props) {
                 PICT PLACEMENT
               </Typography>
             </Grid>
+            <Grid item xs={1}>
+              <Chip style={{marginTop:"4px"}} label="Basic" label={localStorage.getItem("type") + " LOGIN"} />
+            </Grid>
             <Grid item xs={8}>
-              <Typography variant="h6" style={{marginRight:"20px"}}>
+              <Typography variant="h6" style={{marginRight:"20px",marginLeft:"20px"}}>
                 <marquee scrolldelay="8">
-                  Welcome to Pict Placement Module - {localStorage.getItem("token")}
+                  Welcome to Pict Placement Module. Your ID  - {localStorage.getItem("token")}
                 </marquee>
               </Typography>
             </Grid>
-            <Grid item xs={1}>
-              <Chip style={{marginTop:"4px",marginLeft:"15px"}} label="Basic" label={localStorage.getItem("type")} />
-            </Grid>
+            
             <Grid item xs={1}>
               <Button
                 onClick={() => logoutHandler(props)}

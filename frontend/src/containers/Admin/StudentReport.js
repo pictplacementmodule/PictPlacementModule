@@ -81,6 +81,7 @@ class StudentReport extends Component {
                     ...this.state,
                     students: response.data
                 });
+                console.log(this.state.company);
             })
             .catch(error => {
                 console.log(error);

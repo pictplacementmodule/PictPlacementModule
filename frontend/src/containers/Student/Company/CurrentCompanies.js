@@ -32,7 +32,7 @@ class Current extends Component {
 
     constructor() {
         super();
-        axios.get('/industry/findall')
+        axios.get('/industry/getUpcoming')
             .then((response) => {
                 this.setState({ companies: response.data });
                 console.log(response.data)

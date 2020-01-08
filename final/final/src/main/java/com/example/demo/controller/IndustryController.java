@@ -58,6 +58,12 @@ public class IndustryController {
 		System.out.println(industryrepo.findAll2());
 		return industryrepo.findAll2();
 	}
+	
+	@GetMapping("/getUpcoming")
+	public List<industry> findUpcoming() {
+		System.out.println(industryrepo.findAll2());
+		return industryrepo.findIndustryForUpcomig();
+	}
 
 	@PostMapping("/acceptJobDetails") // for adding job details
 	public void acceptjobdetails(@RequestBody jobdescription a) {

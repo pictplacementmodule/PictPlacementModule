@@ -31,6 +31,8 @@ public interface industryrepo extends JpaRepository<industry,Integer>{
 	@Query(value="SELECT * FROM industry where (final_date between ?1 and ?2) order by id asc",nativeQuery=true)
 	public List<industry> findIndustryByDate(Date d1,Date d2);
 	
+	@Query(value="SELECT * FROM industry where final_date < NOW() order by id asc",nativeQuery=true)
+	public List<industry> findIndustryForUpcomig();
 	
 	@Query(value = "SELECT distinct skills from industry_skills",nativeQuery=true)
 	public List<String> finaAllSkills();
