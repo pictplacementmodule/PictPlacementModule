@@ -60,6 +60,15 @@ public class Studentdetails implements Serializable {
 	private String permanentAddress;
 	@Column(name = "fatname")
 	private String fatname;
+	@Column(name = "profileImg")
+	private byte[] profileImg;
+	public byte[] getProfileImg() {
+		return profileImg;
+	}
+
+	public void setProfileImg(byte[] profileImg) {
+		this.profileImg = profileImg;
+	}
 
 	public int getRollno() {
 		return rollno;

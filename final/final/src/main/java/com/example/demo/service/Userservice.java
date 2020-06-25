@@ -41,7 +41,6 @@ public class Userservice {
 	private JavaMailSender javaMailSender;
 
 	public users findById(int id) {
-		System.out.println("n");
 		return userrepo.findById(id).orElse(null);
 	}
 

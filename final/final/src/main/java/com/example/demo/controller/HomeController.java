@@ -80,13 +80,16 @@ public class HomeController {
 			return "FALSE";
 		} else {
 			System.out.println(passwordEncoder.encode(user.getPass()));
+			System.out.println(user.getPass());
 			System.out.println(user1.getPass());
 
-			if (passwordEncoder.matches(user.getPass(), user1.getPass())) {
+			if (passwordEncoder.matches(user.getPass(), user1.getPass().toString())) {
+				System.out.println(user1.getPass());
+				System.out.println(user.getPass());
 				return user1.getType();
 
 			} else {
-				System.out.println("not exists");
+				System.out.println("password mismatch");
 				return "FALSE";
 			}
 
