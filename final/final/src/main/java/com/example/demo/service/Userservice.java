@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -44,9 +48,13 @@ public class Userservice {
 		return userrepo.findById(id).orElse(null);
 	}
 
-	public void adduser(users user) {
-		System.out.println("User added");
-		userrepo.save(user);
+	public BodyBuilder adduser(users user) {
+		if(!userrepo.existsById(user.getId()))
+			userrepo.save(user);
+		else 
+			return ResponseEntity.status(HttpStatus.CONFLICT);
+		System.out.println("done");
+		return ResponseEntity.status(HttpStatus.OK);
 	}
 
 	public void addpd(Studentdetails user) {

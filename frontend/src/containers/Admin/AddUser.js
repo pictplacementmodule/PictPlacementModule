@@ -135,14 +135,22 @@ export default function AddUser() {
     }
 
     const submitHandler = () => {
+        const resetState = {
+        id: '',
+        pass: '',
+        type: '',
+        };
         axios.post('/adduser', state)
             .then((response) => {
+                if(response.status=='OK'){
                 console.log(response.data);
                 setOpen(true);
+                }
             })
             .catch((error) => {
                 console.log(error);
             })
+            setState(resetState);
     }
 
     const handleClose = (event, reason) => {
@@ -159,12 +167,15 @@ export default function AddUser() {
         }
         axios.post("addskills/", pass)
             .then((response) => {
+               
                 console.log(response.data);
                 setOpen(true);
+                
             })
             .catch((error) => {
                 console.log(error);
             })
+            setSkill('');
     }
     const submitCity = () => {
         const pass = {
@@ -178,6 +189,7 @@ export default function AddUser() {
             .catch((error) => {
                 console.log(error);
             })
+            setCity('');
     }
 
     return (

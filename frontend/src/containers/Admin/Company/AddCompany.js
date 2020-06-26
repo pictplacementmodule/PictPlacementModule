@@ -237,6 +237,31 @@ function Profile(props) {
   const submitHandler = event => {
     // setOpen(true);
     event.preventDefault();
+      var resetState = {
+        id: "",
+        name: "",
+        cpName: "",
+        cpEmail1: "",
+        cpEmail2: "",
+        contactNo1: "",
+        contactNo2: "",
+        contactNo3: "",
+        criteria: "",
+        passiveBacklogs: false,
+        activeBacklogs: false,
+        package: "",
+        startDate: new Date(),
+        endDate: new Date(),
+        numberOfStudents: "",
+        skill: [],
+        city: [],
+        branches: {
+          computer: false,
+          it: false,
+          entc: false
+        },
+        successSnackBar: true
+      };
     var industry = {
       id: state.id,
       name: state.name,
@@ -282,6 +307,7 @@ function Profile(props) {
           console.log(error);
         });
     }
+    setState(resetState);
   };
   const handleChange = name => event => {
     setState({
@@ -312,7 +338,7 @@ function Profile(props) {
           Number(value) > 0 && Number(value) < 10 ? "" : "Invalid Criteria";
         break;
       case "package":
-        reg = /^[0-9]+$/;
+        reg = /^[0-9]+\.?([0-9]+)?$/;
         error = reg.test(value) ? "" : "Invalid Package";
         break;
       case "numberOfStudents":
@@ -448,28 +474,28 @@ function Profile(props) {
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  data-tip data-for='companyId'
                   label="Company Id"
                   fullWidth
                   onChange={handleChange("id")}
                   value={state.id}
                 />
+
               </Grid>
+
               <Grid item xs={12} sm={6}>
                 <TextField
                   data-tip data-for='companyName'
-                  label="Company Name"
+                  label="Company Name*"
                   fullWidth
                   onChange={handleChange("name")}
                   value={state.name}
                   error={formErrors.name.length > 0 || emptyError.name}
                 />
-                      <ReactTooltip id='companyName' type='info' effect='solid'>
-  <span>Enter Company name Here</span>
-</ReactTooltip>
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
-                  label="Contact Person Name"
+                  label="Contact Person Name*"
                   fullWidth
                   onChange={handleChange("cpName")}
                   value={state.cpName}
@@ -478,12 +504,16 @@ function Profile(props) {
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
-                  label=" Email id 1"
+                data-tip data-for = "Email1"
+                  label=" Email id 1*"
                   fullWidth
                   onChange={handleChange("cpEmail1")}
                   value={state.cpEmail1}
                   error={formErrors.cpEmail1.length > 0 || emptyError.cpEmail1}
                 />
+              <ReactTooltip id='Email1' type='info' effect='solid'>
+              <span>Enter email in format : example@demo.com</span>
+              </ReactTooltip>
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
@@ -496,6 +526,7 @@ function Profile(props) {
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
+                  data-tip data-for = "contact1*" 
                   label="Contact Number 1"
                   fullWidth
                   onChange={handleChange("contactNo1")}
@@ -504,6 +535,9 @@ function Profile(props) {
                     formErrors.contactNo1.length > 0 || emptyError.contactNo1
                   }
                 />
+                <ReactTooltip id='cntact1' type='info' effect='solid'>
+              <span>Enter 10 digit contact number</span>
+              </ReactTooltip>
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
@@ -525,16 +559,20 @@ function Profile(props) {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                data-tip data-for = "criteria"
                   label="Criteria"
                   fullWidth
                   onChange={handleChange("criteria")}
                   value={state.criteria}
                   error={formErrors.criteria.length > 0}
                 />
+                <ReactTooltip id='criteria' type='info' effect='solid'>
+              <span>Enter the CGPA criteria (should be less than 10)</span>
+              </ReactTooltip>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Package"
+                  label="Package*"
                   fullWidth
                   onChange={handleChange("package")}
                   value={state.package}
