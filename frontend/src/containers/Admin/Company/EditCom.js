@@ -213,14 +213,16 @@ export default function AddVisited() {
 
         event.preventDefault();
         var name = state.name;
-        axios.post('/industry/findById', null, { params: { id: state.name } })
+        axios.post('/industry/findByName', null, { params: { cname: state.name } })
             .then((response) => {
                 if (response.data != "") {
                     console.log(response.data)
                        setState({
                            ...response.data,
                        });
+                       setMessage("Company profile found!");
                        setVariant("success");
+                       setOpen(true);
                 }
                 else{
                     setMessage("No such company profile found!");
@@ -344,7 +346,7 @@ export default function AddVisited() {
                     <Grid container spacing={3}>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                                label="company Id"
+                                label="company Name"
                                 fullWidth
                                 onChange={handleChange('name')}
                                 value={state.name}
@@ -511,7 +513,7 @@ export default function AddVisited() {
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDatePicker
                                 fullWidth
-                                label="Start date"
+                                label="Preferred Date"
                                 fullWidth
                                 value={state.start_date}
                                 onChange={(date) => handleDateChange(date, 'start_date')}

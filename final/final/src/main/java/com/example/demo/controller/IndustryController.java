@@ -102,6 +102,15 @@ public class IndustryController {
 		}
 	}
 
+	@PostMapping("/findByName")
+	public industry findIndustryByName(@RequestParam("cname") String cname) {
+		try {
+			return industryrepo.findByName(cname.toLowerCase()).get(0);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
 	@PostMapping("/sortbypackage")
 	public List<industry> ByPackage() {
 		return industryrepo.ByPackage();

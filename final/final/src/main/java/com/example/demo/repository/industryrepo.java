@@ -41,7 +41,8 @@ public interface industryrepo extends JpaRepository<industry,Integer>{
 	@Query(value = "SELECT distinct locality from industry_locality",nativeQuery=true)
 	public List<String> finaAllLocations();
 	
-	
+	@Query(value = "SELECT * from industry where LOWER(name) LIKE %?1%",nativeQuery=true)
+	public List<industry> findByName(String cname);
 	}
 
 //@Query("SELECT count(*) > 0 from industry where (?1 between start_date and end_date) or (?2 between start_date and end_date)")

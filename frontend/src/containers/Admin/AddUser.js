@@ -117,6 +117,8 @@ export default function AddUser() {
     }
 
     const [open, setOpen] = React.useState(false);
+    const [message,setMessage] = React.useState("Company Profile edited successfully!");
+    const [variant,setVariant] = React.useState("success");
 
 
     const changeHandler = (name) => (event) => {
@@ -145,6 +147,11 @@ export default function AddUser() {
                 if(response.status=='OK'){
                 console.log(response.data);
                 setOpen(true);
+                }
+                else{
+                    setMessage("Invalid entry or user Id already exists !");
+                    setVariant("error");
+                    setOpen(true);
                 }
             })
             .catch((error) => {
@@ -205,8 +212,8 @@ export default function AddUser() {
             >
                 <MySnackbarContentWrapper
                     onClose={handleClose}
-                    variant="success"
-                    message="Added!"
+                    variant={variant}
+                    message={message}
                 />
             </Snackbar>
             <Paper className={classes.paper}>
