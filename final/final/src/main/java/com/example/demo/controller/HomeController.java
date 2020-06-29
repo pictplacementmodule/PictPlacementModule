@@ -182,8 +182,11 @@ public class HomeController {
 	public void ChangeStatusOfPlaced(@RequestBody List<Integer> a) {
 		placedstudents p;
 		Academicdetails ad;
+//		System.out.println(a.size());
 		for (int i = 0; i < a.size(); i++) {
+//			System.out.println(i);
 			p = placedrepo.findById(a.get(i)).get();
+//			System.out.println(p);
 			p.setPL_status(2);
 			placedrepo.deleteStuPlaced(p.getId());
 			ad = academicrepo.findById(p.getId()).get();
