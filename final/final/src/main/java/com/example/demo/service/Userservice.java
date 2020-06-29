@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,13 +49,13 @@ public class Userservice {
 		return userrepo.findById(id).orElse(null);
 	}
 
-	public BodyBuilder adduser(users user) {
+	public boolean adduser(users user) {
 		if(!userrepo.existsById(user.getId()))
 			userrepo.save(user);
 		else 
-			return ResponseEntity.status(HttpStatus.CONFLICT);
+			return false;
 		System.out.println("done");
-		return ResponseEntity.status(HttpStatus.OK);
+		return true;
 	}
 
 	public void addpd(Studentdetails user) {

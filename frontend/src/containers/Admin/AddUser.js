@@ -117,7 +117,7 @@ export default function AddUser() {
     }
 
     const [open, setOpen] = React.useState(false);
-    const [message,setMessage] = React.useState("Company Profile edited successfully!");
+    const [message,setMessage] = React.useState("User added successfully!");
     const [variant,setVariant] = React.useState("success");
 
 
@@ -144,8 +144,10 @@ export default function AddUser() {
         };
         axios.post('/adduser', state)
             .then((response) => {
-                if(response.status=='OK'){
-                console.log(response.data);
+                console.log(response)
+                if(response.data=='TRUE'){
+                setMessage("User added successfully !");
+                setVariant("success");
                 setOpen(true);
                 }
                 else{

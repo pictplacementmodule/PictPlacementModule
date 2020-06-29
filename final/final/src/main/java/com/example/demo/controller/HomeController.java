@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.io.ByteArrayOutputStream;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,9 @@ import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -114,10 +118,12 @@ public class HomeController {
 	}
 
 	@RequestMapping("/adduser") // for adding sign up details
-	public void addUser(@RequestBody users user) {
-		user.setPass(passwordEncoder.encode(user.getPass()));
-		System.out.println(user.getId() + " " + user.getPass());
-		userservice.adduser(user);
+	public String addUser(@RequestBody users user) {
+		if(userservice.adduser(user))
+			return "TRUE";
+		else 
+			return "FALSE";
+		
 	}
 
 	@RequestMapping("/addacademicdetails")
