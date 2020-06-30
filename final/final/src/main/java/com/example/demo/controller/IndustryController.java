@@ -44,6 +44,19 @@ public class IndustryController {
 	@PostMapping("/add")
 	public industry addIndystry(@RequestBody industry industry) {
 		System.out.println(industry.getStart_date());
+		if (!industryrepo.addIndustry(industry.getStart_date()) && !industryrepo.existsById(industry.getId())) {
+			industryrepo.save(industry);
+
+			return industryrepo.findById(industry.getId()).get();
+		}
+		System.out.print("choose different date\n");
+		return null;
+	}
+	
+	
+	@PostMapping("/edit")
+	public industry editIndystry(@RequestBody industry industry) {
+		System.out.println(industry.getStart_date());
 		if (!industryrepo.addIndustry(industry.getStart_date())) {
 			industryrepo.save(industry);
 
@@ -52,6 +65,8 @@ public class IndustryController {
 		System.out.print("choose different date\n");
 		return null;
 	}
+	
+	
 
 	@GetMapping("/findall")
 	public List<industry> findindustry() {

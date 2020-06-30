@@ -158,28 +158,6 @@ function Profile(props) {
   const [cities, setCities] = React.useState([]);
 
   const [open, setOpen] = React.useState(false);
-
-  useEffect(() => {
-    axios
-      .get("/findallskills")
-      .then(response => {
-        console.log(response.data);
-        setSkills([...response.data]);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    axios
-      .get("/findalllocation")
-      .then(response => {
-        console.log(response.data);
-        setCities([...response.data]);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
-
   const [state, setState] = React.useState({
     id: "",
     name: "",
@@ -205,6 +183,65 @@ function Profile(props) {
     },
     successSnackBar: false
   });
+  useEffect(() => {
+    axios
+    .post("/industry/findById", null, {
+      params: { id: localStorage.getItem("token") }
+    })
+    .then(response => {
+      console.log(response.data);
+      console.log(state);
+      if (response.data === null) {
+      } else {
+        setState({
+          ...state,
+      id: response.data.id,
+      name: response.data.name,
+      cpName: response.data.cpname,
+      cpEmail1: response.data.cpemail1,
+      cpEmail2: response.data.cpemail2,
+      contactNo1: response.data.contactno1,
+      contactNo2: response.data.contactno2,
+      contactNo3: response.data.contactno3,
+      criteria: response.data.criteria,
+      passiveBacklogs: response.data.passive_backlogs,
+      activeBacklogs: response.data.active_backlogs,
+      package: response.data.package_lpa,
+      startDate: response.data.start_date,
+      endDate: response.data.end_date,
+      numberOfStudents: response.data.no_of_students,
+      skills: [response.data.skill],
+      city: [response.data.city],
+      branches:{computer: response.data.computer,
+      it: response.data.it,
+      entc: response.data.entc}
+      });
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    });
+    axios
+      .get("/findallskills")
+      .then(response => {
+        console.log(response.data);
+        setSkills([...response.data]);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    axios
+      .get("/findalllocation")
+      .then(response => {
+        console.log(response.data);
+        setCities([...response.data]);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
+  
   var da = [];
   const [formErrors, setError] = React.useState({
     name: "",

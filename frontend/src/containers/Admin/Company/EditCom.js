@@ -238,7 +238,7 @@ export default function AddVisited() {
     const submitHandler2 = (event) => {
         event.preventDefault();
         console.log(state);
-        axios.post('/industry/add', state)
+        axios.post('/industry/edit', state)
             .then((response) => {
                 setMessage("Company Profile edited successfully!")
                 setOpen(true);

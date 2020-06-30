@@ -99,7 +99,6 @@ class Filter extends React.Component {
             .catch((error) => {
                 console.log(error);
             })
-
     }
 
 
@@ -193,11 +192,22 @@ class Filter extends React.Component {
         a.push(comp_id)
         axios.post("/selectByCompany", a)
             .then((response) => {
-                window.location.reload(true);
+                // window.location.reload(true);
             })
             .catch((error) => {
                 console.log(error);
             });
+            axios.post('/short-listed', null, { params: { comp_id: localStorage.getItem('token') } })
+            .then((response) => {
+                console.log(response.data);
+                this.setState({
+                    students: response.data,
+                    temp: response.data,
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     };
 
 

@@ -114,7 +114,7 @@ class ShortListed extends React.Component {
         a.push(comp_id)
         axios.post("/PlacedByCompany", a)
             .then((response) => {
-                window.location.reload(true);
+                window.location.reload(false);
             })
             .catch((error) => {
                 console.log(error);

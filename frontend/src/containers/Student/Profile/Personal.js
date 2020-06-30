@@ -23,6 +23,34 @@ class Personal extends Component {
     disability: '',
   }
 
+  componentDidMount() {
+    axios.post('/industry/findById', null, { params: { id: localStorage.getItem('token') } })
+        .then((response) => {
+            if (response.data != '') {
+                this.setState({
+                    ...this.state,
+                    sgpa: response.data.criteria,
+                    active_backlogs: response.data.active_backlogs,
+                    passive_backlogs: response.data.passive_backlogs,
+                })
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    axios.post('/filter', null, { params: { comp_id: localStorage.getItem('token') } })
+        .then((response) => {
+            this.setState({
+                students: response.data,
+                temp: response.data,
+            });
+            this.filter();
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+}
+
   blah = () => (event) => {
     this.setState({
       ...this.state,
@@ -39,7 +67,7 @@ class Personal extends Component {
     // console.log(this.props.formErrors);
     const formErrors = this.props.formErrors;
 
-
+    
 
     return (
       <React.Fragment>
