@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import java.io.ByteArrayOutputStream;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +9,6 @@ import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.model.Academicdetails;
 import com.example.demo.model.AdminPlaced;
@@ -31,6 +26,7 @@ import com.example.demo.model.Companyv;
 import com.example.demo.model.EligibleStudents;
 import com.example.demo.model.Studentdetails;
 import com.example.demo.model.countofplaced;
+import com.example.demo.model.industry;
 import com.example.demo.model.location;
 import com.example.demo.model.placedstudents;
 import com.example.demo.model.skills;
@@ -119,11 +115,11 @@ public class HomeController {
 
 	@RequestMapping("/adduser") // for adding sign up details
 	public String addUser(@RequestBody users user) {
-		if(userservice.adduser(user))
+		if (userservice.adduser(user))
 			return "TRUE";
-		else 
+		else
 			return "FALSE";
-		
+
 	}
 
 	@RequestMapping("/addacademicdetails")
@@ -199,43 +195,45 @@ public class HomeController {
 			ad.setPlaced(true);
 			placedrepo.save(p);
 		}
-		
-		//userservice.mail(a);
+
+		// userservice.mail(a);
 
 	}
 
-	@SuppressWarnings("null")
 	@PostMapping("/selectByCompany")
 	public void selectByCompany(@RequestBody List<String> myParams) {
 		// myParams.size() -1 will contain the company id
 		int len = myParams.size();
 		int comp_id = Integer.parseInt(myParams.get(len - 1));
+		System.out.println(comp_id);
+		industry indus = ir.findById(comp_id).get();
+		System.out.println((float) indus.getPackage_lpa());
 		for (int i = 0; i < len - 1; i++) {
 			placedstudents ps = new placedstudents();
 			ps.setCompId(comp_id);
 			ps.setId(Integer.parseInt(myParams.get(i)));
 			ps.setPackage_lpa((float) ir.findById(comp_id).get().getPackage_lpa());
 			ps.setLocation("MUMBAI");
-			System.out.println((float) ir.findById(comp_id).get().getPackage_lpa());
+			// System.out.println((float) ir.findById(comp_id).get().getPackage_lpa());
 			ps.setIdname(ir.findById(comp_id).get().getName());
 			ps.setPL_status(0);
 			placedrepo.save(ps);
 		}
 
 	}
-	
-	
+
 	@PostMapping("/PlacedByCompany")
-	public void PlacedByCompany(@RequestBody List<String> myParams) {
+	public Boolean PlacedByCompany(@RequestBody List<String> myParams) {
 		// myParams.size() -1 will contain the company id
 		int len = myParams.size();
 		int comp_id = Integer.parseInt(myParams.get(len - 1));
-		myParams.remove(len-1);
-		List<Integer>p  = new ArrayList<Integer>();
-		for(String s:myParams) {
+		myParams.remove(len - 1);
+		List<Integer> p = new ArrayList<Integer>();
+		for (String s : myParams) {
 			p.add(Integer.parseInt(s));
 		}
-			placedrepo.findByCompIdAndStudent(p,comp_id);
+		placedrepo.findByCompIdAndStudent(p, comp_id);
+		return true;
 
 	}
 
@@ -258,7 +256,6 @@ public class HomeController {
 		locationrep.save(loc);
 	}
 
-	
 	@PostMapping("/findallCompaniesVisited")
 	public List<Companyv> returnCompanyvisited() {
 		return cvr.findAll();
@@ -278,14 +275,14 @@ public class HomeController {
 		List<Integer> stu_id;
 		stu_id = placedrepo.findByComp(id);
 		System.out.println(stu_id);
-		for(Academicdetails a:academicrepo.findTheseStu(stu_id,id)) {
+		for (Academicdetails a : academicrepo.findTheseStu(stu_id, id)) {
 			System.out.println(a.getCollegeId());
 		}
 		if (!stu_id.isEmpty()) {
-			return academicrepo.findTheseStu(stu_id,id);
+			return academicrepo.findTheseStu(stu_id, id);
 		}
 		List<Academicdetails> a = new ArrayList<Academicdetails>();
-		//alternate solution for return when false
+		// alternate solution for return when false
 		return a;
 	}
 
@@ -299,32 +296,31 @@ public class HomeController {
 		}
 		return userservice.findAllstu();
 	}
-	
+
 	@PostMapping("/PendingSelectedByCompany")
 	public List<Academicdetails> SelectedByCompany(@RequestParam("comp_id") int id) {
 		List<Integer> stu_id;
 		stu_id = placedrepo.findByComp(id);
 		if (!stu_id.isEmpty()) {
-			return academicrepo.findPlacedByComp(stu_id,id);
+			return academicrepo.findPlacedByComp(stu_id, id);
 		}
 		List<Academicdetails> a = new ArrayList<Academicdetails>();
-		//alternate solution for return when false
+		// alternate solution for return when false
 		return a;
 	}
-	
+
 	@PostMapping("/FinalPlaced")
 	public List<Academicdetails> PlacedByAdminToComp(@RequestParam("comp_id") int id) {
 		List<Integer> stu_id;
 		stu_id = placedrepo.findByComp(id);
 		if (!stu_id.isEmpty()) {
-			return academicrepo.findFinalPlacedByComp(stu_id,id);
+			return academicrepo.findFinalPlacedByComp(stu_id, id);
 		}
 		List<Academicdetails> a = new ArrayList<Academicdetails>();
-		//alternate solution for return when false
+		// alternate solution for return when false
 		return a;
 	}
-	
-	
+
 	// compress the image bytes before storing it in the database
 	public static byte[] compressBytes(byte[] data) {
 		Deflater deflater = new Deflater();
@@ -343,6 +339,7 @@ public class HomeController {
 		System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
 		return outputStream.toByteArray();
 	}
+
 	// uncompress the image bytes before returning it to the angular application
 	public static byte[] decompressBytes(byte[] data) {
 		Inflater inflater = new Inflater();
@@ -361,7 +358,3 @@ public class HomeController {
 		return outputStream.toByteArray();
 	}
 }
-	
-	
-	
-	

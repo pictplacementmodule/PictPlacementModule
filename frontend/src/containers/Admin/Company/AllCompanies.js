@@ -156,8 +156,12 @@ class AllCompanies extends Component {
             console.log(response.data);
             this.setState({
                ...this.state,
-               companies: response.data
+               companies: response.data.map(industry => {
+                  industry.temp_final_date = null;
+                  return industry;
+               })
             });
+            console.log(this.state.companies);
          })
          .catch(error => {
             console.log(error);
@@ -269,14 +273,11 @@ class AllCompanies extends Component {
          });
    };
 
-   submitHandler3 = industry => {
-      console.log(industry);
+   submitHandler3 = (industry, index) => {
+      console.log("first", industry);
       industry.final_date = industry.temp_final_date;
-      industry = {
-         ...industry,
-         start_date: industry.final_date
-      };
-      console.log(industry);
+      industry.temp_final_date = null;
+      console.log("second", industry);
       axios
          .post("/industry/add", industry)
          .then(response => {
@@ -284,30 +285,37 @@ class AllCompanies extends Component {
                ...this.state,
                open: true
             });
-            this.setState(response.data);
+            console.log("response", response.data);
+            let com = this.state.companies;
+            com[index] = response.data;
+            com[index].temp_final_date = null;
+            this.setState({
+               ...this.state,
+               companies: com
+            });
          })
          .catch(error => {
             console.log(error);
          });
    };
 
-   submitHandler2 = company => {
-      var final = this.state.finalDate;
-      let state = this.state;
-      console.log(final);
-      axios
-         .post("/industry/findById", null, { params: { id: company.id } })
-         .then(response => {
-            this.setState(response.data);
-            console.log(this.state);
-            this.state.finalDate = final;
-            this.state.final_date = this.state.finalDate;
-            this.submitHandler3(this.state);
-         })
-         .catch(error => {
-            console.log(error);
-         });
-   };
+   // submitHandler2 = company => {
+   //    var final = this.state.finalDate;
+   //    let state = this.state;
+   //    console.log(final);
+   //    axios
+   //       .post("/industry/findById", null, { params: { id: company.id } })
+   //       .then(response => {
+   //          this.setState(response.data);
+   //          console.log(this.state);
+   //          this.state.finalDate = final;
+   //          this.state.final_date = this.state.finalDate;
+   //          this.submitHandler3(this.state);
+   //       })
+   //       .catch(error => {
+   //          console.log(error);
+   //       });
+   // };
 
    render() {
       const { classes } = this.props;
@@ -456,7 +464,7 @@ class AllCompanies extends Component {
                               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                  <KeyboardDatePicker
                                     label="Final Date"
-                                    value={company.final_date == null ? company.start_date : company.final_date}
+                                    value={company.temp_final_date === null ? (company.final_date === null ? company.start_date : company.final_date) : company.temp_final_date}
                                     onChange={date =>
                                        this.dateChangeHandlerPersonal(date, index)
                                     }
@@ -469,10 +477,10 @@ class AllCompanies extends Component {
                            </td>
                            <td>
                               <Button
-                                 className={company.final_date == null ? classes.button : classes.button2}
+                                 className={company.temp_final_date == null ? classes.button : classes.button2}
                                  variant="contained"
                                  color="primary"
-                                 onClick={() => this.submitHandler3(company)}
+                                 onClick={() => this.submitHandler3(company, index)}
                               >
                                  Allot
                     </Button>

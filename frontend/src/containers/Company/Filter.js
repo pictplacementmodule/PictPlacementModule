@@ -198,9 +198,20 @@ class Filter extends React.Component {
    };
    handleChangeIndex = index => event => {
       console.log("handleChangeIndex");
+      console.log("selectAll", this.state.selectAll);
       console.log("temp", this.state.temp);
+      this.setState({
+         ...this.state,
+         temp: this.state.temp.map((s, ind) => {
+            if (ind === index) {
+               s.status = event.target.checked;
+            }
+            return s;
+         })
+      })
+      console.log("temp status", this.state.temp[index].status)
+      let s = this.state.temp[index];
 
-      let s = this.state.temp[index]
       console.log(event.target.checked);
       if (!event.target.checked) {
          this.state.x.splice(this.state.x.findIndex((k) => k.roll === s.student.rollno));
@@ -213,9 +224,14 @@ class Filter extends React.Component {
             skills: s.skills,
             status: event.target.checked,
          }
-         this.state.x.push(v);
+         let temp = this.state.x;
+         temp.push(v);
+         this.setState({
+            ...this.state,
+            x: temp
+         })
       }
-      console.log(this.state.x);
+      console.log("x", this.state.x);
    };
 
    getCheckedValue = (index) => {
@@ -362,8 +378,8 @@ class Filter extends React.Component {
                                  control={
                                     <Checkbox
                                        onChange={this.handleChangeIndex(index)}
-                                       value={this.state.selectAll || this.state.temp[index].status}
-                                       checked={this.getCheckedValue(index)}
+                                       checked={this.state.selectAll === false ? this.state.temp[index].status : true}
+
                                     />
                                  }
                                  label="Accept"
