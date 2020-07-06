@@ -115,6 +115,7 @@ public class HomeController {
 
 	@RequestMapping("/adduser") // for adding sign up details
 	public String addUser(@RequestBody users user) {
+		user.setPass(passwordEncoder.encode(user.getPass()));
 		if (userservice.adduser(user))
 			return "TRUE";
 		else
