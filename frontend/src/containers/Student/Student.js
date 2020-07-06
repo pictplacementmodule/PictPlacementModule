@@ -28,7 +28,7 @@ class Student extends Component {
                 if(res.data!=null){
                     this.setState({
                         ...this.state,
-                        dataFilled: false,
+                        dataFilled: true,
                         details: {...res.data},
                     });
                 }
