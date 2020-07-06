@@ -22,6 +22,7 @@ import com.example.demo.model.placedstudents;
 import com.example.demo.repository.Jobdescrepo;
 import com.example.demo.repository.industryrepo;
 import com.example.demo.repository.placedstudentsrepo;
+import com.example.demo.repository.userrepository;
 import com.example.demo.service.Userservice;
 import com.example.demo.service.industryservice;
 
@@ -40,24 +41,30 @@ public class IndustryController {
 	private industryservice industryserv;
 	@Autowired
 	private placedstudentsrepo placedrepo;
+	@Autowired
+	private userrepository userrepo;
 
 	@PostMapping("/add")
 	public industry addIndystry(@RequestBody industry industry) {
-		System.out.println(industry.getId());
-		if (industryrepo.existsById(industry.getId())) {
-			industry i = industryrepo.findById(industry.getId()).get();
-			i.setFinal_date(industry.getFinal_date());
-			industryrepo.save(i);
-			return i;
+		Boolean isLoginPresent = userrepo.existsById(industry.getId());
+		System.out.println(isLoginPresent);
+		if (isLoginPresent) {
+			if (industryrepo.existsById(industry.getId())) {
+				industry i = industryrepo.findById(industry.getId()).get();
+				i.setFinal_date(industry.getFinal_date());
+				industryrepo.save(i);
+				return i;
+			} else {
+				industryrepo.save(industry);
+				return industry;
+			}
 		}
-		System.out.print("choose different date\n");
+
 		return null;
 	}
-	
-	
+
 	@PostMapping("/edit")
 	public industry editIndystry(@RequestBody industry industry) {
-		System.out.println(industry.getStart_date());
 		if (!industryrepo.addIndustry(industry.getStart_date())) {
 			industryrepo.save(industry);
 
@@ -66,15 +73,13 @@ public class IndustryController {
 		System.out.print("choose different date\n");
 		return null;
 	}
-	
-	
 
 	@GetMapping("/findall")
 	public List<industry> findindustry() {
 		System.out.println(industryrepo.findAll2());
 		return industryrepo.findAll2();
 	}
-	
+
 	@GetMapping("/getUpcoming")
 	public List<industry> findUpcoming() {
 		System.out.println(industryrepo.findAll2());
@@ -126,7 +131,7 @@ public class IndustryController {
 			return null;
 		}
 	}
-	
+
 	@PostMapping("/sortbypackage")
 	public List<industry> ByPackage() {
 		return industryrepo.ByPackage();
