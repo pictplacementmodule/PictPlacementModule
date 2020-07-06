@@ -6,27 +6,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Grid from "@material-ui/core/Grid";
 import { connect } from 'react-redux'
-import * as actionTypes from '../../../actions/Student'
-
-const products = [
-  { name: "Product 1", desc: "A nice thing", price: "$9.99" },
-  { name: "Product 2", desc: "Another thing", price: "$3.45" },
-  { name: "Product 3", desc: "Something else", price: "$6.51" },
-  { name: "Product 4", desc: "Best thing of all", price: "$14.11" },
-  { name: "Shipping", desc: "", price: "Free" }
-];
-const addresses = [
-  "1 Material-UI Drive",
-  "Reactville",
-  "Anytown",
-  "99999",
-  "USA"
-];
-const payments = [
-  { name: "Backlog", detail: "No" },
-  { name: "Internships", detail: "2" },
-  { name: "Co-curriculars", detail: "Inter-college football team" }
-];
+import * as actionTypes from '../../../actions/Student';
 
 const useStyles = (theme => ({
   listItem: {
@@ -69,42 +49,78 @@ class Review extends React.Component {
           Personal details
         </Typography>
         <hr></hr>
-        <Typography variant="h6" gutterBottom>
-          First Name: {this.state.firstName}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Middle Name: {this.state.middleName}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Last Name: {this.state.lastName}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Gender: {this.state.gender}
-        </Typography>
-        {/* <Typography variant="h6" gutterBottom>
-          Date of birth: {this.state.dateOfBirth}
-        </Typography> */}
-        <Typography variant="h6" gutterBottom>
-          Mobile no1.:{this.state.mobileNumber1}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Mobile no2.:{this.state.mobileNumber2}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          email: {this.state.email}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Current Address: {this.state.currentAddress}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Permanent Address: {this.state.permanentAddress}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Pancard Number: {this.state.pancardNumber}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Aadhar Number: {this.state.aadharNumber}
-        </Typography>
+        <table style={{ width: "60vw", fontWeight: "bold", margin: "auto" }} className="table table-bordered" id="printArea">
+          <tbody>
+            <tr>
+              <td>First Name</td>
+              <td>{this.props.personal.firstName}</td>
+            </tr>
+            <tr>
+              <td>Middle Name</td>
+              <td>{this.props.personal.middleName}</td>
+            </tr>
+            <tr>
+              <td>Last Name</td>
+              <td>{this.props.personal.lastName}</td>
+            </tr>
+            <tr>
+              <td>Gender</td>
+              <td>{this.props.personal.gender}</td>
+            </tr>
+            <tr>
+              <td>Mobile Number 1</td>
+              <td>{this.props.personal.mobileNumber1}</td>
+            </tr>
+            <tr>
+              <td>Mobile Number 2</td>
+              <td>{this.props.personal.mobileNumber2}</td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td>{this.props.personal.email}</td>
+            </tr>
+            <tr>
+              <td>Date of Birth</td>
+              {/* <td>{this.props.personal.dateOfBirth}</td> */}
+            </tr>
+            <tr>
+              <td>Current Address</td>
+              <td>{this.props.personal.currentAddress}</td>
+            </tr>
+            <tr>
+              <td>Permanent Address</td>
+              <td>{this.props.personal.permanentAddress}</td>
+            </tr>
+            <tr>
+              <td>Pancard Number</td>
+              <td>{this.props.personal.pancardNumber}</td>
+            </tr>
+            <tr>
+              <td>Aadhar Number</td>
+              <td>{this.props.personal.aadharNumber}</td>
+            </tr>
+            <tr>
+              <td>Father's name</td>
+              <td>{this.props.personal.fatname}</td>
+            </tr>
+            <tr>
+              <td>Mother's name</td>
+              <td>{this.props.personal.motname}</td>
+            </tr>
+            <tr>
+              <td>Occupation</td>
+              <td>{this.props.personal.occupation}</td>
+            </tr>
+            <tr>
+              <td>Annual Income</td>
+              <td>{this.props.personal.anninc}</td>
+            </tr>
+            <tr>
+              <td>Disability</td>
+              <td>{this.props.personal.disability}</td>
+            </tr>
+          </tbody>
+        </table>
         <hr></hr>
 
         <Grid container spacing={2}>
@@ -113,6 +129,38 @@ class Review extends React.Component {
               Academic details
             </Typography>
             <hr></hr>
+            <table style={{ width: "60vw", fontWeight: "bold", margin: "auto" }} className="table table-bordered" id="printArea">
+              <tbody>
+                <tr>
+                  <td>Roll Number</td>
+                  <td>{this.props.academic.collegeId}</td>
+                </tr>
+                <tr>
+                  <td>College ID</td>
+                  <td>{this.props.academic.collegeId}</td>
+                </tr>
+                <tr>
+                  <td>PRN Number</td>
+                  <td>{this.props.academic.prnNumber}</td>
+                </tr>
+                <tr>
+                  <td>Branch</td>
+                  <td>{this.props.academic.branch}</td>
+                </tr>
+                <tr>
+                  <td>Tenth %</td>
+                  <td>{this.props.academic.percentageTenth}</td>
+                </tr>
+                <tr>
+                  <td>Board(Tenth)</td>
+                  <td>{this.props.academic.boeTenth}</td>
+                </tr>
+                <tr>
+                  <td>Year of Passing(Tenth)</td>
+                  <td>{this.props.academic.yopTenth}</td>
+                </tr>
+              </tbody>
+            </table>
             <Typography variant="h6" gutterBottom>
               Roll Number: {this.state.rollno}
             </Typography>

@@ -18,7 +18,6 @@ class Personal extends Component {
 
   genders = ['Female', 'Male', 'Other'];
 
-
   state = {
     disability: '',
   }
@@ -60,14 +59,7 @@ class Personal extends Component {
 
   render() {
 
-    //errors recieved from reducer are in this.props.formerrors
-    //errors recieved from profile.js are in this.props.erros
-
-    // console.log(this.props.errors);
-    // console.log(this.props.formErrors);
-    const formErrors = this.props.formErrors;
-
-    
+    const formErrors = this.props.formErrors;    
 
     return (
       <React.Fragment>
@@ -91,9 +83,12 @@ class Personal extends Component {
               name="aadharNumber"
               label="Aadhar card Number"
               fullWidth
-              onChange={this.props.onChange('aadharNumber')}
+              onChange={(event) => this.props.onChange(event,'aadharNumber')}
               value={this.props.aadharNumber}
-              error={formErrors.aadharNumber.length > 0 || this.props.errors.aadharNumber.length > 0}
+              InputProps={{
+                readOnly: this.props.dataFilled,
+              }}
+              // error={formErrors.aadharNumber.length > 0 || this.props.errors.aadharNumber.length > 0}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -101,9 +96,12 @@ class Personal extends Component {
               name="pancardNumber"
               label="Pancard Number"
               fullWidth
-              onChange={this.props.onChange('pancardNumber')}
+              onChange={(event) => this.props.onChange(event,'pancardNumber')}
               value={this.props.pancardNumber}
-              error={this.props.errors.pancardNumber.length > 0}
+              InputProps={{
+                readOnly: this.props.dataFilled,
+              }}
+              // error={this.props.errors.pancardNumber.length > 0}
             />
           </Grid>
         </Grid>
@@ -114,9 +112,12 @@ class Personal extends Component {
               label="First name"
               fullWidth
               autoComplete="fname"
-              onChange={this.props.onChange('firstName')}
+              onChange={(event) => this.props.onChange(event,'firstName')}
               value={this.props.firstName}
-              error={this.props.errors.firstName.length > 0}
+              InputProps={{
+                readOnly: this.props.dataFilled,
+              }}
+              // error={this.props.errors.firstName.length > 0}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -126,9 +127,12 @@ class Personal extends Component {
               label="Middle name"
               fullWidth
               autoComplete="mname"
-              onChange={this.props.onChange('middleName')}
+              onChange={(event) => this.props.onChange(event,'middleName')}
               value={this.props.middleName}
-              error={this.props.errors.middleName.length > 0}
+              InputProps={{
+                readOnly: this.props.dataFilled,
+              }}
+              // error={this.props.errors.middleName.length > 0}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -138,27 +142,36 @@ class Personal extends Component {
               label="Last name"
               fullWidth
               autoComplete="lname"
-              onChange={this.props.onChange('lastName')}
+              onChange={(event) => this.props.onChange(event,'lastName')}
               value={this.props.lastName}
-              error={this.props.errors.lastName.length > 0}
+              InputProps={{
+                readOnly: this.props.dataFilled,
+              }}
+              // error={this.props.errors.lastName.length > 0}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               label="Mobile Number"
               fullWidth
-              onChange={this.props.onChange('mobileNumber1')}
+              onChange={(event) => this.props.onChange(event,'mobileNumber1')}
               value={this.props.mobileNumber1}
-              error={formErrors.mobileNumber1.length > 0 || this.props.errors.mobileNumber1.length > 0}
+              InputProps={{
+                readOnly: this.props.dataFilled,
+              }}
+              // error={formErrors.mobileNumber1.length > 0 || this.props.errors.mobileNumber1.length > 0}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               label="Alternate Mobile Number"
               fullWidth
-              onChange={this.props.onChange('mobileNumber2')}
+              onChange={(event) => this.props.onChange(event,'mobileNumber2')}
               value={this.props.mobileNumber2}
-              error={formErrors.mobileNumber2.length > 0 || this.props.errors.mobileNumber2.length > 0}
+              InputProps={{
+                readOnly: this.props.dataFilled,
+              }}
+              // error={formErrors.mobileNumber2.length > 0 || this.props.errors.mobileNumber2.length > 0}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -167,9 +180,12 @@ class Personal extends Component {
               name="emailAddress"
               label="Email address"
               fullWidth
-              onChange={this.props.onChange('email')}
+              onChange={(event) => this.props.onChange(event,'email')}
               value={this.props.email}
-              error={formErrors.email.length > 0 || this.props.errors.email.length > 0}
+              InputProps={{
+                readOnly: this.props.dataFilled,
+              }}
+              // error={formErrors.email.length > 0 || this.props.errors.email.length > 0}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -177,9 +193,12 @@ class Personal extends Component {
               name="alternateEmail"
               label="Alternate Email address"
               fullWidth
-              onChange={this.props.onChange('alternateEmail')}
+              onChange={(event) => this.props.onChange(event,'alternateEmail')}
               value={this.props.alternateEmail}
-              error={formErrors.alternateEmail.length > 0 || this.props.errors.alternateEmail.length > 0}
+              InputProps={{
+                readOnly: this.props.dataFilled,
+              }}
+              // error={formErrors.alternateEmail.length > 0 || this.props.errors.alternateEmail.length > 0}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -190,9 +209,12 @@ class Personal extends Component {
                 id="dateOfBirth"
                 label="Date of Birth"
                 value={this.props.dateOfBirth}
-                onChange={(date) => this.props.onChangeDate(date, 'dateOfBirth')}
+                onChange={(date) => this.props.onDateChange(date, 'dateOfBirth', 'personal')}
                 KeyboardButtonProps={{
                   'aria-label': 'change date',
+                }}
+                inputProps={{
+                  readOnly: this.state.dataFilled,
                 }}
               />
             </MuiPickersUtilsProvider>
@@ -204,9 +226,12 @@ class Personal extends Component {
               label="Gender"
               margin="normal"
               fullWidth
-              onChange={this.props.onChange('gender')}
+              onChange={(event) => this.props.onChange(event,'gender')}
               value={this.props.gender}
-              error={this.props.errors.gender.length > 0}
+              InputProps={{
+                readOnly: this.props.dataFilled,
+              }}
+              // error={this.props.errors.gender.length > 0}
             >
               {this.genders.map(option => (
                 <MenuItem key={option} value={option}>
@@ -222,9 +247,12 @@ class Personal extends Component {
               label="Current Address"
               fullWidth
               autoComplete="billing address-line1"
-              onChange={this.props.onChange('currentAddress')}
+              onChange={(event) => this.props.onChange(event,'currentAddress')}
               value={this.props.currentAddress}
-              error={this.props.errors.currentAddress.length > 0}
+              InputProps={{
+                readOnly: this.props.dataFilled,
+              }}
+              // error={this.props.errors.currentAddress.length > 0}
             />
           </Grid>
           <Grid item xs={12}>
@@ -234,49 +262,67 @@ class Personal extends Component {
               label="Permanent Address"
               fullWidth
               autoComplete="billing address-line2"
-              onChange={this.props.onChange('permanentAddress')}
+              onChange={(event) => this.props.onChange(event,'permanentAddress')}
               value={this.props.permanentAddress}
-              error={this.props.errors.permanentAddress.length > 0}
+              InputProps={{
+                readOnly: this.props.dataFilled,
+              }}
+              // error={this.props.errors.permanentAddress.length > 0}
             />
           </Grid>
           <Grid item xs={6}>
             <TextField
               label="Father's Name"
               fullWidth
-              onChange={this.props.onChange('fatname')}
+              onChange={(event) => this.props.onChange(event,'fatname')}
               value={this.props.fatname}
+              InputProps={{
+                readOnly: this.props.dataFilled,
+              }}
             />
           </Grid>
           <Grid item xs={6}>
             <TextField
               label="Mother's Name"
               fullWidth
-              onChange={this.props.onChange('motname')}
+              onChange={(event) => this.props.onChange(event,'motname')}
               value={this.props.motname}
+              InputProps={{
+                readOnly: this.props.dataFilled,
+              }}
             />
           </Grid>
           <Grid item xs={6}>
             <TextField
               label="Occupation"
               fullWidth
-              onChange={this.props.onChange('occupation')}
+              onChange={(event) => this.props.onChange(event,'occupation')}
               value={this.props.occupation}
+              InputProps={{
+                readOnly: this.props.dataFilled,
+              }}
             />
           </Grid>
           <Grid item xs={6}>
             <TextField
               label="Annual Income"
               fullWidth
-              onChange={this.props.onChange('anninc')}
+              onChange={(event) => this.props.onChange(event,'anninc')}
               value={this.props.anninc}
+              InputProps={{
+                readOnly: this.props.dataFilled,
+              }}
             />
           </Grid>
           <Grid item xs={6}>
             <TextField
               label="Disability (If any)"
               fullWidth
-              onChange={this.props.onChange('disability')}
+              onChange={(event) => this.props.onChange(event,'disability')}
               value={this.props.disability}
+              InputProps={{
+                readOnly: this.props.dataFilled,
+              }}
             />
           </Grid>
         </Grid>
@@ -285,37 +331,5 @@ class Personal extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    rollno: state.personal.rollno,
-    aadharNumber: state.personal.aadharNumber,
-    pancardNumber: state.personal.pancardNumber,
-    firstName: state.personal.firstName,
-    middleName: state.personal.middleName,
-    lastName: state.personal.lastName,
-    mobileNumber1: state.personal.modileNumber1,
-    mobileNumber2: state.personal.modileNumber2,
-    email: state.personal.email,
-    alternateEmail: state.personal.alternateEmail,
-    dateOfBirth: state.personal.dateOfBirth,
-    gender: state.personal.gender,
-    currentAddress: state.personal.currentAddress,
-    permanentAddress: state.personal.permanentAddress,
-    formErrors: state.personal.formErrors,
-    valid: state.personal.valid,
-    fatname: state.personal.fatname,
-    motname: state.personal.motname,
-    disability: state.personal.disability,
-    anninc: state.personal.anninc,
-    occupation: state.personal.occupation,
-  };
-}
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onChange: (name) => (event) => dispatch({ type: actionTypes.CHANGE, parName: name, value: event.target.value }),
-    onChangeDate: (date, name) => dispatch({ type: actionTypes.CHANGE_DATE, parName: name, value: date }),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Personal);
+export default Personal;

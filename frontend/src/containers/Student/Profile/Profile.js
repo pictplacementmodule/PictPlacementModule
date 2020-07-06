@@ -53,47 +53,177 @@ const styles = (theme => ({
   },
 }));
 
-const steps = ['Personal details', 'Academic details', 'Review your profile'];
+const steps = ['Personal details', 'Academic details'];
 
 
 class Profile extends Component {
 
-  //branch2
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeStep: 0,
+      dataFilled: false,
+      formErrors: {
+        rollno: '',
+        aadharNumber: '',
+        pancardNumber: '',
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        mobileNumber1: '',
+        mobileNumber2: '',
+        email: '',
+        alternateEmail: '',
+        gender: '',
+        currentAddress: '',
+        permanentAddress: '',
+        per: {},
+        aca: {},
+        open: false,
+        agree: false,
+      },
+      personal: {
+        rollno: '',
+        aadharNumber: '',
+        pancardNumber: '',
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        mobileNumber1: '',
+        mobileNumber2: '',
+        email: '',
+        alternateEmail: '',
+        dateOfBirth: new Date(),
+        gender: '',
+        currentAddress: '',
+        permanentAddress: '',
+        valid: '',
+        fatname: '',
+        motname: '',
+        disability: '',
+        anninc: '',
+        occupation: '',
+      },
+      academic: {
+        activeBacklogs: "",
+        boeDiploma: "",
+        boeTenth: "",
+        boeTwelfth: "",
+        branch: "",
+        collegeId: "",
+        diploma: false,
+        engineeringStartYear: new Date(),
+        gapDiploma: "",
+        gapTenth: "",
+        gapTwelfth: "",
+        marksFEFS: "",
+        marksFESS: "",
+        marksSEFS: "",
+        marksSESS: "",
+        marksTEFS: "",
+        marksTESS: "",
+        passiveBacklogs: "",
+        percentageDiploma: "",
+        percentageEngineering: "",
+        percentageTenth: "",
+        percentageTwelfth: "",
+        placed: "",
+        prnNumber: "",
+        rogDiploma: "",
+        rogTenth: "",
+        rogTwelfth: "",
+        roll_no: "",
+        sgpaAggregate: "",
+        sgpaFEFS: "",
+        sgpaFESS: "",
+        sgpaSEFS: "",
+        sgpaSESS: "",
+        sgpaTEFS: "",
+        sgpaTESS: "",
+        skills: [],
+        yeardowns: "",
+        yopDiploma: new Date(),
+        yopTenth: new Date(),
+        yopTwelfth: new Date(),
+      }
+    }
+  }
 
-  state = {
-    activeStep: 0,
-    formErrors: {
-      rollno: '',
-      aadharNumber: '',
-      pancardNumber: '',
-      firstName: '',
-      middleName: '',
-      lastName: '',
-      mobileNumber1: '',
-      mobileNumber2: '',
-      email: '',
-      alternateEmail: '',
-      gender: '',
-      currentAddress: '',
-      permanentAddress: '',
-      per: {},
-      aca: {},
-      open: false,
-      agree: false,
+  componentDidMount() {
+    if (this.props.dataFilled) {
+      this.setState({
+        ...this.state,
+        dataFilled: true,
+        personal: this.props.details.student,
+        academic: {
+          ...this.props.details,
+          student: undefined,
+        }
+      });
     }
   }
 
   getStepContent(step) {
     switch (step) {
       case 0:
-        return <Personal errors={this.state.formErrors} />;
+        return <Personal
+                  dataFilled={this.state.dataFilled}
+                  onDateChange={(date, name, parent) => this.handleDataChange(date, name, parent)}
+                  {...this.state.personal}
+                  onChange={(event, name) => this.handleChangePersonal(event, name)}
+                  errors={this.state.formErrors} />;
       case 1:
-        return <Academic />;
+        return <Academic
+                  dataFilled={this.state.dataFilled}
+                  onDateChange={(date, name, parent) => this.handleDataChange(date, name, parent)}
+                  {...this.state.academic}
+                  handleCheck={(event,name) => this.handleCheck(event,name)}
+                  onChange={(event, name) => this.handleChangeAcademic(event, name)} />;
       case 2:
-        return <Review />;
+        return <Review personal={this.state.personal} />;
       default:
         throw new Error('Unknown step');
     }
+  }
+
+  handleChangePersonal = (event, name) => {
+    this.setState({
+      ...this.state,
+      personal: {
+        ...this.state.personal,
+        [name]: event.target.value,
+      }
+    })
+  }
+  handleChangeAcademic = (event, name) => {
+    console.log(name);
+    this.setState({
+      ...this.state,
+      academic: {
+        ...this.state.academic,
+        [name]: event.target.value,
+      }
+    })
+  }
+
+  handleDataChange = (date, name, parent) => {
+    this.setState({
+      ...this.state,
+      [parent]: {
+        ...this.state[parent],
+        [name]: date,
+      }
+    })
+  }
+
+  handleCheck = (event, name) => {
+    this.setState({
+      ...this.state,
+      academic: {
+        ...this.state.academic,
+        [name] : event.target.checked,
+      }
+    })
   }
 
   handleClickOpen = () => {
@@ -109,22 +239,22 @@ class Profile extends Component {
       open: false,
     })
     console.log(agreed);
-    if(agreed){
-    axios.post('/addPersonaldetails', this.state.per)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    axios.post('/addacademicdetails', this.state.aca)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-      this.setState({ activeStep: this.state.activeStep+1 });
+    if (agreed) {
+      axios.post('/addPersonaldetails', this.state.per)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      axios.post('/addacademicdetails', this.state.aca)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      this.setState({ activeStep: this.state.activeStep + 1 });
     }
   }
 
@@ -307,7 +437,7 @@ class Profile extends Component {
                 <Button onClick={() => this.handleClickClose(false)} color="primary">
                   Disagree
                 </Button>
-                <Button onClick={() =>this.handleClickClose(true)} color="primary" autoFocus>
+                <Button onClick={() => this.handleClickClose(true)} color="primary" autoFocus>
                   Agree
                 </Button>
               </DialogActions>
@@ -316,12 +446,25 @@ class Profile extends Component {
               Student Profile
             </Typography>
             <Stepper activeStep={this.state.activeStep} className={classes.stepper}>
-              {steps.map(label => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
+              {this.state.dataFilled ? (
+                steps.slice(0, 2).map(label => (
+                  <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                ))
+              ) : (
+                  steps.map(label => (
+                    <Step key={label}>
+                      <StepLabel>{label}</StepLabel>
+                    </Step>
+                  ))
+                )}
             </Stepper>
+            {this.state.dataFilled && (
+              <Typography variant="overline">
+                Sorry, you can't edit the details.
+              </Typography>
+            )}
             <React.Fragment>
               {this.state.activeStep === steps.length ? (
                 <React.Fragment>
@@ -338,16 +481,18 @@ class Profile extends Component {
                       {this.state.activeStep !== 0 && (
                         <Button onClick={this.handleBack} className={classes.button}>
                           Back
-                      </Button>
+                        </Button>
                       )}
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={this.handleNext}
-                        className={classes.button}
-                      >
-                        {this.state.activeStep === steps.length - 1 ? 'Save Profile' : 'Next'}
-                      </Button>
+                      {((this.state.dataFilled == false) || (this.state.activeStep == 0)) && (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={this.handleNext}
+                          className={classes.button}
+                        >
+                          {this.state.activeStep === steps.length - 1 ? 'Save Profile' : 'Next'}
+                        </Button>
+                      )}
                     </div>
                   </React.Fragment>
                 )}

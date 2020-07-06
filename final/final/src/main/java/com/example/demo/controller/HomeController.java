@@ -33,6 +33,7 @@ import com.example.demo.model.skills;
 import com.example.demo.model.users;
 import com.example.demo.repository.Academicrepository;
 import com.example.demo.repository.CompanyVisitedRepo;
+import com.example.demo.repository.Personalrepository;
 import com.example.demo.repository.industryrepo;
 import com.example.demo.repository.locationrepo;
 import com.example.demo.repository.placedstudentsrepo;
@@ -55,6 +56,8 @@ public class HomeController {
 	@Autowired
 	private Academicrepository academicrepo;
 	@Autowired
+	private Personalrepository personalRepo;
+	@Autowired
 	private CompanyVisitedRepo cvr;
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -71,6 +74,16 @@ public class HomeController {
 	@RequestMapping("/findallstu") // all the academic details
 	public List<Academicdetails> findallstu() {
 		return userservice.findAllstu();
+	}
+	
+	@RequestMapping("/findPersonalDetails")
+	public Studentdetails findStuPer(@RequestParam int id) {
+		return personalRepo.findById(id).orElse(null);
+	}
+	
+	@RequestMapping("/findAcademicDetails")
+	public Academicdetails findStuAca(@RequestParam int id) {
+		return academicrepo.findById(id).orElse(null);
 	}
 
 	@RequestMapping(value = "/authenticate") // for authentication of login details
