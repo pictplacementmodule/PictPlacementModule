@@ -117,7 +117,7 @@ public class HomeController {
 
 	@RequestMapping("/addPersonaldetails") // for adding student personal details
 	public void addPersonaldetails(@RequestBody Studentdetails user) {
-		System.out.println(user);
+		System.out.println("user "+user);
 		userservice.addpd(user);
 	}
 

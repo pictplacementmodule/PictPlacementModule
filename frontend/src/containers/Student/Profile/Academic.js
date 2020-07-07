@@ -121,16 +121,15 @@ function Academic(props) {
           <FormControlLabel
             control={
               <Checkbox
-                checked={props.diploma}
-                onChange={(event) => props.handleCheck(event, 'diploma')}
+                disabled={props.dataFilled}
+                checked={props.twelfth}
+                onChange={(event) => props.handleCheck(event, 'twelfth')}
                 color="secondary"
               />
             }
             label="Twelfth"
-            inputProps={{
-              readOnly: props.dataFilled,
-            }}
-            value={props.diploma}
+            value={props.twelfth}
+            disabled={props.dataFilled}
           />
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -140,19 +139,19 @@ function Academic(props) {
                 checked={props.diploma}
                 onChange={(event) => props.handleCheck(event, 'diploma')}
                 color="secondary"
+                disabled={props.dataFilled}
               />
             }
             label="Diploma"
-            inputProps={{
-              readOnly: props.datafilled,
-            }}
             value={props.diploma}
+            disabled={props.dataFilled}
           />
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={4}>
           <TextField
+            required
             id="branch"
             select
             label="Branch"
@@ -161,7 +160,8 @@ function Academic(props) {
             inputProps={{
               readOnly: props.dataFilled,
             }}
-            onChange={(event) => props.onChange(event,'branch')}
+            onChange={(event) => props.onChange(event, 'branch')}
+            error={props.errors.branch.length > 0}
           >
             {branches.map(option => (
               <MenuItem key={option} value={option}>
@@ -177,11 +177,13 @@ function Academic(props) {
             label="University PRN Number"
             autoComplete="rn"
             fullWidth
+            required
             inputProps={{
               readOnly: props.dataFilled,
             }}
             value={props.prnNumber}
             onChange={(event) => props.onChange(event, 'prnNumber')}
+            error={props.errors.prnNumber.length > 0}
           />
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -189,11 +191,13 @@ function Academic(props) {
             name="collegeId"
             label="TE Roll no"
             fullWidth
+            required
             inputProps={{
               readOnly: props.dataFilled,
             }}
             value={props.collegeId}
             onChange={(event) => props.onChange(event, 'collegeId')}
+            error={props.errors.roll_no.length > 0}
           />
         </Grid>
       </Grid>
@@ -214,7 +218,8 @@ function Academic(props) {
                   <TextField
                     label="10th Percentage"
                     fullWidth
-                    // error={formErrors.percentage.tenth.length > 0}
+                    required
+                    error={props.errors.percentageTenth.length > 0}
                     inputProps={{
                       readOnly: props.dataFilled,
                     }}
@@ -226,6 +231,8 @@ function Academic(props) {
                   <TextField
                     label="Board of education (10th)"
                     fullWidth
+                    required
+                    error={props.errors.boeTenth.length > 0}
                     inputProps={{
                       readOnly: props.dataFilled,
                     }}
@@ -240,7 +247,7 @@ function Academic(props) {
                       label="Year of passing (10th)"
                       inputProps={{
                         readOnly: props.dataFilled,
-                      }} 
+                      }}
                       value={props.yopTenth}
                       onChange={(date) => props.onDateChange(date, 'yopTenth', 'academic')}
                       variant="inline"
@@ -278,7 +285,7 @@ function Academic(props) {
 
         {/* Twelfth */}
         <Grid item xs={12}>
-          <ExpansionPanel defaultExpanded={props.diploma} disabled={!props.diploma} style={{ backgroundColor: "#fafafa" }}>
+          <ExpansionPanel expanded={props.twelfth} disabled={!props.twelfth} style={{ backgroundColor: "#fafafa" }}>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
             >
@@ -290,6 +297,8 @@ function Academic(props) {
                   <TextField
                     label="12th Percentage"
                     fullWidth
+                    required={props.twelfth}
+                    error={props.errors.percentageTwelfth.length > 0}
                     inputProps={{
                       readOnly: props.dataFilled,
                     }}
@@ -302,6 +311,8 @@ function Academic(props) {
                   <TextField
                     label="Board of education (12th)"
                     fullWidth
+                    required={props.twelfth}
+                    error={props.errors.boeTwelfth.length > 0}
                     inputProps={{
                       readOnly: props.dataFilled,
                     }}
@@ -354,7 +365,7 @@ function Academic(props) {
 
         {/* Diploma */}
         <Grid item xs={12}>
-          <ExpansionPanel defaultExpanded={props.diploma} disabled={!props.diploma} style={{ backgroundColor: "#fafafa" }}>
+          <ExpansionPanel expanded={props.diploma} disabled={!props.diploma} style={{ backgroundColor: "#fafafa" }}>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
             >
@@ -366,18 +377,21 @@ function Academic(props) {
                   <TextField
                     label="Diploma Percentage"
                     fullWidth
+                    required={props.diploma}
+                    error={props.errors.percentageDiploma.length > 0}
                     inputProps={{
                       readOnly: props.dataFilled,
                     }}
                     onChange={(event) => props.onChange(event, 'percentageDiploma')}
                     value={props.percentageDiploma}
-                  // error={formErrors.percentage.diploma.length > 0}
                   />
                 </Grid>
                 <Grid item xs={12} sm={4}>
                   <TextField
                     label="University of passing"
                     fullWidth
+                    required={props.diploma}
+                    error={props.errors.boeDiploma.length > 0}
                     inputProps={{
                       readOnly: props.dataFilled,
                     }}
@@ -456,7 +470,8 @@ function Academic(props) {
             }}
             onChange={(event) => props.onChange(event, 'sgpaAggregate')}
             value={props.sgpaAggregate}
-            // error={formErrors.sgpa.aggregate.length > 0}
+            required
+            error={props.errors.sgpaAggregate.length > 0}
           />
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -468,7 +483,8 @@ function Academic(props) {
             }}
             onChange={(event) => props.onChange(event, 'percentageEngineering')}
             value={props.percentageEngineering}
-            // error={formErrors.percentage.engineering.length > 0}
+            required
+            error={props.errors.percentageEngineering.length > 0}
           />
         </Grid>
       </Grid>
@@ -493,7 +509,8 @@ function Academic(props) {
                     }}
                     onChange={(event) => props.onChange(event, 'sgpaFEFS')}
                     value={props.sgpaFEFS}
-                    // error={formErrors.sgpa.fefs.length > 0}
+                    required
+                    error={props.errors.sgpaFEFS.length > 0}
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
@@ -505,7 +522,8 @@ function Academic(props) {
                     }}
                     onChange={(event) => props.onChange(event, 'sgpaFESS')}
                     value={props.sgpaFESS}
-                    // error={formErrors.sgpa.fess.length > 0}
+                    required
+                    error={props.errors.sgpaFESS.length > 0}
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
@@ -517,6 +535,8 @@ function Academic(props) {
                     }}
                     onChange={(event) => props.onChange(event, 'marksFEFS')}
                     value={props.marksFEFS}
+                    required
+                    error={props.errors.marksFEFS.length > 0}
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
@@ -528,6 +548,8 @@ function Academic(props) {
                     }}
                     onChange={(event) => props.onChange(event, 'marksFESS')}
                     value={props.marksFESS}
+                    required
+                    error={props.errors.marksFESS.length > 0}
                   />
                 </Grid>
               </Grid>
@@ -553,7 +575,8 @@ function Academic(props) {
                     }}
                     onChange={(event) => props.onChange(event, 'sgpaSEFS')}
                     value={props.sgpaSEFS}
-                    // error={formErrors.sgpa.sefs.length > 0}
+                    required
+                    error={props.errors.sgpaSEFS.length > 0}
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
@@ -565,7 +588,8 @@ function Academic(props) {
                     }}
                     onChange={(event) => props.onChange(event, 'sgpaSESS')}
                     value={props.sgpaSESS}
-                    // error={formErrors.sgpa.sess.length > 0}
+                    required
+                    error={props.errors.sgpaSESS.length > 0}
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
@@ -577,6 +601,8 @@ function Academic(props) {
                     }}
                     onChange={(event) => props.onChange(event, 'marksSEFS')}
                     value={props.marksSEFS}
+                    required
+                    error={props.errors.marksSEFS.length > 0}
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
@@ -588,6 +614,8 @@ function Academic(props) {
                     }}
                     onChange={(event) => props.onChange(event, 'marksSESS')}
                     value={props.marksSESS}
+                    required
+                    error={props.errors.marksSESS.length > 0}
                   />
                 </Grid>
               </Grid>
@@ -613,7 +641,8 @@ function Academic(props) {
                     }}
                     onChange={(event) => props.onChange(event, 'sgpaTEFS')}
                     value={props.sgpaTEFS}
-                    // error={formErrors.sgpa.tefs.length > 0}
+                    required
+                    error={props.errors.sgpaTEFS.length > 0}
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
@@ -625,7 +654,7 @@ function Academic(props) {
                     }}
                     onChange={(event) => props.onChange(event, 'sgpaTESS')}
                     value={props.sgpaTESS}
-                    // error={formErrors.sgpa.tess.length > 0}
+                    error={props.errors.sgpaTESS.length > 0}
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
@@ -637,6 +666,8 @@ function Academic(props) {
                     }}
                     onChange={(event) => props.onChange(event, 'marksTEFS')}
                     value={props.marksTEFS}
+                    required
+                    error={props.errors.marksTEFS.length > 0}
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
@@ -648,6 +679,7 @@ function Academic(props) {
                     }}
                     onChange={(event) => props.onChange(event, 'marksTESS')}
                     value={props.marksTESS}
+                    error={props.errors.marksTESS.length > 0}
                   />
                 </Grid>
               </Grid>
@@ -666,6 +698,8 @@ function Academic(props) {
             }}
             onChange={(event) => props.onChange(event, 'activeBacklogs')}
             value={props.activeBacklogs}
+            required
+            error={props.errors.activeBacklogs.length > 0}
           />
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -677,6 +711,8 @@ function Academic(props) {
             }}
             onChange={(event) => props.onChange(event, 'passiveBacklogs')}
             value={props.passiveBacklogs}
+            required
+            error={props.errors.passiveBacklogs.length > 0}
           />
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -688,6 +724,8 @@ function Academic(props) {
             }}
             onChange={(event) => props.onChange(event, 'yeardowns')}
             value={props.yeardowns}
+            required
+            error={props.errors.yeardowns.length > 0}
           />
         </Grid>
         {/* Skills */}

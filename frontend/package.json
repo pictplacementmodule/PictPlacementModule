@@ -19,15 +19,13 @@
     "pdfmake": "^0.1.60",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-redux": "^7.1.1",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "^3.3.0",
     "react-table": "^6.10.3",
     "react-to-pdf": "0.0.8",
     "react-to-print": "^2.5.0",
-    "react-tooltip": "^3.11.2",
-    "redux": "^4.0.4"
+    "react-tooltip": "^3.11.2"
   },
   "scripts": {
     "start": "react-scripts start",
