@@ -18,45 +18,6 @@ class Personal extends Component {
 
   genders = ['Female', 'Male', 'Other'];
 
-  state = {
-    disability: '',
-  }
-
-  componentDidMount() {
-    axios.post('/industry/findById', null, { params: { id: localStorage.getItem('token') } })
-      .then((response) => {
-        if (response.data != '') {
-          this.setState({
-            ...this.state,
-            sgpa: response.data.criteria,
-            active_backlogs: response.data.active_backlogs,
-            passive_backlogs: response.data.passive_backlogs,
-          })
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-    axios.post('/filter', null, { params: { comp_id: localStorage.getItem('token') } })
-      .then((response) => {
-        this.setState({
-          students: response.data,
-          temp: response.data,
-        });
-        this.filter();
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  }
-
-  blah = () => (event) => {
-    this.setState({
-      ...this.state,
-      disability: event.target.value,
-    })
-  }
-
   render() {
 
     return (
@@ -67,7 +28,7 @@ class Personal extends Component {
         <Grid spacing={2} container direction="column" alignItems="center" justify="center">
           <Grid item xs={4}>
             <img style={{border:"grey 1px solid"}} height="150" width="150" 
-              src= {(this.props.profileImg=="" || this.props.profileImg==null) ?"/profile_picture.jpg":this.props.profileImg} />
+              src= {(this.props.profileImg=="" || this.props.profileImg==null) ?"/profile_picture.jpg":('data:image/jpeg;base64,'+this.props.profileImg)} />
           </Grid>
           <Grid style={{display:this.props.dataFilled?"none":"block"}} item xs={4}>
             <input
@@ -84,6 +45,7 @@ class Personal extends Component {
             </label>
           </Grid>
         </Grid>
+        <div style={{height:"6vh"}}/>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={4}>
             <TextField
@@ -231,7 +193,7 @@ class Personal extends Component {
                   'aria-label': 'change date',
                 }}
                 inputProps={{
-                  readOnly: this.state.dataFilled,
+                  readOnly: this.props.dataFilled,
                 }}
               />
             </MuiPickersUtilsProvider>

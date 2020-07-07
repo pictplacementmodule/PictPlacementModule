@@ -288,7 +288,7 @@ class Profile extends Component {
         personal: this.props.details.student,
         academic: {
           ...this.props.details,
-          diploma: this.props.details.diploma=="true",
+          diploma: this.props.details.diploma == "true",
           // twelfth: this.props.details.twelfth=="true",
           student: undefined,
         }
@@ -361,32 +361,32 @@ class Profile extends Component {
   validateAcademic = () => {
     let errors = {};
     let data = this.state.academic;
-    errors.branch = (data.branch=="") ?"This can't be empty!" : "";
-    errors.prnNumber = (data.prnNumber=="") ?"This can't be empty!" : "";
-    errors.roll_no = (data.collegeId=="") ?"This can't be empty!" : "";
-    errors.percentageTenth = !(Number(data.percentageTenth)<=100) || data.percentageTenth=="" ? "Invalid!":"";
-    errors.boeTenth = (data.boeTenth=="") ?"This can't be empty!" : "";
-    errors.percentageTwelfth = data.twelfth && (!(Number(data.percentageTwelfth)<=100) || data.percentageTwelfth=="") ? "Invalid!":"";
-    errors.boeTwelfth = (data.twelfth && data.boeTwelfth=="") ?"This can't be empty!" : "";
-    errors.percentageDiploma = data.diploma && (!(Number(data.percentageDiploma)<=100) || data.percentageDiploma=="") ? "Invalid!":"";
-    errors.boeDiploma = data.diploma && data.boeDiploma=="" ?"This can't be empty!" : "";
-    errors.percentageEngineering = !(Number(data.percentageEngineering)<=100) || data.percentageEngineering=="" ? "Invalid!":"";
-    errors.sgpaAggregate = !(Number(data.sgpaAggregate)<=10) || data.sgpaAggregate=="" ? "Invalid!":"";
-    errors.sgpaFEFS = !(Number(data.sgpaFEFS)<=10) || data.sgpaFEFS=="" ? "Invalid!":"";
-    errors.sgpaFESS = !(Number(data.sgpaFESS)<=10) || data.sgpaFESS=="" ? "Invalid!":"";
-    errors.sgpaSEFS = !(Number(data.sgpaSEFS)<=10) || data.sgpaSEFS=="" ? "Invalid!":"";
-    errors.sgpaSESS = !(Number(data.sgpaSESS)<=10) || data.sgpaSESS=="" ? "Invalid!":"";
-    errors.sgpaTEFS = !(Number(data.sgpaTEFS)<=10) || data.sgpaTEFS=="" ? "Invalid!":"";
-    errors.sgpaTESS = !(Number(data.sgpaTESS)<=10) || data.sgpaTESS=="" ? "Invalid!":"";
-    errors.marksFEFS = !/^\d+$/.test(data.marksFEFS) ? "Invalid!":"";
-    errors.marksFESS = !/^\d+$/.test(data.marksFESS) ? "Invalid!":"";
-    errors.marksSEFS = !/^\d+$/.test(data.marksSEFS) ? "Invalid!":"";
-    errors.marksSESS = !/^\d+$/.test(data.marksSESS) ? "Invalid!":"";
-    errors.marksTEFS = !/^\d+$/.test(data.marksTEFS) ? "Invalid!":"";
-    errors.marksTESS = !/^\d+$/.test(data.marksTESS) ? "Invalid!":"";
-    errors.passiveBacklogs = !/^\d+$/.test(data.passiveBacklogs) ? "Invalid!":"";
-    errors.activeBacklogs = !/^\d+$/.test(data.activeBacklogs) ? "Invalid!":"";
-    errors.yeardowns = !/^\d+$/.test(data.yeardowns) ? "Invalid!":"";
+    errors.branch = (data.branch == "") ? "This can't be empty!" : "";
+    errors.prnNumber = (data.prnNumber == "") ? "This can't be empty!" : "";
+    errors.roll_no = (data.collegeId == "") ? "This can't be empty!" : "";
+    errors.percentageTenth = !(Number(data.percentageTenth) <= 100) || data.percentageTenth == "" ? "Invalid!" : "";
+    errors.boeTenth = (data.boeTenth == "") ? "This can't be empty!" : "";
+    errors.percentageTwelfth = data.twelfth && (!(Number(data.percentageTwelfth) <= 100) || data.percentageTwelfth == "") ? "Invalid!" : "";
+    errors.boeTwelfth = (data.twelfth && data.boeTwelfth == "") ? "This can't be empty!" : "";
+    errors.percentageDiploma = data.diploma && (!(Number(data.percentageDiploma) <= 100) || data.percentageDiploma == "") ? "Invalid!" : "";
+    errors.boeDiploma = data.diploma && data.boeDiploma == "" ? "This can't be empty!" : "";
+    errors.percentageEngineering = !(Number(data.percentageEngineering) <= 100) || data.percentageEngineering == "" ? "Invalid!" : "";
+    errors.sgpaAggregate = !(Number(data.sgpaAggregate) <= 10) || data.sgpaAggregate == "" ? "Invalid!" : "";
+    errors.sgpaFEFS = !(Number(data.sgpaFEFS) <= 10) || data.sgpaFEFS == "" ? "Invalid!" : "";
+    errors.sgpaFESS = !(Number(data.sgpaFESS) <= 10) || data.sgpaFESS == "" ? "Invalid!" : "";
+    errors.sgpaSEFS = !(Number(data.sgpaSEFS) <= 10) || data.sgpaSEFS == "" ? "Invalid!" : "";
+    errors.sgpaSESS = !(Number(data.sgpaSESS) <= 10) || data.sgpaSESS == "" ? "Invalid!" : "";
+    errors.sgpaTEFS = !(Number(data.sgpaTEFS) <= 10) || data.sgpaTEFS == "" ? "Invalid!" : "";
+    errors.sgpaTESS = !(Number(data.sgpaTESS) <= 10) || data.sgpaTESS == "" ? "Invalid!" : "";
+    errors.marksFEFS = !/^\d+$/.test(data.marksFEFS) ? "Invalid!" : "";
+    errors.marksFESS = !/^\d+$/.test(data.marksFESS) ? "Invalid!" : "";
+    errors.marksSEFS = !/^\d+$/.test(data.marksSEFS) ? "Invalid!" : "";
+    errors.marksSESS = !/^\d+$/.test(data.marksSESS) ? "Invalid!" : "";
+    errors.marksTEFS = !/^\d+$/.test(data.marksTEFS) ? "Invalid!" : "";
+    errors.marksTESS = !/^\d+$/.test(data.marksTESS) ? "Invalid!" : "";
+    errors.passiveBacklogs = !/^\d+$/.test(data.passiveBacklogs) ? "Invalid!" : "";
+    errors.activeBacklogs = !/^\d+$/.test(data.activeBacklogs) ? "Invalid!" : "";
+    errors.yeardowns = !/^\d+$/.test(data.yeardowns) ? "Invalid!" : "";
 
     this.setState({
       ...this.state,
@@ -397,7 +397,6 @@ class Profile extends Component {
         }
       }
     });
-    console.log(errors);
     return !Object.values(errors).some((val) => val != "");
   }
 
@@ -449,23 +448,18 @@ class Profile extends Component {
         ...this.state,
         personal: {
           ...this.state.personal,
-          profileImg: reader.result,
+          profileImg: this.getBase64data(reader.result),
         }
       })
     }
   }
 
-  base64toArrayByffer = (base64) => {
-    console.log(base64.split(",")[1]);
-    var binary_string = window.atob(base64.split(",")[1]);
-    console.log(binary_string);
-    var len = binary_string.length;
-    var bytes = new Uint8Array(len);
-    for (var i = 0; i < len; i++) {
-      bytes[i] = binary_string.charCodeAt(i);
-    }
-    console.log(bytes.buffer);
-    return bytes.buffer;
+
+  getBase64data = (dataURI) => {
+    var BASE64_MARKER = ';base64,';
+    var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+    var base64 = dataURI.substring(base64Index);
+    return base64;
   }
 
   handleClickOpen = () => {
@@ -485,7 +479,6 @@ class Profile extends Component {
       axios.post('/addPersonaldetails', {
         ...this.state.personal,
         rollno: localStorage.getItem("token"),
-        // profileImg: this.base64toArrayByffer(this.state.personal.profileImg)
       })
         .then((res) => {
           return axios.post('/addacademicdetails', {
@@ -525,7 +518,7 @@ class Profile extends Component {
         break;
       case 1:
         this.validateAcademic();
-        if (this.state.dataFilled || this.validateAcademic()){
+        if (this.state.dataFilled || this.validateAcademic()) {
           this.handleClickOpen();
         }
         // this.handleClickOpen();

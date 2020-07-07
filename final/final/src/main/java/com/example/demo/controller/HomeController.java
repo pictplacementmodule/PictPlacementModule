@@ -83,7 +83,13 @@ public class HomeController {
 	
 	@RequestMapping("/findAcademicDetails")
 	public Academicdetails findStuAca(@RequestParam int id) {
-		return academicrepo.findById(id).orElse(null);
+		Academicdetails stu = academicrepo.findById(id).orElse(null);
+		System.out.println("hiii");
+		System.out.println(decompressBytes(stu.getStudent().getProfileImg()));
+		if(stu!=null) {
+			stu.getStudent().setProfileImg(decompressBytes(stu.getStudent().getProfileImg()));
+		}
+		return stu;
 	}
 
 	@RequestMapping(value = "/authenticate") // for authentication of login details
@@ -117,7 +123,7 @@ public class HomeController {
 
 	@RequestMapping("/addPersonaldetails") // for adding student personal details
 	public void addPersonaldetails(@RequestBody Studentdetails user) {
-		System.out.println("user "+user);
+		user.setProfileImg(compressBytes(user.getProfileImg()));
 		userservice.addpd(user);
 	}
 
@@ -336,6 +342,7 @@ public class HomeController {
 
 	// compress the image bytes before storing it in the database
 	public static byte[] compressBytes(byte[] data) {
+		System.out.println("Size "+data.length);
 		Deflater deflater = new Deflater();
 		deflater.setInput(data);
 		deflater.finish();
@@ -368,6 +375,7 @@ public class HomeController {
 		} catch (IOException ioe) {
 		} catch (DataFormatException e) {
 		}
+		System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
 		return outputStream.toByteArray();
 	}
 }
