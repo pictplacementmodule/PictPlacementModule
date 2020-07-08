@@ -158,6 +158,8 @@ function Profile(props) {
    const [cities, setCities] = React.useState([]);
 
    const [open, setOpen] = React.useState(false);
+   const [variant,setVariant] = React.useState("success");
+   const [message,setMessage] = React.useState("Profile added successfully!");
 
    useEffect(() => {
       axios
@@ -207,6 +209,7 @@ function Profile(props) {
    });
    var da = [];
    const [formErrors, setError] = React.useState({
+      id: "",
       name: "",
       cpName: "",
       cpEmail1: "",
@@ -219,23 +222,30 @@ function Profile(props) {
       numberOfStudents: ""
    });
 
-   const [emptyError, setEmptyError] = React.useState({});
-
-   const keys = ["name", "cpName", "cpEmail1", "contactNo1", "package"];
-
-   let e = {};
    function validate() {
-      setEmptyError({});
-      keys.map(key => {
-         if (state[key].length == 0) {
-            e[key] = "Empty";
-         }
+      let errors = {}
+      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      errors.id = (state.id.length == 0) ? "This can't be empty!" : "";
+      errors.name = (state.name.length == 0) ? "This can't be empty!" : "";
+      errors.cpName = (state.cpName.length == 0) ? "This can't be empty!" : "";
+      errors.contactNo1 = (!/^\d+$/.test((state.contactNo1)) || state.contactNo1.length != 10) ?
+         "Invalid mobile number!" : "";
+      errors.contactNo2 = (!/^\d+$/.test((state.contactNo2)) || state.contactNo2.length != 10) ?
+         "Invalid mobile number!" : "";
+      errors.contactNo3 = (state.contactNo3.length!=0) && (!/^\d+$/.test((state.contactNo3)) || state.contactNo3.length != 10) ?
+         "Invalid mobile number!" : "";
+      errors.cpEmail1 = !re.test(state.cpEmail1) ? "Invalid email!" : "";
+      errors.cpEmail2 = !re.test(state.cpEmail2) ? "Invalid email!" : "";
+      errors.package = !/^\d+$/.test(state.package) ? "Invalid!" : "";
+      errors.numberOfStudents = !/^\d+$/.test(state.numberOfStudents) ? "Invalid!" : "";
+      errors.criteria = state.criteria=="" || Number(state.criteria)>10 ? "Invalid!" : "";
+      setError({
+         ...errors
       });
-      setEmptyError(e);
+      return !Object.values(errors).some((e) => e!="");
    }
 
    const submitHandler = event => {
-      // setOpen(true);
       event.preventDefault();
       var resetState = {
          id: "",
@@ -284,75 +294,34 @@ function Profile(props) {
          it: state.branches.it,
          entc: state.branches.entc
       };
-      validate();
-      var valid = true;
-      if (
-         Object.values(formErrors).some(error => error.length > 0) ||
-         Object.keys(e).length > 0
-      ) {
-         valid = false;
-      } else {
-         valid = true;
-      }
-      // valid = true;
-      console.log(valid);
-      if (valid) {
+      if (validate()) {
          axios
             .post("/industry/add", industry)
             .then(response => {
-               console.log(response);
+               if(response.data){
+                  setMessage("Profile added successfully!");
+                  setVariant("success");
+                  setState(resetState);
+               }
+               else{
+                  setMessage("Company with same ID already existing!");
+                  setVariant("error");
+               }                
                setOpen(true);
             })
             .catch(error => {
                console.log(error);
             });
       }
-      setState(resetState);
    };
    const handleChange = name => event => {
       setState({
          ...state,
          [name]: event.target.value
       });
-      const value = event.target.value;
-      let error = "";
-      let reg = "";
-      switch (name) {
-         case "cpName":
-            reg = /^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/;
-            error = reg.test(value) ? "" : "Invalid CPName";
-            break;
-         case "cpEmail1":
-         case "cpEmail2":
-            reg = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-            error = reg.test(value) ? "" : "Invalid Email";
-            break;
-         case "contactNo1":
-         case "contactNo2":
-         case "contactNo3":
-            reg = /^\d{10}$/;
-            error = reg.test(value) ? "" : "Invalid Phone Number";
-            break;
-         case "criteria":
-            error =
-               Number(value) > 0 && Number(value) < 10 ? "" : "Invalid Criteria";
-            break;
-         case "package":
-            reg = /^[0-9]+\.?([0-9]+)?$/;
-            error = reg.test(value) ? "" : "Invalid Package";
-            break;
-         case "numberOfStudents":
-            error = Number(value) > 0 ? "" : "Invalid Number Of Students";
-            break;
-      }
-      setError({
-         ...formErrors,
-         [name]: error
-      });
    };
 
    const handleChecked = name => event => {
-      console.log(event.target.checked);
       setState({
          ...state,
          branches: {
@@ -360,7 +329,6 @@ function Profile(props) {
             [name]: event.target.checked
          }
       });
-      console.log(state.branches);
    };
 
    const handleDateChange = (date, name) => {
@@ -419,13 +387,13 @@ function Profile(props) {
       for (i = 0; i < da.length; i++) {
          st[i] = new Date(da[i]);
       }
-      console.log(st);
+      // console.log(st);
       for (i = 0; i < st.length; i++) {
          n[i] = st[i].getDate();
          m[i] = st[i].getMonth();
          y[i] = st[i].getFullYear();
       }
-      console.log(n, m, y);
+      // console.log(n, m, y);
       for (let j = 0; j < st.length; j++)
          k[j] =
             n[j] === date.getDate() &&
@@ -460,8 +428,8 @@ function Profile(props) {
          >
             <MySnackbarContentWrapper
                onClose={handleClose}
-               variant="success"
-               message="Profile added successfully!"
+               variant={variant}
+               message={message}
             />
          </Snackbar>
          <Paper className={classes.paper}>
@@ -477,39 +445,42 @@ function Profile(props) {
                            data-tip data-for='companyId'
                            label="User Id"
                            fullWidth
+                           required
+                           error={formErrors.id.length>0}
                            onChange={handleChange("id")}
                            value={state.id}
                         />
-
                      </Grid>
-
                      <Grid item xs={12} sm={6}>
                         <TextField
                            data-tip data-for='companyName'
-                           label="Company Name*"
+                           label="Company Name"
                            fullWidth
+                           required
                            onChange={handleChange("name")}
                            value={state.name}
-                           error={formErrors.name.length > 0 || emptyError.name}
+                           error={formErrors.name.length > 0}
                         />
                      </Grid>
                      <Grid item xs={12} sm={4}>
                         <TextField
-                           label="Contact Person Name*"
+                           label="Contact Person Name"
                            fullWidth
+                           required
                            onChange={handleChange("cpName")}
                            value={state.cpName}
-                           error={formErrors.cpName.length > 0 || emptyError.cpName}
+                           error={formErrors.cpName.length > 0}
                         />
                      </Grid>
                      <Grid item xs={12} sm={4}>
                         <TextField
                            data-tip data-for="Email1"
-                           label=" Email id 1*"
+                           label=" Email id 1"
                            fullWidth
+                           required
                            onChange={handleChange("cpEmail1")}
                            value={state.cpEmail1}
-                           error={formErrors.cpEmail1.length > 0 || emptyError.cpEmail1}
+                           error={formErrors.cpEmail1.length > 0}
                         />
                         <ReactTooltip id='Email1' type='info' effect='solid'>
                            <span>Enter email in format : example@demo.com</span>
@@ -519,6 +490,7 @@ function Profile(props) {
                         <TextField
                            label=" Email id 2"
                            fullWidth
+                           required
                            onChange={handleChange("cpEmail2")}
                            value={state.cpEmail2}
                            error={formErrors.cpEmail2.length > 0}
@@ -529,11 +501,10 @@ function Profile(props) {
                            data-tip data-for="contact1*"
                            label="Contact Number 1"
                            fullWidth
+                           required
                            onChange={handleChange("contactNo1")}
                            value={state.contactNo1}
-                           error={
-                              formErrors.contactNo1.length > 0 || emptyError.contactNo1
-                           }
+                           error={formErrors.contactNo1.length > 0}
                         />
                         <ReactTooltip id='cntact1' type='info' effect='solid'>
                            <span>Enter 10 digit contact number</span>
@@ -543,6 +514,7 @@ function Profile(props) {
                         <TextField
                            label="Contact Number 2"
                            fullWidth
+                           required
                            onChange={handleChange("contactNo2")}
                            value={state.contactNo2}
                            error={formErrors.contactNo2.length > 0}
@@ -562,6 +534,7 @@ function Profile(props) {
                            data-tip data-for="criteria"
                            label="Criteria"
                            fullWidth
+                           required
                            onChange={handleChange("criteria")}
                            value={state.criteria}
                            error={formErrors.criteria.length > 0}
@@ -572,17 +545,19 @@ function Profile(props) {
                      </Grid>
                      <Grid item xs={12} sm={6}>
                         <TextField
-                           label="Package*"
+                           label="Package"
                            fullWidth
+                           required
                            onChange={handleChange("package")}
                            value={state.package}
-                           error={formErrors.package.length > 0 || emptyError.package}
+                           error={formErrors.package.length > 0}
                         />
                      </Grid>
                      <Grid item xs={12} sm={4}>
                         <TextField
                            label="Number of Students"
                            fullWidth
+                           required
                            onChange={handleChange("numberOfStudents")}
                            value={state.numberOfStudents}
                            error={formErrors.numberOfStudents.length > 0}
