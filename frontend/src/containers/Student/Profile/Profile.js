@@ -323,7 +323,7 @@ class Profile extends Component {
     let errors = {};
     let data = this.state.personal;
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    errors.aadharNumber = (!/^\d+$/.test((data.aadharNumber)) || data.aadharNumber.length != 16) ?
+    errors.aadharNumber = (!/^\d+$/.test((data.aadharNumber)) || data.aadharNumber.length != 12) ?
       "Invalid aadhar number!" : "";
     errors.pancardNumber = (data.pancardNumber.length != 10) ?
       "Invalid pancard number!" : "";

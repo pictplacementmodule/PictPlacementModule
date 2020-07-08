@@ -16,7 +16,6 @@ import Button from "@material-ui/core/Button";
 import DateFnsUtils from "@date-io/date-fns";
 import axios from "../../../axios";
 import CompanyDetails from "./CompanyDetails";
-
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
@@ -34,6 +33,7 @@ import {
    MuiPickersUtilsProvider,
    KeyboardDatePicker
 } from "@material-ui/pickers";
+import frontend_base_url from "../../../baseurl";
 
 const styles = theme => ({
    icon: {
@@ -229,7 +229,7 @@ class AllCompanies extends Component {
    companyHandler = company => {
       console.log("clicked" + company.name);
       window.open(
-         "http://localhost:3000/admin/company-details/" + company.id,
+         frontend_base_url + "/admin/company-details/" + company.id,
          "_blank"
       );
    };

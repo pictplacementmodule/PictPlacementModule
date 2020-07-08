@@ -21,6 +21,7 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
+import frontend_base_url from '../../../baseurl';
 
 const styles = (theme => ({
 
@@ -110,7 +111,7 @@ class AllCompanies extends Component {
 
     companyHandler = (company) => {
         console.log("clicked" + company.name);
-        window.open("http://localhost:3000/admin/company-details/"+company.id, '_blank');
+        window.open(frontend_base_url + "/admin/company-details/"+company.id, '_blank');
     }
 
     submitHandler = () => {

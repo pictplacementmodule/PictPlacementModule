@@ -7,6 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import axios from '../../axios'
+import frontend_base_url from "../../baseurl"
 import { fontSize } from '@material-ui/system';
 import Button from "@material-ui/core/Button";
 import "bootstrap/dist/css/bootstrap.css";
@@ -71,7 +72,8 @@ class SkillsReport extends React.Component {
     
     companyHandler = (company) => {
         console.log("clicked" + company.name);
-        window.open("http://localhost:3000/admin/skill-report/"+company.id, '_blank');
+        console.log(axios)
+        window.open(frontend_base_url + "/admin/skill-report/"+company.id, '_blank');
     }
 
     render() {
