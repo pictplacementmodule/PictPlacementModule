@@ -2,14 +2,12 @@ import React, { useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import { connect } from 'react-redux'
 import {
   MuiPickersUtilsProvider,
   DatePicker,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import Chip from '@material-ui/core/Chip';
-import * as actionTypes from '../../../actions/Student'
 import Switch from '@material-ui/core/Switch';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormLabel from "@material-ui/core/FormLabel";
@@ -93,12 +91,6 @@ function Academic(props) {
 
   const classes = useStyles();
 
-  const [checked, setChecked] = React.useState(props.state2.diploma);
-
-  const toggleChecked = (name) => (event) => {
-    props.onSwitch(name, event.target.checked);
-  };
-
   const [skills, setSkills] = React.useState([]);
 
   const [open, setOpen] = React.useState(false);
@@ -118,7 +110,6 @@ function Academic(props) {
 
   let firstYear = null;
 
-  let formErrors = props.state2.formErrors;
 
   return (
     <React.Fragment>
@@ -130,36 +121,47 @@ function Academic(props) {
           <FormControlLabel
             control={
               <Checkbox
-                checked={props.state2.twelfth}
-                onChange={toggleChecked('twelfth')}
+                disabled={props.dataFilled}
+                checked={props.twelfth}
+                onChange={(event) => props.handleCheck(event, 'twelfth')}
                 color="secondary"
               />
             }
             label="Twelfth"
+            value={props.twelfth}
+            disabled={props.dataFilled}
           />
         </Grid>
         <Grid item xs={12} sm={4}>
           <FormControlLabel
             control={
               <Checkbox
-                checked={props.state2.diploma}
-                onChange={toggleChecked('diploma')}
+                checked={props.diploma}
+                onChange={(event) => props.handleCheck(event, 'diploma')}
                 color="secondary"
+                disabled={props.dataFilled}
               />
             }
             label="Diploma"
+            value={props.diploma}
+            disabled={props.dataFilled}
           />
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={4}>
           <TextField
+            required
             id="branch"
             select
             label="Branch"
             fullWidth
-            value={props.state2.branch}
-            onChange={props.onChange('branch')}
+            value={props.branch}
+            inputProps={{
+              readOnly: props.dataFilled,
+            }}
+            onChange={(event) => props.onChange(event, 'branch')}
+            error={props.errors.branch.length > 0}
           >
             {branches.map(option => (
               <MenuItem key={option} value={option}>
@@ -175,8 +177,13 @@ function Academic(props) {
             label="University PRN Number"
             autoComplete="rn"
             fullWidth
-            value={props.state2.prnNumber}
-            onChange={props.onChange('prnNumber')}
+            required
+            inputProps={{
+              readOnly: props.dataFilled,
+            }}
+            value={props.prnNumber}
+            onChange={(event) => props.onChange(event, 'prnNumber')}
+            error={props.errors.prnNumber.length > 0}
           />
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -184,8 +191,13 @@ function Academic(props) {
             name="collegeId"
             label="TE Roll no"
             fullWidth
-            value={props.state2.collegeId}
-            onChange={props.onChange('collegeId')}
+            required
+            inputProps={{
+              readOnly: props.dataFilled,
+            }}
+            value={props.collegeId}
+            onChange={(event) => props.onChange(event, 'collegeId')}
+            error={props.errors.roll_no.length > 0}
           />
         </Grid>
       </Grid>
@@ -194,7 +206,7 @@ function Academic(props) {
       <Grid container spacing={3}>
         {/* Tenth */}
         <Grid item xs={12}>
-          <ExpansionPanel style={{backgroundColor:"#fafafa"}}>
+          <ExpansionPanel defaultExpanded={true} style={{ backgroundColor: "#fafafa" }}>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
             >
@@ -206,17 +218,26 @@ function Academic(props) {
                   <TextField
                     label="10th Percentage"
                     fullWidth
-                    value={props.state2.percentage.tenth}
-                    onChange={props.onChange2('percentage', 'tenth')}
-                    error={formErrors.percentage.tenth.length > 0}
+                    required
+                    error={props.errors.percentageTenth.length > 0}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    value={props.percentageTenth}
+                    onChange={(event) => props.onChange(event, 'percentageTenth')}
                   />
                 </Grid>
                 <Grid item xs={12} sm={4}>
                   <TextField
                     label="Board of education (10th)"
                     fullWidth
-                    value={props.state2.boardOfEducation.tenth}
-                    onChange={props.onChange2('boardOfEducation', 'tenth')}
+                    required
+                    error={props.errors.boeTenth.length > 0}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    value={props.boeTenth}
+                    onChange={(event) => props.onChange(event, 'boeTenth')}
                   />
                 </Grid>
                 <Grid item xs={12} sm={4}>
@@ -224,8 +245,11 @@ function Academic(props) {
                     <DatePicker
                       views={["year"]}
                       label="Year of passing (10th)"
-                      value={props.state2.yearOfPassing.tenth}
-                      onChange={(year) => props.onChangeYearOfPassing(year, 'tenth')}
+                      inputProps={{
+                        readOnly: props.dataFilled,
+                      }}
+                      value={props.yopTenth}
+                      onChange={(date) => props.onDateChange(date, 'yopTenth', 'academic')}
                       variant="inline"
                       fullWidth
                       disableToolbar
@@ -236,16 +260,22 @@ function Academic(props) {
                   <TextField
                     label="Education gap after 10th"
                     fullWidth
-                    value={props.state2.educationGap.tenth}
-                    onChange={props.onChange2('educationGap', 'tenth')}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'gapTenth')}
+                    value={props.gapTenth}
                   />
                 </Grid>
                 <Grid item xs={12} sm={8}>
                   <TextField
                     label="Reason of gap (10th)"
                     fullWidth
-                    value={props.state2.reasonOfGap.tenth}
-                    onChange={props.onChange2('reasonOfGap', 'tenth')}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'rogTenth')}
+                    value={props.rogTenth}
                   />
                 </Grid>
               </Grid>
@@ -255,7 +285,7 @@ function Academic(props) {
 
         {/* Twelfth */}
         <Grid item xs={12}>
-          <ExpansionPanel disabled={!props.state2.twelfth} style={{backgroundColor:"#fafafa"}}>
+          <ExpansionPanel expanded={props.twelfth} disabled={!props.twelfth} style={{ backgroundColor: "#fafafa" }}>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
             >
@@ -267,17 +297,27 @@ function Academic(props) {
                   <TextField
                     label="12th Percentage"
                     fullWidth
-                    value={props.state2.percentage.twelfth}
-                    onChange={props.onChange2('percentage', 'twelfth')}
-                    error={formErrors.percentage.twelfth.length > 0}
+                    required={props.twelfth}
+                    error={props.errors.percentageTwelfth.length > 0}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'percentageTwelfth')}
+                    value={props.percentageTwelfth}
+                  // error={formErrors.percentage.twelfth.length > 0}
                   />
                 </Grid>
                 <Grid item xs={12} sm={4}>
                   <TextField
                     label="Board of education (12th)"
                     fullWidth
-                    value={props.state2.boardOfEducation.twelfth}
-                    onChange={props.onChange2('boardOfEducation', 'twelfth')}
+                    required={props.twelfth}
+                    error={props.errors.boeTwelfth.length > 0}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'boeTwelfth')}
+                    value={props.boeTwelfth}
                   />
                 </Grid>
                 <Grid item xs={12} sm={4}>
@@ -288,8 +328,11 @@ function Academic(props) {
                       variant="inline"
                       disableToolbar
                       fullWidth
-                      value={props.state2.yearOfPassing.twelfth}
-                      onChange={(year) => props.onChangeYearOfPassing(year, 'twelfth')}
+                      inputProps={{
+                        readOnly: props.dataFilled,
+                      }}
+                      value={props.yopTwelfth}
+                      onChange={(date) => props.onDateChange(date, 'yopTwelfth', 'academic')}
                     />
                   </MuiPickersUtilsProvider>
                 </Grid>
@@ -297,16 +340,22 @@ function Academic(props) {
                   <TextField
                     label="Education gap after 12th"
                     fullWidth
-                    value={props.state2.educationGap.twelfth}
-                    onChange={props.onChange2('educationGap', 'twelfth')}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'gapTwelfth')}
+                    value={props.gapTwelfth}
                   />
                 </Grid>
                 <Grid item xs={12} sm={8}>
                   <TextField
                     label="Reason of gap (12th)"
                     fullWidth
-                    value={props.state2.reasonOfGap.twelfth}
-                    onChange={props.onChange2('reasonOfGap', 'twelfth')}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'rogTwelfth')}
+                    value={props.rogTwelfth}
                   />
                 </Grid>
               </Grid>
@@ -316,7 +365,7 @@ function Academic(props) {
 
         {/* Diploma */}
         <Grid item xs={12}>
-          <ExpansionPanel disabled={!props.state2.diploma} style={{backgroundColor:"#fafafa"}}>
+          <ExpansionPanel expanded={props.diploma} disabled={!props.diploma} style={{ backgroundColor: "#fafafa" }}>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
             >
@@ -328,17 +377,26 @@ function Academic(props) {
                   <TextField
                     label="Diploma Percentage"
                     fullWidth
-                    value={props.state2.percentage.diploma}
-                    onChange={props.onChange2('percentage', 'diploma')}
-                    error={formErrors.percentage.diploma.length > 0}
+                    required={props.diploma}
+                    error={props.errors.percentageDiploma.length > 0}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'percentageDiploma')}
+                    value={props.percentageDiploma}
                   />
                 </Grid>
                 <Grid item xs={12} sm={4}>
                   <TextField
                     label="University of passing"
                     fullWidth
-                    value={props.state2.boardOfEducation.diploma}
-                    onChange={props.onChange2('boardOfEducation', 'diploma')}
+                    required={props.diploma}
+                    error={props.errors.boeDiploma.length > 0}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'boeDiploma')}
+                    value={props.boeDiploma}
                   />
                 </Grid>
                 <Grid item xs={12} sm={4}>
@@ -346,10 +404,13 @@ function Academic(props) {
                     <DatePicker
                       views={["year"]}
                       label="Year of passing (diploma)"
-                      value={props.state2.yearOfPassing.diploma}
-                      onChange={(year) => props.onChangeYearOfPassing(year, 'diploma')}
                       variant="inline"
                       fullWidth
+                      inputProps={{
+                        readOnly: props.dataFilled,
+                      }}
+                      value={props.yopDiploma}
+                      onChange={(date) => props.onDateChange(date, 'yopDiploma', 'academic')}
                       disableToolbar
                     />
                   </MuiPickersUtilsProvider>
@@ -358,16 +419,22 @@ function Academic(props) {
                   <TextField
                     label="Education gap after Diploma"
                     fullWidth
-                    value={props.state2.educationGap.diploma}
-                    onChange={props.onChange2('educationGap', 'diploma')}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'gapDiploma')}
+                    value={props.gapDiploma}
                   />
                 </Grid>
                 <Grid item xs={12} sm={8}>
                   <TextField
                     label="Reason of gap (Diploma)"
                     fullWidth
-                    value={props.state2.reasonOfGap.diploma}
-                    onChange={props.onChange2('reasonOfGap', 'diploma')}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'rogDiploma')}
+                    value={props.rogDiploma}
                   />
                 </Grid>
               </Grid>
@@ -386,8 +453,11 @@ function Academic(props) {
               variant="inline"
               disableToolbar
               fullWidth
-              value={props.state2.engineeringStartYear}
-              onChange={(year) => props.onChangeDate(year, 'engineeringStartYear')}
+              inputProps={{
+                readOnly: props.dataFilled,
+              }}
+              onChange={(date) => props.onDateChange(date, 'engineeringStartYear', 'academic')}
+              value={props.engineeringStartYear}
             />
           </MuiPickersUtilsProvider>
         </Grid>
@@ -395,18 +465,26 @@ function Academic(props) {
           <TextField
             label="Aggregate SGPA"
             fullWidth
-            value={props.state2.sgpa.aggregate}
-            onChange={props.onChange2('sgpa', 'aggregate')}
-            error={formErrors.sgpa.aggregate.length > 0}
+            inputProps={{
+              readOnly: props.dataFilled,
+            }}
+            onChange={(event) => props.onChange(event, 'sgpaAggregate')}
+            value={props.sgpaAggregate}
+            required
+            error={props.errors.sgpaAggregate.length > 0}
           />
         </Grid>
         <Grid item xs={12} sm={4}>
           <TextField
             label="Aggregate Percentage"
             fullWidth
-            value={props.state2.percentage.engineering}
-            onChange={props.onChange2('percentage', 'engineering')}
-            error={formErrors.percentage.engineering.length > 0}
+            inputProps={{
+              readOnly: props.dataFilled,
+            }}
+            onChange={(event) => props.onChange(event, 'percentageEngineering')}
+            value={props.percentageEngineering}
+            required
+            error={props.errors.percentageEngineering.length > 0}
           />
         </Grid>
       </Grid>
@@ -414,7 +492,7 @@ function Academic(props) {
       <Grid container spacing={3}>
         {/* Engineering first year */}
         <Grid item xs={12}>
-          <ExpansionPanel disabled={props.state2.diploma} style={{backgroundColor:"#fafafa"}}>
+          <ExpansionPanel defaultExpanded={true} disabled={props.diploma} style={{ backgroundColor: "#fafafa" }}>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
             >
@@ -426,34 +504,52 @@ function Academic(props) {
                   <TextField
                     label="First sem SGPA"
                     fullWidth
-                    value={props.state2.sgpa.fefs}
-                    onChange={props.onChange2('sgpa', 'fefs')}
-                    error={formErrors.sgpa.fefs.length > 0}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'sgpaFEFS')}
+                    value={props.sgpaFEFS}
+                    required
+                    error={props.errors.sgpaFEFS.length > 0}
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
                   <TextField
                     label="Second sem SGPA"
                     fullWidth
-                    value={props.state2.sgpa.fess}
-                    onChange={props.onChange2('sgpa', 'fess')}
-                    error={formErrors.sgpa.fess.length > 0}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'sgpaFESS')}
+                    value={props.sgpaFESS}
+                    required
+                    error={props.errors.sgpaFESS.length > 0}
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
                   <TextField
                     label="First sem marks"
                     fullWidth
-                    value={props.state2.marks.fefs}
-                    onChange={props.onChange2('marks', 'fefs')}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'marksFEFS')}
+                    value={props.marksFEFS}
+                    required
+                    error={props.errors.marksFEFS.length > 0}
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
                   <TextField
                     label="Second sem marks"
                     fullWidth
-                    value={props.state2.marks.fess}
-                    onChange={props.onChange2('marks', 'fess')}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'marksFESS')}
+                    value={props.marksFESS}
+                    required
+                    error={props.errors.marksFESS.length > 0}
                   />
                 </Grid>
               </Grid>
@@ -462,7 +558,7 @@ function Academic(props) {
         </Grid>
         {/* Engineering second year */}
         <Grid item xs={12}>
-          <ExpansionPanel style={{backgroundColor:"#fafafa"}}>
+          <ExpansionPanel defaultExpanded={true} style={{ backgroundColor: "#fafafa" }}>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
             >
@@ -474,34 +570,52 @@ function Academic(props) {
                   <TextField
                     label="First sem SGPA"
                     fullWidth
-                    value={props.state2.sgpa.sefs}
-                    onChange={props.onChange2('sgpa', 'sefs')}
-                    error={formErrors.sgpa.sefs.length > 0}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'sgpaSEFS')}
+                    value={props.sgpaSEFS}
+                    required
+                    error={props.errors.sgpaSEFS.length > 0}
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
                   <TextField
                     label="Second sem SGPA"
                     fullWidth
-                    value={props.state2.sgpa.sess}
-                    onChange={props.onChange2('sgpa', 'sess')}
-                    error={formErrors.sgpa.sess.length > 0}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'sgpaSESS')}
+                    value={props.sgpaSESS}
+                    required
+                    error={props.errors.sgpaSESS.length > 0}
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
                   <TextField
                     label="First sem marks"
                     fullWidth
-                    value={props.state2.marks.sefs}
-                    onChange={props.onChange2('marks', 'sefs')}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'marksSEFS')}
+                    value={props.marksSEFS}
+                    required
+                    error={props.errors.marksSEFS.length > 0}
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
                   <TextField
                     label="Second sem marks"
                     fullWidth
-                    value={props.state2.marks.sess}
-                    onChange={props.onChange2('marks', 'sess')}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'marksSESS')}
+                    value={props.marksSESS}
+                    required
+                    error={props.errors.marksSESS.length > 0}
                   />
                 </Grid>
               </Grid>
@@ -510,7 +624,7 @@ function Academic(props) {
         </Grid>
         {/* Engineering third year */}
         <Grid item xs={12}>
-          <ExpansionPanel style={{backgroundColor:"#fafafa"}}>
+          <ExpansionPanel defaultExpanded={true} style={{ backgroundColor: "#fafafa" }}>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
             >
@@ -522,34 +636,50 @@ function Academic(props) {
                   <TextField
                     label="First sem SGPA"
                     fullWidth
-                    value={props.state2.sgpa.tefs}
-                    onChange={props.onChange2('sgpa', 'tefs')}
-                    error={formErrors.sgpa.tefs.length > 0}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'sgpaTEFS')}
+                    value={props.sgpaTEFS}
+                    required
+                    error={props.errors.sgpaTEFS.length > 0}
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
                   <TextField
                     label="Second sem SGPA"
                     fullWidth
-                    value={props.state2.sgpa.tess}
-                    onChange={props.onChange2('sgpa', 'tess')}
-                    error={formErrors.sgpa.tess.length > 0}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'sgpaTESS')}
+                    value={props.sgpaTESS}
+                    error={props.errors.sgpaTESS.length > 0}
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
                   <TextField
                     label="First sem marks"
                     fullWidth
-                    value={props.state2.marks.tefs}
-                    onChange={props.onChange2('marks', 'tefs')}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'marksTEFS')}
+                    value={props.marksTEFS}
+                    required
+                    error={props.errors.marksTEFS.length > 0}
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
                   <TextField
                     label="Second sem marks"
                     fullWidth
-                    value={props.state2.marks.tess}
-                    onChange={props.onChange2('marks', 'tess')}
+                    inputProps={{
+                      readOnly: props.dataFilled,
+                    }}
+                    onChange={(event) => props.onChange(event, 'marksTESS')}
+                    value={props.marksTESS}
+                    error={props.errors.marksTESS.length > 0}
                   />
                 </Grid>
               </Grid>
@@ -563,24 +693,39 @@ function Academic(props) {
           <TextField
             label="No. of active backlogs"
             fullWidth
-            value={props.state2.activeBacklogs}
-            onChange={props.onChange('activeBacklogs')}
+            inputProps={{
+              readOnly: props.dataFilled,
+            }}
+            onChange={(event) => props.onChange(event, 'activeBacklogs')}
+            value={props.activeBacklogs}
+            required
+            error={props.errors.activeBacklogs.length > 0}
           />
         </Grid>
         <Grid item xs={12} sm={4}>
           <TextField
             label="No. of passive backlogs"
             fullWidth
-            value={props.state2.passiveBacklogs}
-            onChange={props.onChange('passiveBacklogs')}
+            inputProps={{
+              readOnly: props.dataFilled,
+            }}
+            onChange={(event) => props.onChange(event, 'passiveBacklogs')}
+            value={props.passiveBacklogs}
+            required
+            error={props.errors.passiveBacklogs.length > 0}
           />
         </Grid>
         <Grid item xs={12} sm={4}>
           <TextField
             label="No. of yeardowns"
             fullWidth
-            value={props.state2.yeardowns}
-            onChange={props.onChange('yeardowns')}
+            inputProps={{
+              readOnly: props.dataFilled,
+            }}
+            onChange={(event) => props.onChange(event, 'yeardowns')}
+            value={props.yeardowns}
+            required
+            error={props.errors.yeardowns.length > 0}
           />
         </Grid>
         {/* Skills */}
@@ -589,8 +734,7 @@ function Academic(props) {
             <InputLabel htmlFor="select-multiple-checkbox">Skillset</InputLabel>
             <Select
               multiple
-              value={props.state2.skill}
-              onChange={props.onChange('skill')}
+              value={props.skills}
               input={<Input id="select-multiple-chip" />}
               renderValue={selected => (
                 <div className={classes.chips}>
@@ -601,10 +745,14 @@ function Academic(props) {
               )}
               MenuProps={MenuProps}
               fullWidth
+              inputProps={{
+                readOnly: props.dataFilled,
+              }}
+              onChange={(event) => props.onChange(event, 'skills')}
             >
               {skills.map(s => (
                 <MenuItem key={s} value={s}>
-                  <Checkbox checked={props.state2.skill.indexOf(s) > -1} />
+                  <Checkbox checked={props.skills.indexOf(s) > -1} />
                   <ListItemText primary={s} />
                 </MenuItem>
               ))}
@@ -617,20 +765,4 @@ function Academic(props) {
   );
 }
 
-const matchStateToProps = (state) => {
-  return {
-    state2: state.academic,
-  };
-}
-
-const matchDispatchToProps = (dispatch) => {
-  return {
-    onChange: (name) => (event) => dispatch({ type: actionTypes.CHANGE, parName: name, value: event.target.value }),
-    onChange2: (name1, name2) => (event) => dispatch({ type: actionTypes.CHANGE2, par1Name: name1, par2Name: name2, value: event.target.value }),
-    onChangeYearOfPassing: (year, name) => dispatch({ type: actionTypes.CHANGE_YEAR_OF_PASSING, parName: name, value: year }),
-    onChangeDate: (year, name) => dispatch({ type: actionTypes.CHANGE_DATE, parName: name, value: year }),
-    onSwitch: (name, value) => dispatch({ type: actionTypes.CHANGE_SWITCH, parName: name, value: value })
-  }
-}
-
-export default connect(matchStateToProps, matchDispatchToProps)(Academic);
+export default Academic;
