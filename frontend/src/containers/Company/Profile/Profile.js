@@ -161,6 +161,8 @@ function Profile(props) {
     const [variant, setVariant] = React.useState("success");
     const [message, setMessage] = React.useState("Profile added successfully!");
 
+    const [filled, setFilled] = React.useState(false);
+
     useEffect(() => {
         axios
             .post("/industry/findById", null, {
@@ -169,6 +171,7 @@ function Profile(props) {
             .then(response => {
                 console.log(response.data);
                 if (response.data === null) {
+                    setFilled(false);
                 } else {
                     setState({
                         ...state,
@@ -194,6 +197,7 @@ function Profile(props) {
                             entc: response.data.entc
                         }
                     });
+                    setFilled(true);
                 }
             })
             .catch(error => {
@@ -473,6 +477,15 @@ function Profile(props) {
                 <Typography component="h2" variant="h4" align="center">
                     Add Company
         </Typography>
+                {filled && (
+                    <>
+                    <div style={{height:"2vh"}}/>
+                    <Typography variant="overline">
+                        Sorry, you can't edit the details.
+                    </Typography>
+                    <div style={{height:"1vh"}}/>
+                    </>
+                )}
                 <br></br>
                 <div id="divToPrint">
                     <form className={classes.container} noValidate autoComplete="off">
@@ -486,6 +499,7 @@ function Profile(props) {
                                     error={formErrors.id.length > 0}
                                     onChange={handleChange("id")}
                                     value={state.id}
+                                    inputProps={{ readOnly: filled }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -497,6 +511,7 @@ function Profile(props) {
                                     onChange={handleChange("name")}
                                     value={state.name}
                                     error={formErrors.name.length > 0}
+                                    inputProps={{ readOnly: filled }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -507,6 +522,7 @@ function Profile(props) {
                                     onChange={handleChange("cpName")}
                                     value={state.cpName}
                                     error={formErrors.cpName.length > 0}
+                                    inputProps={{ readOnly: filled }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -518,8 +534,9 @@ function Profile(props) {
                                     onChange={handleChange("cpEmail1")}
                                     value={state.cpEmail1}
                                     error={formErrors.cpEmail1.length > 0}
+                                    inputProps={{ readOnly: filled }}
                                 />
-                                <ReactTooltip id='Email1' type='info' effect='solid'>
+                                <ReactTooltip disable={filled} id='Email1' type='info' effect='solid'>
                                     <span>Enter email in format : example@demo.com</span>
                                 </ReactTooltip>
                             </Grid>
@@ -531,6 +548,7 @@ function Profile(props) {
                                     onChange={handleChange("cpEmail2")}
                                     value={state.cpEmail2}
                                     error={formErrors.cpEmail2.length > 0}
+                                    inputProps={{ readOnly: filled }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -542,8 +560,9 @@ function Profile(props) {
                                     onChange={handleChange("contactNo1")}
                                     value={state.contactNo1}
                                     error={formErrors.contactNo1.length > 0}
+                                    inputProps={{ readOnly: filled }}
                                 />
-                                <ReactTooltip id='cntact1' type='info' effect='solid'>
+                                <ReactTooltip disable={filled} id='cntact1' type='info' effect='solid'>
                                     <span>Enter 10 digit contact number</span>
                                 </ReactTooltip>
                             </Grid>
@@ -555,6 +574,7 @@ function Profile(props) {
                                     onChange={handleChange("contactNo2")}
                                     value={state.contactNo2}
                                     error={formErrors.contactNo2.length > 0}
+                                    inputProps={{ readOnly: filled }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -564,6 +584,7 @@ function Profile(props) {
                                     onChange={handleChange("contactNo3")}
                                     value={state.contactNo3}
                                     error={formErrors.contactNo3.length > 0}
+                                    inputProps={{ readOnly: filled }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -575,8 +596,9 @@ function Profile(props) {
                                     onChange={handleChange("criteria")}
                                     value={state.criteria}
                                     error={formErrors.criteria.length > 0}
+                                    inputProps={{ readOnly: filled }}
                                 />
-                                <ReactTooltip id='criteria' type='info' effect='solid'>
+                                <ReactTooltip disable={filled} id='criteria' type='info' effect='solid'>
                                     <span>Enter the CGPA criteria (should be less than 10)</span>
                                 </ReactTooltip>
                             </Grid>
@@ -588,6 +610,7 @@ function Profile(props) {
                                     onChange={handleChange("package")}
                                     value={state.package}
                                     error={formErrors.package.length > 0}
+                                    inputProps={{ readOnly: filled }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -598,6 +621,7 @@ function Profile(props) {
                                     onChange={handleChange("numberOfStudents")}
                                     value={state.numberOfStudents}
                                     error={formErrors.numberOfStudents.length > 0}
+                                    inputProps={{ readOnly: filled }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -607,6 +631,7 @@ function Profile(props) {
                                             checked={state.passiveBacklogs}
                                             onChange={toggleBacklogs("passiveBacklogs")}
                                             color="primary"
+                                            inputProps={{ readOnly: filled }}
                                         />
                                     }
                                     style={{
@@ -625,6 +650,7 @@ function Profile(props) {
                                             checked={state.activeBacklogs}
                                             onChange={toggleBacklogs("activeBacklogs")}
                                             color="primary"
+                                            inputProps={{ readOnly: filled }}
                                         />
                                     }
                                     style={{ boxSizing: "border-box", marginTop: "20px" }}
@@ -649,6 +675,7 @@ function Profile(props) {
                                             checked={state.branches.computer}
                                             onChange={handleChecked("computer")}
                                             value="computer"
+                                        disabled={filled}
                                         />
                                     }
                                     label="Computer"
@@ -662,6 +689,7 @@ function Profile(props) {
                                             checked={state.branches.it}
                                             onChange={handleChecked("it")}
                                             value="it"
+                                        disabled={filled}
                                         />
                                     }
                                     label="Information Technology"
@@ -675,7 +703,8 @@ function Profile(props) {
                                             checked={state.branches.entc}
                                             onChange={handleChecked("entc")}
                                             value="entc"
-                                        />
+                                            disabled={filled}
+                                            />
                                     }
                                     label="Electronics and Telecommunication"
                                 />
@@ -692,6 +721,7 @@ function Profile(props) {
                                             "aria-label": "change date"
                                         }}
                                         shouldDisableDate={retrieve}
+                                        disabled={filled}
                                     />
                                 </MuiPickersUtilsProvider>
                             </Grid>
@@ -705,6 +735,7 @@ function Profile(props) {
                                         multiple
                                         value={state.skills}
                                         onChange={handleChange("skills")}
+                                        inputProps={{ readOnly: filled }}
                                         input={<Input id="select-multiple-chip" />}
                                         renderValue={selected => (
                                             <div className={classes.chips}>
@@ -738,6 +769,7 @@ function Profile(props) {
                                         multiple
                                         value={state.city}
                                         onChange={handleChange("city")}
+                                        inputProps={{ readOnly: filled }}
                                         input={<Input id="select-multiple-chip" />}
                                         renderValue={selected => (
                                             <div className={classes.chips}>
@@ -764,9 +796,9 @@ function Profile(props) {
                             </Grid>
 
                             <Grid item xs={12} align="right" onClick={submitHandler}>
-                                <Button className={classes.button} size="large" variant="contained" color="primary">
+                                <Button style={{ display: filled ? "none" : "block" }} className={classes.button} size="large" variant="contained" color="primary">
                                     Submit
-                </Button>
+                                </Button>
                             </Grid>
                         </Grid>
                     </form>
