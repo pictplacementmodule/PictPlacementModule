@@ -237,8 +237,8 @@ function Profile(props) {
       errors.cpEmail1 = !re.test(state.cpEmail1) ? "Invalid email!" : "";
       errors.cpEmail2 = !re.test(state.cpEmail2) ? "Invalid email!" : "";
       errors.package = !/^\d+$/.test(state.package) ? "Invalid!" : "";
-      errors.numberOfStudents = !/^\d+$/.test(state.numberOfStudents) ? "Invalid!" : "";
-      errors.criteria = state.criteria=="" || Number(state.criteria)>10 ? "Invalid!" : "";
+      errors.numberOfStudents = !/^\d+$/.test(state.numberOfStudents) || Number(state.numberOfStudents)<10 ? "Invalid!" : "";
+      errors.criteria = state.criteria=="" || Number(state.criteria)>10 || Number(state.criteria)<0 ? "Invalid!" : "";
       setError({
          ...errors
       });
@@ -498,7 +498,7 @@ function Profile(props) {
                      </Grid>
                      <Grid item xs={12} sm={4}>
                         <TextField
-                           data-tip data-for="contact1*"
+                           data-tip data-for="contact1"
                            label="Contact Number 1"
                            fullWidth
                            required
@@ -506,7 +506,7 @@ function Profile(props) {
                            value={state.contactNo1}
                            error={formErrors.contactNo1.length > 0}
                         />
-                        <ReactTooltip id='cntact1' type='info' effect='solid'>
+                        <ReactTooltip id='contact1' type='info' effect='solid'>
                            <span>Enter 10 digit contact number</span>
                         </ReactTooltip>
                      </Grid>
@@ -532,7 +532,7 @@ function Profile(props) {
                      <Grid item xs={12} sm={6}>
                         <TextField
                            data-tip data-for="criteria"
-                           label="Criteria"
+                           label="Criteria (Minumum C.G.P.A)"
                            fullWidth
                            required
                            onChange={handleChange("criteria")}
@@ -545,7 +545,7 @@ function Profile(props) {
                      </Grid>
                      <Grid item xs={12} sm={6}>
                         <TextField
-                           label="Package"
+                           label="Package (LPA)"
                            fullWidth
                            required
                            onChange={handleChange("package")}

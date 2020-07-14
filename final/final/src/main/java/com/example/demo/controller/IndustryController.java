@@ -56,7 +56,7 @@ public class IndustryController {
 
 	@PostMapping("/add")
 	public boolean addIndystry(@RequestBody industry industry) {
-		if (!industryrepo.existsById(industry.getId())) {
+		if (!industryrepo.existsById(industry.getId()) && userservice.findById(industry.getId()).getType()=="company") {
 			industryrepo.save(industry);
 			return true;
 		}

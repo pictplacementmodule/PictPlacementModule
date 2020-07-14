@@ -277,11 +277,11 @@ export default function AddVisited() {
             error = (Number(value) > 0 && Number(value) < 10) ? '' : 'Invalid Criteria';
             break;
          case 'package_lpa':
-            reg = /^[0-9]+$/
-            error = reg.test(value) ? '' : 'Invalid package_lpa';
+            reg = /^[0-9]+(\.[0-9]+)?$/
+            error = (reg.test(value)  && Number(value) > 0) ? '' : 'Invalid package_lpa';
             break;
          case 'no_of_students':
-            error = Number(value) > 0 ? '' : 'Invalid Number Of Students';
+            error = (Number(value) > 0 && Number(value) > 0) ? '' : 'Invalid Number Of Students';
             break;
       }
       setError({
