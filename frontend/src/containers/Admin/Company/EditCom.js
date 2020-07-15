@@ -241,6 +241,7 @@ export default function AddVisited() {
       console.log(state);
       axios.post('/industry/edit', state)
          .then((response) => {
+            console.log("is it here", response);
             setMessage("Company Profile edited successfully!")
             setOpen(true);
          })
@@ -280,7 +281,7 @@ export default function AddVisited() {
             break;
          case 'package_lpa':
             reg = /^[0-9]+(\.[0-9]+)?$/
-            error = (reg.test(value)  && Number(value) > 0) ? '' : 'Invalid package_lpa';
+            error = (reg.test(value) && Number(value) > 0) ? '' : 'Invalid package_lpa';
             break;
          case 'no_of_students':
             error = (Number(value) > 0 && Number(value) > 0) ? '' : 'Invalid Number Of Students';
@@ -347,15 +348,15 @@ export default function AddVisited() {
                <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                      <TextField
-                        
+
                         label="company Name"
                         fullWidth
                         onChange={handleChange('name')}
                         value={state.name}
                      />
-                      <ReactTooltip id='criteria' type='info' effect='solid'>
-                           <span>Enter the CGPA criteria (should be less than 10)</span>
-                        </ReactTooltip>
+                     <ReactTooltip id='criteria' type='info' effect='solid'>
+                        <span>Enter the CGPA criteria (should be less than 10)</span>
+                     </ReactTooltip>
                   </Grid>
 
                   <Grid item xs={12} align="right">
@@ -375,6 +376,9 @@ export default function AddVisited() {
                      fullWidth
                      onChange={handleChange('name')}
                      value={state.name}
+                     InputProps={{
+                        readOnly: true,
+                     }}
                   />
                </Grid>
                <Grid item xs={12} sm={4}>
@@ -397,8 +401,8 @@ export default function AddVisited() {
                      error={formErrors.cpemail1.length > 0}
                   />
                   <ReactTooltip id='Email1' type='info' effect='solid'>
-                           <span>Enter email in format : example@demo.com</span>
-                        </ReactTooltip>
+                     <span>Enter email in format : example@demo.com</span>
+                  </ReactTooltip>
                </Grid>
                <Grid item xs={12} sm={4}>
                   <TextField
@@ -419,8 +423,8 @@ export default function AddVisited() {
                      error={formErrors.contactno1.length > 0}
                   />
                   <ReactTooltip id='contact1' type='info' effect='solid'>
-                           <span>Enter 10 digit contact number</span>
-                        </ReactTooltip>
+                     <span>Enter 10 digit contact number</span>
+                  </ReactTooltip>
                </Grid>
                <Grid item xs={12} sm={4}>
                   <TextField
