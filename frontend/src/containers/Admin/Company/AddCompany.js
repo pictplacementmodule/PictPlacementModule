@@ -23,7 +23,7 @@ import Select from "@material-ui/core/Select";
 import Checkbox from "@material-ui/core/Checkbox";
 import Chip from "@material-ui/core/Chip";
 import Switch from "@material-ui/core/Switch";
-import ReactTooltip from "react-tooltip"
+import ReactTooltip from "react-tooltip";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";

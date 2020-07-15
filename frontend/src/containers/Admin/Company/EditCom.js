@@ -33,6 +33,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
+import ReactTooltip from "react-tooltip";
+
 // import moment from "moment";
 
 const variantIcon = {
@@ -345,11 +347,15 @@ export default function AddVisited() {
                <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                      <TextField
+                        
                         label="company Name"
                         fullWidth
                         onChange={handleChange('name')}
                         value={state.name}
                      />
+                      <ReactTooltip id='criteria' type='info' effect='solid'>
+                           <span>Enter the CGPA criteria (should be less than 10)</span>
+                        </ReactTooltip>
                   </Grid>
 
                   <Grid item xs={12} align="right">
@@ -365,6 +371,7 @@ export default function AddVisited() {
                <Grid item xs={12} sm={12}>
                   <TextField
                      label="Company Name"
+                     required
                      fullWidth
                      onChange={handleChange('name')}
                      value={state.name}
@@ -374,6 +381,7 @@ export default function AddVisited() {
                   <TextField
                      label="Contact Person Name"
                      fullWidth
+                     required
                      onChange={handleChange('cpname')}
                      value={state.cpname}
                      error={formErrors.cpname.length > 0}
@@ -383,10 +391,14 @@ export default function AddVisited() {
                   <TextField
                      label=" Email id 1"
                      fullWidth
+                     required
                      onChange={handleChange('cpemail1')}
                      value={state.cpemail1}
                      error={formErrors.cpemail1.length > 0}
                   />
+                  <ReactTooltip id='Email1' type='info' effect='solid'>
+                           <span>Enter email in format : example@demo.com</span>
+                        </ReactTooltip>
                </Grid>
                <Grid item xs={12} sm={4}>
                   <TextField
@@ -401,15 +413,20 @@ export default function AddVisited() {
                   <TextField
                      label="Contact Number 1"
                      fullWidth
+                     required
                      onChange={handleChange('contactno1')}
                      value={state.contactno1}
                      error={formErrors.contactno1.length > 0}
                   />
+                  <ReactTooltip id='contact1' type='info' effect='solid'>
+                           <span>Enter 10 digit contact number</span>
+                        </ReactTooltip>
                </Grid>
                <Grid item xs={12} sm={4}>
                   <TextField
                      label="Contact Number 2"
                      fullWidth
+                     required
                      onChange={handleChange('contactno2')}
                      value={state.contactno2}
                      error={formErrors.contactno2.length > 0}
@@ -426,8 +443,9 @@ export default function AddVisited() {
                </Grid>
                <Grid item xs={12} sm={6}>
                   <TextField
-                     label="Criteria"
+                     label="Criteria (C.G.P.A)"
                      fullWidth
+                     required
                      onChange={handleChange('criteria')}
                      value={state.criteria}
                      error={formErrors.criteria.length > 0}
@@ -435,8 +453,9 @@ export default function AddVisited() {
                </Grid>
                <Grid item xs={12} sm={6}>
                   <TextField
-                     label="Package"
+                     label="Package (LPA)"
                      fullWidth
+                     required
                      onChange={handleChange('package_lpa')}
                      value={state.package_lpa}
                      error={formErrors.package_lpa.length > 0}
@@ -446,6 +465,7 @@ export default function AddVisited() {
                   <TextField
                      label="Number of Students"
                      fullWidth
+                     required
                      onChange={handleChange('no_of_students')}
                      value={state.no_of_students}
                      error={formErrors.no_of_students.length > 0}

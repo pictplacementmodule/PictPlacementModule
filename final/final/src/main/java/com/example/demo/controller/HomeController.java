@@ -83,8 +83,8 @@ public class HomeController {
 	
 	@RequestMapping("/findAcademicDetails")
 	public Academicdetails findStuAca(@RequestParam int id) {
-		Academicdetails stu = academicrepo.findById(id).orElse(null);
-		System.out.println("hiii");
+		Academicdetails stu = academicrepo.findById(id).get();
+		System.out.println(stu);
 		System.out.println(decompressBytes(stu.getStudent().getProfileImg()));
 		if(stu!=null) {
 			stu.getStudent().setProfileImg(decompressBytes(stu.getStudent().getProfileImg()));

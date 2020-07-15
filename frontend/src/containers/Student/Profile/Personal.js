@@ -61,8 +61,9 @@ class Personal extends Component {
             <TextField required
               id="aadharNumber"
               name="aadharNumber"
-              label="Aadhar card Number"
+              label="Aadhar card Number (12 digit)"
               fullWidth
+              required
               onChange={(event) => this.props.onChange(event, 'aadharNumber')}
               value={this.props.aadharNumber}
               InputProps={{
@@ -74,8 +75,9 @@ class Personal extends Component {
           <Grid item xs={12} sm={4}>
             <TextField required
               name="pancardNumber"
-              label="Pancard Number"
+              label="Pancard Number (10 digit)"
               fullWidth
+              required
               onChange={(event) => this.props.onChange(event, 'pancardNumber')}
               value={this.props.pancardNumber}
               InputProps={{
@@ -106,6 +108,7 @@ class Personal extends Component {
               name="middleName"
               label="Middle name"
               fullWidth
+              required
               autoComplete="mname"
               onChange={(event) => this.props.onChange(event, 'middleName')}
               value={this.props.middleName}
@@ -115,7 +118,8 @@ class Personal extends Component {
             />
           </Grid>
           <Grid item xs={12} sm={4}>
-            <TextField required
+            <TextField 
+              required
               id="lastName"
               name="lastName"
               label="Last name"
@@ -131,7 +135,7 @@ class Personal extends Component {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField required
-              label="Mobile Number"
+              label="Mobile Number (10 digit)"
               fullWidth
               onChange={(event) => this.props.onChange(event, 'mobileNumber1')}
               value={this.props.mobileNumber1}
@@ -143,8 +147,9 @@ class Personal extends Component {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Alternate Mobile Number"
+              label="Alternate Mobile Number (10 digit)"
               fullWidth
+              required
               onChange={(event) => this.props.onChange(event, 'mobileNumber2')}
               value={this.props.mobileNumber2}
               InputProps={{
@@ -251,7 +256,7 @@ class Personal extends Component {
           </Grid>
           <Grid item xs={6}>
             <TextField required
-              label="Father's Name"
+              label="Father's Full Name"
               fullWidth
               onChange={(event) => this.props.onChange(event, 'fatname')}
               value={this.props.fatname}
@@ -263,7 +268,7 @@ class Personal extends Component {
           </Grid>
           <Grid item xs={6}>
             <TextField required
-              label="Mother's Name"
+              label="Mother's First Name"
               fullWidth
               onChange={(event) => this.props.onChange(event, 'motname')}
               value={this.props.motname}
@@ -277,6 +282,7 @@ class Personal extends Component {
             <TextField required
               label="Occupation"
               fullWidth
+              required
               onChange={(event) => this.props.onChange(event, 'occupation')}
               value={this.props.occupation}
               InputProps={{
@@ -289,6 +295,7 @@ class Personal extends Component {
             <TextField required
               label="Annual Income"
               fullWidth
+              required
               onChange={(event) => this.props.onChange(event, 'anninc')}
               value={this.props.anninc}
               InputProps={{
@@ -299,7 +306,7 @@ class Personal extends Component {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              label="Disability (If any)"
+              label="Disability (If any else put NA)"
               fullWidth
               onChange={(event) => this.props.onChange(event, 'disability')}
               value={this.props.disability}
