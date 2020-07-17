@@ -41,49 +41,39 @@ public class IndustryController {
 	@Autowired
 	private placedstudentsrepo placedrepo;
 
-//	@PostMapping("/add")
-//	public industry addIndystry(@RequestBody industry industry) {
-//		System.out.println(industry.getId());
-//		if (industryrepo.existsById(industry.getId())) {
-//			industry i = industryrepo.findById(industry.getId()).get();
-//			i.setFinal_date(industry.getFinal_date());
-//			industryrepo.save(i);
-//			return i;
-//		}
-//		System.out.print("choose different date\n");
-//		return null;
-//	}
-
 	@PostMapping("/add")
 	public boolean addIndystry(@RequestBody industry industry) {
-		if (!industryrepo.existsById(industry.getId()) && userservice.findById(industry.getId()).getType()=="company") {
+		if (!industryrepo.existsById(industry.getId())
+				&& userservice.findById(industry.getId()).getType() == "company") {
 			industryrepo.save(industry);
 			return true;
 		}
 		return false;
 	}
-	
-	
-	@PostMapping("/edit")
-	public industry editIndystry(@RequestBody industry industry) {
-		System.out.println(industry.getStart_date());
-		if (!industryrepo.addIndustry(industry.getStart_date())) {
-			industryrepo.save(industry);
 
-			return industryrepo.findById(industry.getId()).get();
+	@PostMapping("/edit")
+	public Boolean editIndystry(@RequestBody industry industry) {
+
+		if (industry.getId() != 0 && industryrepo.findById(industry.getId()).get() != null) {
+			System.out.println("hello world");
+			try {
+				if (!industryrepo.addIndustry(industry.getStart_date())) {
+					industryrepo.save(industry);
+					return true;
+				}
+			} catch (Exception exception) {
+				return false;
+			}
 		}
-		System.out.print("choose different date\n");
-		return null;
+		return false;
 	}
-	
-	
 
 	@GetMapping("/findall")
 	public List<industry> findindustry() {
 		System.out.println(industryrepo.findAll2());
 		return industryrepo.findAll2();
 	}
-	
+
 	@GetMapping("/getUpcoming")
 	public List<industry> findUpcoming() {
 		System.out.println(industryrepo.findAll2());
@@ -94,9 +84,6 @@ public class IndustryController {
 	public void acceptjobdetails(@RequestBody jobdescription a) {
 		System.out.println("job details addded");
 		jobdescrepo.addind(a.getIndustry().getId(), a.getJobDesc(), a.getJobDesignation());
-//		System.out.println(a.toString());
-//		System.out.println(a.getIndustry() + " " + a.getJobDesc() + " " + a.getJobDesignation());
-//		jobdescrepo.save(a);
 	}
 
 	@GetMapping("/getDateList")
@@ -135,7 +122,7 @@ public class IndustryController {
 			return null;
 		}
 	}
-	
+
 	@PostMapping("/sortbypackage")
 	public List<industry> ByPackage() {
 		return industryrepo.ByPackage();

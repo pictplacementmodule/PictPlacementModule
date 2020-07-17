@@ -21,7 +21,6 @@ public interface industryrepo extends JpaRepository<industry, Integer> {
 	@Query(value = "SELECT * FROM industry as i ORDER BY no_of_students desc", nativeQuery = true)
 	public List<industry> ByNoOfStudent();
 
-//----------------dates
 	@Query("SELECT count(*) > 0 from industry where (?1 = final_date )")
 	public boolean addIndustry(Date d1);
 
