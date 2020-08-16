@@ -1,3 +1,3 @@
-const frontend_base_url = "http://localhost:3000/"
+const frontend_base_url = "https://placement-frontend.herokuapp.com/"
   
   export default frontend_base_url;
