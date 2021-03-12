@@ -14,7 +14,7 @@
     "dom-to-pdf": "^0.1.2",
     "file-saver": "^2.0.2",
     "html2canvas": "^1.0.0-rc.5",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.3.1",
     "moment": "^2.24.0",
     "pdfmake": "^0.1.60",
     "react": "^16.9.0",
